@@ -1,0 +1,47 @@
+<template>
+    <div class="sf-ultimos-comentarios">
+
+                <v-card elevation="2" shaped class="mb-5">
+            <v-app-bar>
+                <v-icon> mdi-comment-multiple-outline</v-icon>
+                <v-title class="font-weight-black ml-5"> ULTIMOS COMENTARIOS</v-title>
+            </v-app-bar>
+
+            <v-list>
+                <div class="rs-recent-comments-container mt-4">
+
+                <v-row>
+                    <v-col cols="4">
+                        <v-img class="imagen" src="https://previews.123rf.com/images/jemastock/jemastock1705/jemastock170506999/78062109-cara-de-joven-aislado-sobre-fondo-blanco-expresi%C3%B3n-de-la-cara-hermosa-del-muchacho-ilustraci%C3%B3n-vecto.jpg" width="70px" height="70px" />
+                    </v-col>
+                    <v-col cols="8">
+                        <p class="font-weight-black mt-2 ml-n7">USERNAME ha comentado en **TITULO PELI** </p>
+                    </v-col>
+                </v-row>
+                <v-divider class="mt-4 mb-4"></v-divider>
+
+                <v-row>
+                    <v-col cols="4">
+                        <v-img class="imagen" src="https://static.diariofemenino.com/uploads/belleza/82981-CARA.jpg" width="70px" height="70px" />
+                    </v-col>
+                    <v-col cols="8">
+                        <p class="font-weight-black mt-2 ml-n7">USERNAME ha comentado en **TITULO PELI** </p>
+                    </v-col>
+                </v-row>
+                <v-divider class="mt-4 mb-4"></v-divider>
+
+                </div>
+            </v-list>
+
+        </v-card>
+
+    </div>
+</template>
+
+<style scoped>
+.imagen{
+    border: 3px solid rgb(229,9,20);
+    border-radius: 100%;
+    margin-left: 2em;
+}
+</style>
