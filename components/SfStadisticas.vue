@@ -1,25 +1,25 @@
 <template>
     <div class="sf-stadisticas">
 
-        <v-card elevation="2" shaped>
+        <v-card elevation="2" shaped v-if="visible">
             <v-app-bar>
                 <v-icon> mdi-go-kart-track</v-icon>
-                <v-title class="font-weight-black ml-5"> ESTADÍSTICAS</v-title>
+                <v-app-bar-title class="font-weight-black ml-5"> ESTADÍSTICAS</v-app-bar-title>
             </v-app-bar>
 
             <v-list>
                 <v-list-item>
-                    <v-list-icon>
+                    <v-list-item-icon>
                         <v-icon id="icon" class="mr-5">mdi-movie-open-star-outline</v-icon>
-                    </v-list-icon>
-                    <v-list-content class="font-weight-black"> #n PELICULAS SUBIDAS </v-list-content>
+                    </v-list-item-icon>
+                    <v-list-item-content class="font-weight-black"> {{movies}} PELICULAS SUBIDAS  </v-list-item-content>
                 </v-list-item>
             
                 <v-list-item>
-                    <v-list-icon>
+                    <v-list-item-icon>
                         <v-icon id="icon" class="mr-5"> mdi-television-classic</v-icon>
-                    </v-list-icon>
-                    <v-list-content class="font-weight-black"> #n SERIES SUBIDAS </v-list-content>
+                    </v-list-item-icon>
+                    <v-list-item-content class="font-weight-black"> {{serials}} SERIES SUBIDAS  </v-list-item-content>
                 </v-list-item>
 
             </v-list>
@@ -29,6 +29,64 @@
 
     </div>
 </template>
+
+<script>
+
+export default ({
+    data() {
+        return{
+            visible: true,
+            serials: "",
+            movies: ""
+        }
+    },
+
+    async beforeMount(){
+        const token = localStorage.getItem('token')
+
+        if(!token){
+            this.visible = false
+        }
+
+        await this.stats()
+
+    },
+
+    methods: {
+        
+        async stats(){
+
+            try{
+                //stats de movies
+                const res1 = await fetch('http://localhost:4500/api/movie/stats')
+                const moviesData = await res1.json()
+
+                if(moviesData.error){
+                    return alert(moviesData.error)
+                }
+                this.movies = moviesData.movies
+
+                //stats de serials
+                const res2 = await fetch('http://localhost:4500/api/serial/stats')
+
+                const serialsData = await res2.json()
+
+                if(serialsData.error){
+                    return alert(serialsData.error)
+                }
+                this.serials = serialsData.serials
+
+            }catch(error){
+                return res.json(error)
+            }
+
+
+        }
+
+    }
+})
+</script>
+
 
 <style scoped>
 

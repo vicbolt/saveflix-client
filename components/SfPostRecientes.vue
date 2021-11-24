@@ -1,10 +1,10 @@
 <template>
-    <div class="sf-post-recientes">
+    <div class="sf-post-recientes" v-if="visible">
 
         <v-card elevation="2" shaped class="mb-5">
             <v-app-bar>
                 <v-icon> mdi-fire</v-icon>
-                <v-title class="font-weight-black ml-5"> POST RECIENTES </v-title>
+                <v-app-bar-title class="font-weight-black ml-5"> POST RECIENTES </v-app-bar-title>
             </v-app-bar>
 
             <v-list>
@@ -13,8 +13,8 @@
                     <v-col cols="4">
                         <v-img class="imagen" src="https://es.web.img2.acsta.net/pictures/20/11/10/10/03/4913863.jpg" width="70px" height="70px" />
                     </v-col>
-                    <v-col cols="8">
-                        <p class="mt-2 ml-n7">USERNAME ha subido TITULO_PELICULA# </p>
+                    <v-col cols="8" class="ml-n5">
+                        <p class="mt-2"> <strong> USERNAME </strong> ha subido <strong> TITULO_PELICULA </strong></p>
                     </v-col> 
                 </v-row>
                 <v-divider class="mt-4 mb-4"></v-divider>
@@ -24,8 +24,8 @@
                     <v-col cols="4">
                         <v-img class="imagen" src="https://img.vixdata.io/pd/jpg-large/es/sites/default/files/e/eerie-pelicula-terror-filipinas-2019-netflix-portada-056203.jpg" width="70px" height="70px"/>
                     </v-col>
-                    <v-col cols="8">
-                        <p class="mt-2 ml-n7">USERNAME ha subido TITULO_PELICULA# </p>
+                    <v-col cols="8" class="ml-n5">
+                        <p class="mt-2"> <strong> USERNAME </strong> ha subido <strong> TITULO_PELICULA </strong></p>
                     </v-col>
                 </v-row>
                 <v-divider class="mt-4 mb-4"></v-divider>
@@ -34,8 +34,8 @@
                     <v-col cols="4">
                         <v-img class="imagen" src="https://www.ecartelera.com/carteles/2600/2600/001_m.jpg" width="70px" height="70px"/>
                     </v-col>
-                    <v-col cols="8">
-                        <p class="mt-2 ml-n7"> USERNAME ha subido TITULO_PELICULA# </p>
+                    <v-col cols="8" class="ml-n5">
+                        <p class="mt-2"> <strong> USERNAME </strong> ha subido <strong> TITULO_PELICULA </strong> </p>
                     </v-col>
                 </v-row>
                 <v-divider class="mt-4 mb-4"></v-divider>
@@ -47,6 +47,25 @@
         </v-card>
     </div>
 </template>
+
+<script>
+
+export default ({
+    data() {
+        return{
+            visible: true
+        }
+    },
+
+    beforeMount(){
+        const token = localStorage.getItem('token')
+
+        if(!token){
+            this.visible = false
+        }
+    }
+})
+</script>
 
 
 <style scoped>

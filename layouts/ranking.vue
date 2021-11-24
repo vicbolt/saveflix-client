@@ -1,8 +1,8 @@
 <template>
     <v-app>
-        <v-bar>
-            <SfMenuNav />
-        </v-bar>
+        
+        <SfMenuNav />
+
         <v-container fluid>
            
             <v-row>

@@ -1,14 +1,31 @@
 <template>
-    <div class="sf-chat">
+    <div class="sf-chat" v-if="visible">
 
         <v-row>
             <v-col cols="8">
                 <v-card elevation="2" shaped class="mb-5">
                     <v-app-bar>
-                        <v-icon> mdi-chat-outline</v-icon>
-                        <v-title class="font-weight-black ml-5"> CHAT</v-title>
+                        <v-row>
+                            <v-col cols="2">
+                                <v-img class="ml-n1" id="imagen" src="https://previews.123rf.com/images/jemastock/jemastock1705/jemastock170506999/78062109-cara-de-joven-aislado-sobre-fondo-blanco-expresi%C3%B3n-de-la-cara-hermosa-del-muchacho-ilustraci%C3%B3n-vecto.jpg" width="50px" height="50px" />
+                            </v-col>
+                            <v-col cols="10">
+                                <h3 class="font-weight-black mt-3 ml-n10"> PEDRO </h3>
+                            </v-col>
+                        </v-row>
                     </v-app-bar>
-                    <p class="mt-5">AQUI VAN LA CONVERSACION CON CADA UNO DE ELLOS</p>
+                    <v-card height="300px">
+
+                    </v-card>
+                    <v-row>
+                        <v-col cols="10">
+                            <v-text-field placeholder="Escribe un mensaje" class="ml-3"></v-text-field>
+                        </v-col>
+                        <v-col cols="2">
+                            <v-btn color="red" class="mt-4" width="28px"> ENVIAR </v-btn>
+                        </v-col>
+                    </v-row>
+                    
                 </v-card>
             </v-col>
 
@@ -16,7 +33,7 @@
                 <v-card elevation="2" shaped class="mb-5">
                     <v-app-bar>
                         <v-icon> mdi-account-group</v-icon>
-                        <v-title class="font-weight-black ml-5"> LISTA DE AMIGOS</v-title>
+                        <v-card-title class="font-weight-black ml-5"> LISTA DE AMIGOS</v-card-title>
                     </v-app-bar>
                 <v-row class="mt-2">
                     <v-col cols="4" >
@@ -49,6 +66,23 @@
     </div>
 </template>
 
+<script>
+export default ({
+    data() {
+        return{
+            visible: true
+        }
+    },
+
+    beforeMount(){
+        const token = localStorage.getItem('token')
+
+        if(!token){
+            this.visible = false
+        }
+    }
+})
+</script>
 
 <style scoped>
 #imagen{

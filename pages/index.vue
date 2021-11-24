@@ -27,7 +27,11 @@ export default ({
         }, 4500)
 
         setTimeout(()=>{
-            this.$router.push('/home')
+            const token = localStorage.getItem('token')
+            if(token){
+                this.$router.push('/home')
+            }
+            this.$router.push('/login')
         }, 6500)
         
     }

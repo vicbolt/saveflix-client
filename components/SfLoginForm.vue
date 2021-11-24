@@ -1,29 +1,91 @@
 <template>
-    <div class="sf-login-form">
+    <div class="sf-login-form" v-if="visible">
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
-        <v-form >
+        <v-form>
             <h1> INICIO DE SESIÓN </h1>
             <v-row>
-            <v-col 2></v-col>
+            <v-col></v-col>
             <v-col cols="5">
-            <v-text-field placeholder="Correo electrónico" outlined class="mb-n4"/>
-            <v-text-field placeholder="Contraseña" outlined class="mb-n3"/>  
-            <v-btn id="boton" type="submit" block> INICIAR SESIÓN</v-btn>
+            <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
+            <v-text-field type="password" v-model="password" placeholder="Contraseña" outlined class="mb-n3"/>  
+            <v-btn id="boton" block @click="login"> INICIAR SESIÓN</v-btn>
 
             <div class="enlace">
             <a href="/signUp"> ¿No tienes una cuenta? Regístrate para continuar</a>
             </div>
             </v-col>
-           
 
-            <v-col 2></v-col>
+            <v-col></v-col>
             </v-row>
-
         </v-form>
 
     </div>
 </template>
+
+<script>
+export default ({
+    data(){
+        return{
+            email: "",
+            password: "",
+            visible: true,
+        }
+    },
+
+    beforeMount(){
+        
+        const token = localStorage.getItem('token')
+
+        if(token){
+            this.visible = false
+            this.$router.push('/home')
+        }
+    },
+
+    methods: {
+
+        async login(){
+            try{
+                const body = JSON.stringify({
+                    email: this.email,
+                    password: this.password
+                })
+
+                const res = await fetch('http://localhost:4500/api/user/logIn', {
+                    method: 'post',
+                    headers:{
+                        'Content-Type': 'application/json',
+                    }, 
+                    body: body,
+                })
+
+                const data = await res.json()
+                if(data.error){
+                    alert(data.error)
+                    this.$router.push('/logIn')
+                }
+
+                if(data.token){
+                    localStorage.setItem('token', JSON.stringify(data.token))
+                    localStorage.setItem('userId', JSON.stringify(data.userId))
+                    
+                }
+
+                this.$router.push('/')
+
+                
+
+
+                }catch (error) {
+                    return res.json(error)
+                } 
+            }
+        },
+    })
+
+</script>
+
 
 
 
