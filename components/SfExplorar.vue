@@ -9,8 +9,8 @@
 
         <v-card>
             <v-row>
-                <v-col @click="goTo(movie._id)" cols=4 v-for="movie in titles" :key="movie.id">
-                    <SfCard  :image="movie.image" :title="movie.title" :score="movie.score" />
+                <v-col @click="goTo(title._id)" cols=4 v-for="title in titles" :key="title.id">
+                    <SfCard  :image="title.image" :title="title.title" :score="title.score" />
                 </v-col>
                            
             </v-row>

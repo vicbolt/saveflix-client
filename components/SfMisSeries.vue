@@ -11,7 +11,7 @@
 
             <v-card-text>
                 <v-row>
-                    <v-col cols=4 v-for="serial in serials" :key="serial.id">
+                    <v-col @click="goTo(serial._id)" cols=4 v-for="serial in serials" :key="serial.id">
                         <v-list-item>
                             <v-list-item-content class="fondo">
                                 <v-img height="280px" :src="serial.image" />
@@ -70,9 +70,9 @@ export default ({
             }
         },
 
-        // goTo(serialId){
-        //     this.$router.push(`/serialDetails/${serialId}`)
-        // }
+        goTo(serialId){
+            this.$router.push(`/details/${serialId}`)
+        }
     }
 })
 </script>

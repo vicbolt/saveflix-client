@@ -1,8 +1,7 @@
 <template>
-    <div class="sf-details">
+    <div class="sf-edit-movie">
 
-        <SfDetails :post="post" />
-        <SfComments /> 
+        <SfEdit :post="post"/>
 
     </div>
 </template>
@@ -43,5 +42,7 @@ export default ({
             return res.json(error)
         }
     },
+
 })
+
 </script>

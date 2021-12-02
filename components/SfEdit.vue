@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-edit-movie">
+    <div class="sf-edit">
 
         <v-card>
             <v-app-bar>
@@ -11,21 +11,21 @@
                 <v-row>
                     <v-col cols="4">
                         <v-file-input v-model="image" v-if="unshow" class="mt-3" height="360px" filled prepend-icon="" style="background: gray; border: 2px solid white" :placeholder="movie.image"/>
-                        <v-img v-if="show" :src="movie.image" @click="swap()"></v-img>
+                        <v-img v-if="show" :src="post.image" @click="swap()"></v-img>
                     </v-col>
 
                     <v-col cols="8">
                         <h6>TITULO DE LA PELICULA</h6>
                         <v-divider class="mb-1" ></v-divider>
-                        <v-text-field v-model="title" :placeholder="movie.title" outlined />
+                        <v-text-field v-model="title" :placeholder="post.title" outlined />
 
                         <h6 class="mt-n5">DIRECTOR</h6>
                         <v-divider class="mb-1"></v-divider>
-                        <v-text-field v-model="director" :placeholder="movie.director" outlined />
+                        <v-text-field v-model="director" :placeholder="post.director" outlined />
 
                         <h6 class="mt-n5">SINOPSIS</h6>
                         <v-divider class="mb-1"></v-divider>
-                        <v-text-field v-model="description" :placeholder="movie.description" outlined height="100px" />
+                        <v-text-field v-model="description" :placeholder="post.description" outlined height="100px" />
 
                         <h6 class="mt-n5">PUNTUACIÓN</h6>
                         <v-divider class="mb-1"></v-divider>
@@ -60,7 +60,7 @@ export default ({
             image: undefined,
             show: true,
             unshow: false,
-            score: this.movie.score,
+            score: this.post.score,
             knowledge: "0",
             scoreRules: [
                 v => ( v && v >= 0 ) || "El valor mínimo es 0",
@@ -70,7 +70,7 @@ export default ({
     },
 
     props: {
-        movie: {
+        post: {
             type: Object,
             required: true
         }
@@ -113,7 +113,7 @@ export default ({
                 }
 
                 alert('El post se ha modificado con éxito')
-                this.$router.push(`http://localhost:4500/api/movie/details/${this.movie._id}`)
+                this.$router.push(`http://localhost:4500/api/movie/details/${this.post._id}`)
 
             }catch(error){
                 return res.json(error)
