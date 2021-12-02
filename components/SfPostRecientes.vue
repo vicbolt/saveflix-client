@@ -8,40 +8,17 @@
             </v-app-bar>
 
             <v-list>
-                <div class="rs-recent-upload-container mt-4">
+                <div v-for="title in titles" :key="title.id" class="rs-recent-upload-container mt-4">
                 <v-row>
                     <v-col cols="4">
-                        <v-img class="imagen" src="https://es.web.img2.acsta.net/pictures/20/11/10/10/03/4913863.jpg" width="70px" height="70px" />
+                        <v-img class="imagen" :src="title.image" width="70px" height="70px" />
                     </v-col>
                     <v-col cols="8" class="ml-n5">
-                        <p class="mt-2"> <strong> USERNAME </strong> ha subido <strong> TITULO_PELICULA </strong></p>
+                        <p class="mt-2"> <strong> {{title.user}} </strong> ha subido <strong> {{title.title}} </strong></p>
                     </v-col> 
                 </v-row>
                 <v-divider class="mt-4 mb-4"></v-divider>
-                
-
-                <v-row>
-                    <v-col cols="4">
-                        <v-img class="imagen" src="https://img.vixdata.io/pd/jpg-large/es/sites/default/files/e/eerie-pelicula-terror-filipinas-2019-netflix-portada-056203.jpg" width="70px" height="70px"/>
-                    </v-col>
-                    <v-col cols="8" class="ml-n5">
-                        <p class="mt-2"> <strong> USERNAME </strong> ha subido <strong> TITULO_PELICULA </strong></p>
-                    </v-col>
-                </v-row>
-                <v-divider class="mt-4 mb-4"></v-divider>
-
-                <v-row>
-                    <v-col cols="4">
-                        <v-img class="imagen" src="https://www.ecartelera.com/carteles/2600/2600/001_m.jpg" width="70px" height="70px"/>
-                    </v-col>
-                    <v-col cols="8" class="ml-n5">
-                        <p class="mt-2"> <strong> USERNAME </strong> ha subido <strong> TITULO_PELICULA </strong> </p>
-                    </v-col>
-                </v-row>
-                <v-divider class="mt-4 mb-4"></v-divider>
                 </div>
-
-
             </v-list>
 
         </v-card>
@@ -50,21 +27,51 @@
 
 <script>
 
-export default ({
+export default {
     data() {
         return{
-            visible: true
+            visible: true,
+            titles: []
         }
     },
 
-    beforeMount(){
-        const token = localStorage.getItem('token')
+    async beforeMount(){
 
-        if(!token){
-            this.visible = false
+        await this.postRecientes()
+    },
+
+    methods: {
+
+        async postRecientes(){
+        try{
+                const res1 = await fetch('http://localhost:4500/api/movie/postRecientes')
+                const res2 = await fetch('http://localhost:4500/api/serial/postRecientes')
+
+                const data1 = await res1.json()
+                if(data1.error){
+                    return alert(data1.error) 
+                }
+
+                const data2 = await res2.json()
+                if(data2.error){
+                    return alert(data2.error) 
+                }
+
+                for(const title of data1.movies){
+                    this.titles.push(title)
+                }
+
+                for(const title of data2.serials){
+                    this.titles.push(title)
+                }
+
+ 
+            } catch(error){
+                return res1.json(error)
+            }
         }
-    }
-})
+    },
+}
 </script>
 
 

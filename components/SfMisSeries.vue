@@ -68,7 +68,11 @@ export default ({
             }catch(error){
                 return res.json(error)
             }
-        }
+        },
+
+        // goTo(serialId){
+        //     this.$router.push(`/serialDetails/${serialId}`)
+        // }
     }
 })
 </script>

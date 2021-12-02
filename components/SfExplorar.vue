@@ -9,30 +9,8 @@
 
         <v-card>
             <v-row>
-                <v-col cols=4 v-for="movie in movies" :key="movie.id">
-                    <v-list-item>
-                        <v-list-item-content class="fondo">
-                            <v-img height="280px"  :src="movie.image"/>
-                            <v-list-item-title class="text-center mt-2 font-weight-black"> {{movie.title}} </v-list-item-title>
-                                <v-progress-linear color="rgb(229,9,20)" v-model="movie.score" height="25">
-                                    <strong> {{ Math.ceil(movie.score) }} <v-icon color="white" size="15"> mdi-heart </v-icon> </strong>
-                                </v-progress-linear>
-                                <v-btn class="boton">ver mas...</v-btn>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-col>
-
-                <v-col cols=4  v-for="serial in serials" :key="serial.id">
-                    <v-list-item>
-                        <v-list-item-content class="fondo">
-                            <v-img height="280px" :src="serial.image" />
-                            <v-list-item-title class="text-center mt-2 font-weight-black"> {{serial.title}} </v-list-item-title>
-                                <v-progress-linear color="rgb(229,9,20)" v-model="serial.score" height="25">
-                                    <strong> {{ Math.ceil(serial.score) }} <v-icon color="white" size="15"> mdi-heart </v-icon> </strong>
-                                </v-progress-linear>
-                                    <v-btn class="boton">ver mas...</v-btn>
-                        </v-list-item-content>
-                    </v-list-item>
+                <v-col @click="goTo(movie._id)" cols=4 v-for="movie in titles" :key="movie.id">
+                    <SfCard  :image="movie.image" :title="movie.title" :score="movie.score" />
                 </v-col>
                            
             </v-row>
@@ -50,8 +28,7 @@ export default ({
     data(){
         return {
             visible: true,
-            movies: [],
-            serials: []
+            titles: []
         }
     },
 
@@ -81,20 +58,37 @@ export default ({
                     return alert(data2.error) 
                 }
 
-                this.movies = []
-                this.serials = []
-                for(const movie of data1.movies){
-                    this.movies.push(movie)
+                for(const title of data1.movies){
+                    this.titles.push(title)
                 }
 
-                for(const serial of data2.serials){
-                    this.serials.push(serial)
+                for(const title of data2.serials){
+                    this.titles.push(title)
                 }
+                const total = data1.movies.length + data2.serials.length //suma de peliculas y series
+
+                const verify = []
+
+                const aux = []
+
+                while(aux.length < total){
+                    let n = Math.floor(Math.random()*total)
+                    if(!verify.includes(n)){
+                        aux.push(this.titles[n])
+                        verify.push(n)
+                    }
+                }
+
+                this.titles = aux
 
  
             }catch(error){
                 return res1.json(error)
             }
+        },
+
+        goTo(movieId){
+            this.$router.push(`/details/${movieId}`)
         }
     }
 })

@@ -1,20 +1,21 @@
 <template>
     <div class="sf-serial-details">
 
-        <v-bar-card>
+        <v-card>
             <v-app-bar shaped style="background: white; color: black">
                     <v-icon class="mr-4" size="35" color="black"> mdi-star </v-icon>
-                    <v-title class="font-weight-black mt-1" style="font-size:25px"> {{movie.title}} </v-title>
+                    <v-app-bar-title class="font-weight-black mt-1" style="font-size:25px"> {{movie.title}} </v-app-bar-title>
                     <v-spacer></v-spacer>
-                </v-app-bar>
-            </v-bar-card>
+                    <v-btn @click="edit(movie._id)" class="mr-2"><v-icon color="green">mdi-movie-edit-outline</v-icon></v-btn>
+                    <v-btn @click="remove(movie._id)"><v-icon color="red">mdi-trash-can-outline</v-icon></v-btn>
+            </v-app-bar>
 
-            <v-card-body>
+            <v-card-text>
                 <v-row>
                     <v-list-item>
                         <v-list-item-content class="fondo">
-                            <v-col cols="4" class="mt-3"> 
-                                  <v-img height="420px" style="border: 4px solid white" :src="movie.image"></v-img>
+                            <v-col cols="4" class="mt-3">
+                                        <v-img height="420px" style="border: 4px solid white" :src="movie.image"></v-img>
                             </v-col>
                             <v-col cols="8">
                                     <h6 class="mb-1">DIRECTOR</h6>
@@ -65,17 +66,53 @@
                         </v-list-item-content>
                     </v-list-item>
                 </v-row>
-            </v-card-body>
+            </v-card-text>
+        </v-card>
     </div>
 </template>
 
 <script>
 
 export default ({
+    data(){
+        return{
+           
+        }
+    },
     props: {
         movie: {
             type: Object,
             required: true
+        }
+    },
+
+
+    methods:{
+        async remove(movieId){
+            try{
+                const res = await fetch(`http://localhost:4500/api/movie/remove/${movieId}`,{
+                    method: 'delete',
+                    headers: {
+                        'Content-type':"application/json"
+                    }
+                })
+
+                const data = await res.json()
+                if(data.error){
+                    return alert(data.error)
+                }
+
+                alert('El post ha sido borrado con éxito')
+                this.$router.push('/misPeliculas')
+
+            }catch(error){
+                return res.json(error)
+            }
+        },
+
+        edit(movieId){
+
+            this.$router.push(`/editMovie/${movieId}`)
         }
     }
 })

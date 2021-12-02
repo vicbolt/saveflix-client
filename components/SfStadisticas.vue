@@ -66,6 +66,8 @@ export default ({
                 }
                 this.movies = moviesData.movies
 
+                console.log(this.movies)
+
                 //stats de serials
                 const res2 = await fetch('http://localhost:4500/api/serial/stats')
 
@@ -76,8 +78,10 @@ export default ({
                 }
                 this.serials = serialsData.serials
 
+                console.log(this.serials)
+
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
 
 

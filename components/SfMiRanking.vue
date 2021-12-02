@@ -11,10 +11,10 @@
 
                 <v-card-text>
                     <v-list>
-                        <div v-for="movie in ranking" :key="movie.id" class="container-movies mb-5" style="background-color: black">
+                        <div v-for="(movie, index) in ranking" :key="movie.id" @click="goTo(movie._id)" class="container-movies mb-5" style="background-color: black">
                             <v-row>
                                 <v-col cols="1" style="background-color:rgb(229,9,20)">
-                                    <h1 class="text-center mt-6" style="color:white;">{{moviePosition}}</h1>
+                                    <h1 class="text-center mt-6" style="color:white;">{{index + 1}}</h1>
                                 </v-col>
                                 <v-col cols="3">
                                     <v-img class="imagen" style="border-radius:100%" :src="movie.image" width="70px" height="70px" />
@@ -41,10 +41,10 @@
     
                 <v-card-text>
                     <v-list>
-                        <div v-for="serial in serialRanking" :key="serial.id" class="container-movies mb-5" style="background-color: black">
+                        <div v-for="serial, index in serialRanking" :key="serial.id" class="container-movies mb-5" style="background-color: black">
                             <v-row>
                                 <v-col cols="1" style="background-color:rgb(229,9,20)">
-                                        <h1 class="text-center mt-6" style="color:white;">{{serialPosition}}</h1>
+                                        <h1 class="text-center mt-6" style="color:white;">{{index + 1}}</h1>
                                 </v-col>
                                 <v-col cols="3">
                                     <v-img class="imagen" style="border-radius:100%" :src="serial.image" width="70px" height="70px" />
@@ -127,6 +127,11 @@ export default ({
                 return res.json(error)
             }
         },
+
+        goTo(movieId){
+
+            this.$router.push(`/details/${movieId}`)
+        }
     }
 })
 </script>

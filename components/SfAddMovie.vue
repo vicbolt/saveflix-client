@@ -10,8 +10,7 @@
             <v-card-text>
                 <v-row>
                     <v-col cols="4">
-                        <v-file-input v-model="image" class="mt-3" height="360px" outlined prepend-icon="" style="background: gray; border: 2px solid white" placeholder="AÑADIR PORTADA"/>
-                        
+                        <v-file-input v-model="image" class="mt-3" height="360px" filled prepend-icon="" style="background: gray; border: 2px solid white" placeholder="AÑADIR PORTADA"/>
                     </v-col>
 
                     <v-col cols="8">
@@ -31,7 +30,7 @@
                         <v-divider class="mb-1"></v-divider>
                         <v-row>
                             <v-col cols="2">
-                                <v-text-field v-model="score" :onkeydown="showScore()" height="30px" placeholder="0/100" outlined ></v-text-field>
+                                <v-text-field v-model="score" :onkeydown="showScore()" :rules="scoreRules" height="30px" placeholder="0/100" outlined ></v-text-field>
                             </v-col>
                             <v-col cols="10">
                                 <v-progress-linear color="rgb(229,9,20)" v-model="knowledge" height="55">
@@ -60,31 +59,45 @@ export default {
             score: "",
             image: undefined,
             knowledge: "0",
-            owner: undefined,
+            scoreRules: [
+                v => ( v && v >= 0 ) || "El valor mínimo es 0",
+                v => ( v && v <= 100 ) || "El valor máximo es 100",
+            ],
         }
     },
 
     beforeMount(){
-        const ownerId = localStorage.getItem('userId')
 
-        if(ownerId){
-                this.owner = JSON.stringify('ownerId')
-        }
+        
+        
     },
     
     methods: {
         async upload(){
-            
-            const formData = new FormData()
-                formData.enctype = 'multipart/form-data'
-                formData.append('title', this.title)
-                formData.append('director', this.director)
-                formData.append('description', this.description)
-                formData.append('score', this.score)
-                formData.append('owner', this.owner)
-                formData.append('image', this.image)
-            
+
             try{
+
+                const strUserId = localStorage.getItem('userId')
+
+                const userId = JSON.parse(strUserId)
+
+                console.log(userId)
+                
+                const formData = new FormData()
+                    formData.enctype = 'multipart/form-data'
+                    formData.append('title', this.title)
+                    formData.append('director', this.director)
+                    formData.append('description', this.description)
+                    formData.append('score', this.score)
+                    formData.append('userId', userId)
+                    formData.append('image', this.image)
+
+                    console.log(this.title)
+                    console.log(this.director)
+                    console.log(this.description)
+                    console.log(this.score)
+                    console.log(userId)
+                    console.log(this.image)
 
                 const res = await fetch('http://localhost:4500/api/movie/create', {
                     method: 'post',
