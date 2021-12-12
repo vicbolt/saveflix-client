@@ -6,14 +6,14 @@
                     <v-icon class="mr-4" size="35"> mdi-television-classic </v-icon>
                     <v-card-title class="font-weight-black mt-1" style="font-size:25px"> MIS SERIES </v-card-title>
                     <v-spacer></v-spacer>
-                    <v-btn color="green" @click="addSerial">AÑADIR SERIE</v-btn>
+                    <v-btn color="red" @click="addSerial">AÑADIR SERIE</v-btn>
                 </v-app-bar>
 
             <v-card-text>
                 <v-row>
                     <v-col @click="goTo(serial._id)" cols=4 v-for="serial in serials" :key="serial.id">
                         <v-list-item>
-                            <v-list-item-content class="fondo">
+                            <v-list-item-content style="cursor: pointer" class="fondo">
                                 <v-img height="280px" :src="serial.image" />
                                 <v-list-item-title class="text-center mt-2 font-weight-black"> {{serial.title}} </v-list-item-title>
                                     <v-progress-linear color="rgb(229,9,20)" v-model="serial.score" height="25">
@@ -53,7 +53,13 @@ export default ({
 
         async loadSerials(){
             try{
-                const res = await fetch('http://localhost:4500/api/serial/getAll')
+                const strParamsId = localStorage.getItem('userId')
+
+                const paramsId = JSON.parse(strParamsId)
+
+                const config = require('/config')
+
+                const res = await fetch(config.hostname + `api/serial/getAll/${paramsId}`)
 
                 const data = await res.json()
                 if(data.error){
@@ -66,7 +72,7 @@ export default ({
                 }
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 

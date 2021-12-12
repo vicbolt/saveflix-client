@@ -10,7 +10,13 @@
             <v-text-field v-model="username" placeholder="Nombre de usuario" outlined class="mb-n2"/>
             <v-text-field v-model="password" type="password" placeholder="Contraseña" outlined class="mb-n4"/>
             <v-text-field v-model="password2" type="password" placeholder="Repita la contraseña" outlined class="mb-n2"/>
-               
+            <v-row>
+                <v-col cols="2">
+                    <v-file-input v-model="avatar"  height="80px" outlined prepend-icon="" placeholder="AVATAR" filled> </v-file-input>
+                </v-col>
+                <v-col cols="9"></v-col>
+            </v-row>
+            
             <v-btn id="boton" @click="submit" block> REGISTRARME </v-btn>
 
             <div class="enlace">
@@ -34,34 +40,38 @@ export default ({
             username: "",
             password: "",
             password2: "",
+            avatar: undefined,
         }
     },
 
     methods: {
         async submit(){
-            try{
-                const body = JSON.stringify({
-                    email: this.email,
-                    username: this.username,
-                    password: this.password,
-                    password2: this.password2
-                })
 
-                const res = await fetch('http://localhost:4500/api/user/signUp', {
+                const formData = new FormData()
+                    formData.enctype = "multipart/form-data",
+                    formData.append('email', this.email)
+                    formData.append('username', this.username)
+                    formData.append('password', this.password)
+                    formData.append('password2', this.password2)
+                    formData.append('avatar', this.avatar)
+
+                try{
+
+                const config = require('../config')
+
+                const res = await fetch(config.hostname + 'api/user/signUp', {
                     method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body,
+                    body: formData
                 })
 
                 const data = await res.json()
-                if(data.error){
-                    return alert(data.error)
-                }
-
-                alert('El usuario se ha registrado con éxito')
-                this.$router.push('/logIn')
+                    if(data.error){
+                        return alert(data.error)
+                    } else {
+                        this.$router.push('/logIn')
+                    }
+                
+                return alert("Se ha registrado con éxito")
 
             } catch(error){
                 return res.status(500).json(error)

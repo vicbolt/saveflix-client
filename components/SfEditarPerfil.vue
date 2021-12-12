@@ -41,11 +41,12 @@ export default ({
     async beforeMount(){
 
         try{
-                
+                const config = require('../config')
+
                 const strId = localStorage.getItem('userId')
                 const id = JSON.parse(strId)
 
-                const res = await fetch(`http://localhost:4500/api/user/getOne/${id}`)
+                const res = await fetch(config.hostname + `api/user/getOne/${id}`)
 
                 const data = await res.json()
                 if(data.error){
@@ -75,6 +76,8 @@ export default ({
 
         async guardar(){
             try{
+                const config = require('../config')
+                
                 const body = JSON.stringify({
                     username: this.username,
                     email: this.email,
@@ -84,7 +87,7 @@ export default ({
                 const strId = localStorage.getItem('userId')
                 const id = JSON.parse(strId)
 
-                const res = await fetch(`http://localhost:4500/api/user/update/${id}`,{
+                const res = await fetch(config.hostname + `api/user/update/${id}`,{
                     method: 'put',
                     headers:{
                         'Content-Type': 'application/json'
@@ -99,7 +102,7 @@ export default ({
 
                 alert('Los cambios se han guardado correctamente')
 
-                this.$router.push('/home')
+                this.$router.push(`/explorar/${id}`)
 
             }catch(error){
                 return res.json(error)

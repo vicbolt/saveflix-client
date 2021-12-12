@@ -10,24 +10,25 @@
                 </v-app-bar>
 
                 <v-card-text>
-                    <v-list>
-                        <div v-for="(movie, index) in ranking" :key="movie.id" @click="goTo(movie._id)" class="container-movies mb-5" style="background-color: black">
-                            <v-row>
+                        <div v-for="(movie, index) in ranking" :key="movie.id"  @click="goTo(movie._id)" id="background"  class="container-movies mb-5" :style="{backgroundImage:`url(${ movie.image })` }">
+                            <v-row style="background-color: rgb(0,0,0,0.9); cursor: pointer" class="mr-0">
                                 <v-col cols="1" style="background-color:rgb(229,9,20)">
                                     <h1 class="text-center mt-6" style="color:white;">{{index + 1}}</h1>
                                 </v-col>
                                 <v-col cols="3">
                                     <v-img class="imagen" style="border-radius:100%" :src="movie.image" width="70px" height="70px" />
                                 </v-col>
-                                <v-col cols="7">
-                                    <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px"> {{movie.title}} </p> 
+                                <v-col cols="5">
+                                    <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px; color:white;"> {{movie.title}} </p>
                                 </v-col> 
+                                <v-col cols="3" >
+                                    <h4 class="ml-15 mt-2" style="font-size:20px; text-align:center"> {{movie.score}} <br> <v-icon color="red">mdi-heart</v-icon></h4> 
+                                </v-col>
                                 <div>
-                                <v-divider></v-divider>
+                                    <v-divider></v-divider>
                                 </div>
                             </v-row>
                         </div>
-                    </v-list>
                 </v-card-text>         
             </v-card>
             </v-col>
@@ -36,28 +37,29 @@
             <v-card elevation="2">
                 <v-app-bar shaped class="d-flex justify-center mb-2" style="font-size: 25px; background-color:rgb(229,9,20)" >
                     <v-icon class="mr-4" size="30"> mdi-star </v-icon>
-                        <v-card-title class="font-weight-black"> TOP SERIES </v-card-title>
+                        <v-card-title class="font-weight-black" style="font-size: 25px"> TOP SERIES </v-card-title>
                 </v-app-bar>
     
                 <v-card-text>
-                    <v-list>
-                        <div v-for="serial, index in serialRanking" :key="serial.id" class="container-movies mb-5" style="background-color: black">
-                            <v-row>
-                                <v-col cols="1" style="background-color:rgb(229,9,20)">
-                                        <h1 class="text-center mt-6" style="color:white;">{{index + 1}}</h1>
+                        <div v-for="serial, index in serialRanking" :key="serial.id" @click="goTo(serial._id)" id="background"  class="container-movies mb-5" :style="{backgroundImage:`url(${serial.image})`}">
+                            <v-row style="background-color: rgb(0,0,0,0.9); cursor: pointer" class="mr-0">
+                                <v-col cols="1" style="background-color:rgb(229,9,20)" >
+                                        <h1  class="text-center mt-6" style="color:white;">{{index + 1}}</h1>
                                 </v-col>
                                 <v-col cols="3">
                                     <v-img class="imagen" style="border-radius:100%" :src="serial.image" width="70px" height="70px" />
                                 </v-col>
-                                <v-col cols="7">
-                                    <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px"> {{serial.title}} </p> 
+                                <v-col cols="5">
+                                    <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px; color:white;"> {{serial.title}} </p> 
                                 </v-col> 
+                                <v-col cols="3" >
+                                    <h4 class="ml-15 mt-2" style="font-size:20px; text-align:center"> {{serial.score}} <br> <v-icon color="red">mdi-heart</v-icon></h4> 
+                                </v-col>
                                 <div>
                                 <v-divider></v-divider>
                                 </div>
                             </v-row>
                         </div>
-                    </v-list>
                 </v-card-text>       
 
             </v-card>
@@ -68,8 +70,9 @@
 </template>
 
 <script>
-
 export default ({
+    layout: 'ranking',
+
     data(){
         return{
             ranking: [],
@@ -89,7 +92,12 @@ export default ({
         async moviesRanking(){
             try {
 
-            const res = await fetch('http://localhost:4500/api/movie/getAll')
+                const strId = localStorage.getItem('userId')
+                const id = JSON.parse(strId)
+
+            const config = require('/config')
+
+            const res = await fetch(config.hostname + `api/movie/getAll/${id}`)
 
             const data = await res.json()
             if(data.error){
@@ -110,27 +118,32 @@ export default ({
         async serialsRanking(){
             try {
 
-            const res = await fetch('http://localhost:4500/api/serial/getAll')
+                const config = require('/config')
 
-            const data = await res.json()
-            if(data.error){
-                return alert(data.error)
-            }
+                const strId = localStorage.getItem('userId')
+                const id = JSON.parse(strId)
 
-            this.serials = []
+                const res = await fetch(config.hostname + `api/serial/getAll/${id}`)
 
-            for(const serial of data.serialRanking){
-                this.serialRanking.push(serial)
-            }
+                const data = await res.json()
+                if(data.error){
+                    return alert(data.error)
+                }
+
+                this.serials = []
+
+                for(const serial of data.serialRanking){
+                    this.serialRanking.push(serial)
+                }
 
             }catch(error){
                 return res.json(error)
             }
         },
 
-        goTo(movieId){
+        goTo(titleId){
 
-            this.$router.push(`/details/${movieId}`)
+            this.$router.push(`/details/${titleId}`)
         }
     }
 })
@@ -146,4 +159,14 @@ export default ({
     padding: 3px;
     border-radius: 2%;
 }
+
+#background{
+    background-size: 100% ;
+}
+
+
+#background:hover{
+    zoom: 130%;
+}
+
 </style>

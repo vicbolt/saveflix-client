@@ -9,8 +9,8 @@
 
         <v-card>
             <v-row>
-                <v-col @click="goTo(title._id)" cols=4 v-for="title in titles" :key="title.id">
-                    <SfCard  :image="title.image" :title="title.title" :score="title.score" />
+                <v-col @click="goTo(title._id)"  cols=4 v-for="title in titles" :key="title.id" >
+                    <SfCard id="post" style="cursor: pointer"  :image="title.image" :title="title.title" :score="title.score" />
                 </v-col>
                            
             </v-row>
@@ -45,8 +45,11 @@ export default ({
     methods: {
         async loadMoviesAndSerials(){
             try{
-                const res1 = await fetch('http://localhost:4500/api/movie/getAll')
-                const res2 = await fetch('http://localhost:4500/api/serial/getAll')
+
+                const config = require('/config')
+
+                const res1 = await fetch(config.hostname + `api/movie/explorar`)
+                const res2 = await fetch(config.hostname + `api/serial/explorar`)
 
                 const data1 = await res1.json()
                 if(data1.error){
@@ -107,5 +110,9 @@ export default ({
 .boton{
     background-color: rgb(18, 18, 18);
     border: 2px solid rgb(229,9,20);
+}
+
+#post:hover{
+    zoom: 101%;
 }
 </style>

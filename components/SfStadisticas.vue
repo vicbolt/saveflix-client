@@ -4,7 +4,7 @@
         <v-card elevation="2" shaped v-if="visible">
             <v-app-bar>
                 <v-icon> mdi-go-kart-track</v-icon>
-                <v-app-bar-title class="font-weight-black ml-5"> ESTADÍSTICAS</v-app-bar-title>
+                <v-app-bar-title class="font-weight-black ml-5"> ESTADÍSTICAS GLOBALES</v-app-bar-title>
             </v-app-bar>
 
             <v-list>
@@ -58,7 +58,10 @@ export default ({
 
             try{
                 //stats de movies
-                const res1 = await fetch('http://localhost:4500/api/movie/stats')
+
+                const config = require('../config')
+
+                const res1 = await fetch(config.hostname + 'api/movie/stats')
                 const moviesData = await res1.json()
 
                 if(moviesData.error){
@@ -66,10 +69,9 @@ export default ({
                 }
                 this.movies = moviesData.movies
 
-                console.log(this.movies)
 
                 //stats de serials
-                const res2 = await fetch('http://localhost:4500/api/serial/stats')
+                const res2 = await fetch(config.hostname + 'api/serial/stats')
 
                 const serialsData = await res2.json()
 
@@ -78,7 +80,6 @@ export default ({
                 }
                 this.serials = serialsData.serials
 
-                console.log(this.serials)
 
             }catch(error){
                 return console.log(error)

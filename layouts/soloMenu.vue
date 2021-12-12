@@ -13,12 +13,3 @@
         
     </v-app>
 </template>
-
-<style scoped>
-
-.v-application{
-    background-image: url("https://c.tenor.com/dDYJqUGJtQkAAAAC/stars-night.gif");
-
-}
-
-</style>

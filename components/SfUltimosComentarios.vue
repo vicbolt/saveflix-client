@@ -1,38 +1,25 @@
 <template>
-    <div class="sf-ultimos-comentarios" v-if="visible">
+    <div class="sf-ultimos-comentarios">
 
-                <v-card elevation="2" shaped class="mb-5">
+        <v-card elevation="2" shaped class="mb-5">
             <v-app-bar>
                 <v-icon> mdi-comment-multiple-outline</v-icon>
                 <v-app-bar-title class="font-weight-black ml-5"> <strong> ÚLTIMOS COMENTARIOS </strong> </v-app-bar-title>
             </v-app-bar>
 
             <v-list>
-                <div class="rs-recent-comments-container mt-4">
-
-                <v-row>
-                    <v-col cols="4">
-                        <v-img class="imagen" src="https://previews.123rf.com/images/jemastock/jemastock1705/jemastock170506999/78062109-cara-de-joven-aislado-sobre-fondo-blanco-expresi%C3%B3n-de-la-cara-hermosa-del-muchacho-ilustraci%C3%B3n-vecto.jpg" width="70px" height="70px" />
-                    </v-col>
-                    <v-col cols="8" class="ml-n5">
-                        <p class="mt-2"> <strong>  USERNAME </strong> ha comentado en <strong> TITULO_PELICULA </strong> </p>
-                    </v-col>
-                </v-row>
-                <v-divider class="mt-4 mb-4"></v-divider>
-
-                <v-row>
-                    <v-col cols="4">
-                        <v-img class="imagen" src="https://static.diariofemenino.com/uploads/belleza/82981-CARA.jpg" width="70px" height="70px" />
-                    </v-col>
-                    <v-col cols="8" class="ml-n5">
-                        <p class="mt-2"><strong> USERNAME </strong> ha comentado en <strong> TITULO_PELICULA </strong></p>
-                    </v-col>
-                </v-row>
-                <v-divider class="mt-4 mb-4"></v-divider>
-
+                <div v-for="comment in comments" :key="comment.id" @click="goTo(comment.post)" style="cursor:pointer" class="mt-4">
+                    <v-row>
+                        <v-col cols="4">
+                            <v-img class="imagen" :src="comment.user.avatar" width="70px" height="70px" />
+                        </v-col>
+                        <v-col cols="8" class="ml-n5">
+                            <p class="mt-2"> <strong>  {{comment.user.username}} </strong> ha comentado en <strong> {{comment.post.title}} </strong> </p>
+                        </v-col>
+                    </v-row>
+                    <v-divider class="mt-4 mb-4"></v-divider>
                 </div>
             </v-list>
-
         </v-card>
 
     </div>
@@ -42,15 +29,49 @@
 export default ({
     data() {
         return{
-            visible: true
+            comments: []
         }
     },
 
-    beforeMount(){
-        const token = localStorage.getItem('token')
+    async beforeMount(){
+        await this.ultimosComentarios()
+    },
 
-        if(!token){
-            this.visible = false
+    methods: {
+       async ultimosComentarios(){
+            try{
+                const config = require('../config')
+                const res = await fetch(config.hostname + 'api/movieComment/latestComments')
+
+                const data = await res.json()
+
+                if(data.error){
+                    return alert(data.error)
+                }
+
+
+                const res2 = await fetch(config.hostname + 'api/serialComment/latestComments')
+                const data2 = await res2.json()
+                if(data2.error){
+                    return alert(data2.error)
+                }
+
+                const allComments = data.comments.concat(data2.comments)
+
+                // const comentarios = allComments.sort({ createdAt: "desc" }) //¿PORQUE NO FUNCIONA?
+            
+                for(const comment of allComments){
+                    this.comments.push(comment)
+                }
+        
+
+            }catch(error){
+                return console.log(error)
+            }
+        },
+
+        goTo(postId){
+            this.$router.push(`/details/${postId}`)
         }
     }
 })

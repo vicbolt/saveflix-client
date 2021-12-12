@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-post-recientes" v-if="visible">
+    <div class="sf-post-recientes">
 
         <v-card elevation="2" shaped class="mb-5">
             <v-app-bar>
@@ -8,13 +8,13 @@
             </v-app-bar>
 
             <v-list>
-                <div v-for="title in titles" :key="title.id" class="rs-recent-upload-container mt-4">
+                <div v-for="post in posts" :key="post.id" @click="goTo(post._id)" class="rs-recent-upload-container mt-4" style="cursor:pointer">
                 <v-row>
                     <v-col cols="4">
-                        <v-img class="imagen" :src="title.image" width="70px" height="70px" />
+                        <v-img class="imagen" :src="post.image" width="70px" height="70px" />
                     </v-col>
                     <v-col cols="8" class="ml-n5">
-                        <p class="mt-2"> <strong> {{title.user}} </strong> ha subido <strong> {{title.title}} </strong></p>
+                        <p class="mt-2"> <strong> {{post.user.username}} </strong> ha subido <strong> {{post.title}} </strong></p>
                     </v-col> 
                 </v-row>
                 <v-divider class="mt-4 mb-4"></v-divider>
@@ -30,8 +30,7 @@
 export default {
     data() {
         return{
-            visible: true,
-            titles: []
+            posts: []
         }
     },
 
@@ -44,8 +43,10 @@ export default {
 
         async postRecientes(){
         try{
-                const res1 = await fetch('http://localhost:4500/api/movie/postRecientes')
-                const res2 = await fetch('http://localhost:4500/api/serial/postRecientes')
+            const config = require('../config')
+
+                const res1 = await fetch(config.hostname + 'api/movie/postRecientes')
+                const res2 = await fetch(config.hostname + 'api/serial/postRecientes')
 
                 const data1 = await res1.json()
                 if(data1.error){
@@ -57,20 +58,32 @@ export default {
                     return alert(data2.error) 
                 }
 
-                for(const title of data1.movies){
-                    this.titles.push(title)
+                const movies = data1.movies
+                const serials = data2.serials
+
+                const posts = movies.concat(serials)  //.sort({createdAt: 'desc'})
+
+
+                for(const post of posts){
+                    this.posts.push(post)
                 }
 
-                for(const title of data2.serials){
-                    this.titles.push(title)
-                }
+                // console.log(movies)
+                // console.log(serials)
+                // console.log(posts)
 
- 
             } catch(error){
                 return res1.json(error)
             }
-        }
+        },
+
+    goTo(postId){
+        console.log(postId)
+        this.$router.push(`/details/${postId}`)
+    }
     },
+
+
 }
 </script>
 

@@ -91,6 +91,7 @@ export default ({
 
         async update(){
             try{
+                const config = require('../config')
 
                 const formData = new FormData()
                     formData.enctype = 'multipart/form-data'
@@ -102,7 +103,7 @@ export default ({
                     formData.set('owner', this.movie.user)
 
 
-                const res = await fetch(`http://localhost:4500/api/movie/update/${this.movie._id}`, {
+                const res = await fetch(config.hostname + `api/movie/update/${this.movie._id}`, {
                     method: 'put',
                     body: formData
                 })
@@ -113,7 +114,7 @@ export default ({
                 }
 
                 alert('El post se ha modificado con éxito')
-                this.$router.push(`http://localhost:4500/api/movie/details/${this.post._id}`)
+                this.$router.push(config.hostname + `api/movie/details/${this.post._id}`)
 
             }catch(error){
                 return res.json(error)

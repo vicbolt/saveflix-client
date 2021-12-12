@@ -1,29 +1,8 @@
 <template>
     <div class="sf-chat" v-if="visible">
-
         <v-row>
-
-            <v-col cols="8">
-                <v-row>
-                    <v-ul class="list-group"></v-ul>
-                </v-row>
-
-                <v-row>
-                    <v-col cols="10">
-                        <v-text-field placeholder="Escribe un mensaje" class="ml-3"></v-text-field>
-                    </v-col>
-                    <v-col cols="2">
-                        <v-btn color="red" class="mt-4" width="28px"> ENVIAR </v-btn>
-                    </v-col>
-                </v-row>
-
-            </v-col>
-
-
-
-
             <!-- CHAT INPUT -->
-            <!-- <v-col cols="8">
+            <v-col cols="8">
                 <v-card elevation="2" shaped class="mb-5">
                     <v-app-bar>
                         <v-row>
@@ -46,9 +25,9 @@
                             <v-btn color="red" class="mt-4" width="28px"> ENVIAR </v-btn>
                         </v-col>
                     </v-row>
-                    
+
                 </v-card>
-            </v-col> -->
+            </v-col>
 
             <!-- END CHAT INPUT -->
 
@@ -83,7 +62,6 @@
                 </v-card>
             </v-col>
 
-
         </v-row>
 
     </div>
@@ -91,6 +69,8 @@
 
 <script>
 export default ({
+    layout: 'soloMenu',
+    
     data() {
         return{
             visible: true

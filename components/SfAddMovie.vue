@@ -66,22 +66,16 @@ export default {
         }
     },
 
-    beforeMount(){
-
-        
-        
-    },
-    
     methods: {
         async upload(){
 
             try{
 
+                const config = require('../config')
+
                 const strUserId = localStorage.getItem('userId')
 
                 const userId = JSON.parse(strUserId)
-
-                console.log(userId)
                 
                 const formData = new FormData()
                     formData.enctype = 'multipart/form-data'
@@ -99,7 +93,7 @@ export default {
                     console.log(userId)
                     console.log(this.image)
 
-                const res = await fetch('http://localhost:4500/api/movie/create', {
+                const res = await fetch(config.hostname + 'api/movie/create', {
                     method: 'post',
                     body: formData
                 })

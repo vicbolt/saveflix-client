@@ -28,8 +28,12 @@ export default ({
 
         setTimeout(()=>{
             const token = localStorage.getItem('token')
+
+            const strId = localStorage.getItem('userId')
+            const id = JSON.parse(strId)
+
             if(token){
-                this.$router.push('/home')
+                this.$router.push(`/explorar/${id}`)
             }
             this.$router.push('/login')
         }, 6500)

@@ -1,18 +1,18 @@
 <template>
-    <div class="sf-mis-peliculas" v-if="visible">
+    <div class="sf-mis-peliculas">
 
         <v-card elevation="2">
             <v-app-bar shaped>
                 <v-icon class="mr-4" size="35"> mdi-movie-open-star-outline </v-icon>
-                <v-app-bar-title class="font-weight-black mt-1" style="font-size:20px"> MIS PELICULAS </v-app-bar-title>
+                <v-app-bar-title class="font-weight-black mt-1" style="font-size:20px" > MIS PELICULAS </v-app-bar-title>
                 <v-spacer></v-spacer>
-                <v-btn color="green" @click="addMovie"> AÑADIR PELICULA </v-btn>
+                <v-btn color="red" @click="addMovie"> AÑADIR PELICULA </v-btn>
             </v-app-bar>
             <v-card-text>
                 <v-row>
-                    <v-col cols=4 v-for="movie in movies" :key="movie.id" @click="goTo(movie._id)">
+                    <v-col cols=4  v-for="movie in movies" :key="movie.id" @click="goTo(movie._id)">
                         <v-list-item>
-                            <v-list-item-content class="fondo">
+                            <v-list-item-content style="cursor: pointer" class="fondo">
                                 <v-img height="280px" :src="movie.image"/>
                                 <v-list-item-title class="text-center mt-2 font-weight-black"> {{movie.title}} </v-list-item-title>
                                         <v-progress-linear color="rgb(229,9,20)" v-model="movie.score" height="25">
@@ -33,14 +33,14 @@
 export default ({
     data() {
         return{
-            visible: true,
             movies: []
         }
     },
 
     async beforeMount(){
-
         await this.loadMovies()
+        
+
 
     },
 
@@ -51,7 +51,12 @@ export default ({
 
         async loadMovies(){
             try{
-                const res = await fetch('http://localhost:4500/api/movie/getAll')
+
+                const strParamsId = localStorage.getItem('userId')
+
+                const paramsId = JSON.parse(strParamsId)
+
+                const res = await fetch(`http://localhost:4500/api/movie/getAll/${paramsId}`)
 
                 const data = await res.json()
                 if(data.error){
@@ -63,6 +68,7 @@ export default ({
                 for(const movie of data.movies){
                     this.movies.push(movie)
                 }
+
 
 
             }catch(error){

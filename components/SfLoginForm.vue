@@ -37,9 +37,12 @@ export default ({
         
         const token = localStorage.getItem('token')
 
+        const strId = localStorage.getItem('userId')
+        const id = JSON.parse(strId)
+
         if(token){
             this.visible = false
-            this.$router.push('/home')
+            this.$router.push(`/explorar/${id}`)
         }
     },
 
@@ -47,12 +50,14 @@ export default ({
 
         async login(){
             try{
+                const config = require('../config')
+
                 const body = JSON.stringify({
                     email: this.email,
                     password: this.password
                 })
 
-                const res = await fetch('http://localhost:4500/api/user/logIn', {
+                const res = await fetch(config.hostname + 'api/user/logIn', {
                     method: 'post',
                     headers:{
                         'Content-Type': 'application/json',

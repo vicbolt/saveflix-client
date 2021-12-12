@@ -27,7 +27,7 @@
                         <v-divider class="mb-1"></v-divider>
                         <v-row>
                             <v-col cols="2">
-                                <v-text-field v-model="score" :onkeydown="showScore()" height="30px" placeholder="0/100" outlined ></v-text-field>
+                                <v-text-field v-model="score" :onkeydown="showScore()" :rules="scoreRules" height="30px" placeholder="0/100" outlined ></v-text-field>
                             </v-col>
                             <v-col cols="10">
                                 <v-progress-linear color="rgb(229,9,20)" v-model="knowledge" height="55">
@@ -56,20 +56,19 @@ export default ({
             score: "",
             image: undefined,
             knowledge: "0",
-            owner: undefined,
-        }
-    },
-
-    beforeMount(){
-        const ownerId = localStorage.getItem('userId')
-
-        if(ownerId){
-            this.owner = JSON.stringify('ownerId')
+            scoreRules: [
+                v => ( v && v >= 0 ) || "El valor mínimo es 0",
+                v => ( v && v <= 100 ) || "El valor máximo es 100",
+            ],
         }
     },
 
     methods: {
         async upload(){
+
+            const strUserId = localStorage.getItem('userId')
+
+            const userId = JSON.parse(strUserId)
             
             const formData = new FormData()
                 formData.enctype = 'multipart/form-data'
@@ -77,12 +76,14 @@ export default ({
                 formData.append('director', this.director)
                 formData.append('description', this.description)
                 formData.append('score', this.score)
-                formData.append('owner', this.owner)
+                formData.append('userId', userId)
                 formData.append('image', this.image)
             
             try{
 
-                const res = await fetch('http://localhost:4500/api/serial/create', {
+                const config = require('../config')
+
+                const res = await fetch(config.hostname + 'api/serial/create', {
                     method: 'post',
                     body: formData
                 })

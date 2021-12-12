@@ -6,15 +6,16 @@
             <img height="50em" width="130em" src="@/assets/images/logotipoWeb.png" />
             </a>
             <div class="ml-5px">
-            <v-btn id="Btn" class="font-weight-black ml-15" width="10em" height="50px" href="/home">
-            <v-badge color="pink" dot>HOME</v-badge>
+            <v-btn id="Btn" class="font-weight-black ml-15" width="10em" height="50px" @click="explorar()">
+            <v-badge color="pink" dot>EXPLORAR</v-badge>
             </v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" href="/misPeliculas">MIS PELICULAS</v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" href="/misSeries">MIS SERIES</v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" href="/miRanking">MI RANKING</v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" href="/chat">
+            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="misPeliculas()">MIS PELICULAS</v-btn>
+            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="misSeries()">MIS SERIES</v-btn>
+            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="ranking()">MI RANKING</v-btn>
+            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="chat()">
             <v-badge color="pink" dot>CHAT</v-badge>
             </v-btn>
+            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="perfil()">MI PERFIL</v-btn>
             </div>
 
             <v-spacer></v-spacer>
@@ -25,7 +26,7 @@
                 <template v-slot:activator="{ on }">
                     <v-btn class="mr-10" v-on="on" depressed fab small>
                         <v-avatar size="55" class="mr-3" color="rgb(229,9,20)"> 
-                             <img class="avatar" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5b8f05fa-b132-4fdb-8c4d-b103a177656c/d2hkfk2-9329643d-295a-4de0-b809-7bc460d023a5.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzViOGYwNWZhLWIxMzItNGZkYi04YzRkLWIxMDNhMTc3NjU2Y1wvZDJoa2ZrMi05MzI5NjQzZC0yOTVhLTRkZTAtYjgwOS03YmM0NjBkMDIzYTUuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.mbgi2x7zLaYHoJ0pM5bjKk4hNWL7OznlpItGyI__Q6w" alt="avatar">
+                             <img class="avatar" :src="avatar" alt="avatar">
                         </v-avatar>
                     </v-btn>
                 </template>
@@ -34,7 +35,7 @@
                     <v-list>
                         <v-list-item>
                             <v-list-item-avatar size="60" class="mr-5" color="rgb(229,9,20)">
-                                <img class="avatar" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5b8f05fa-b132-4fdb-8c4d-b103a177656c/d2hkfk2-9329643d-295a-4de0-b809-7bc460d023a5.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzViOGYwNWZhLWIxMzItNGZkYi04YzRkLWIxMDNhMTc3NjU2Y1wvZDJoa2ZrMi05MzI5NjQzZC0yOTVhLTRkZTAtYjgwOS03YmM0NjBkMDIzYTUuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.mbgi2x7zLaYHoJ0pM5bjKk4hNWL7OznlpItGyI__Q6w" alt="Avatar">
+                                <img class="avatar" :src="avatar" alt="avatar">
                             </v-list-item-avatar>
                             <v-list-item-title>
                                 <v-list-item-title class="font-weight-black"> {{username}} </v-list-item-title>
@@ -80,6 +81,8 @@ export default({
             visible: true,
             username: "",
             email: "",
+            userId: "",
+            avatar: undefined
         }
     },
 
@@ -94,6 +97,7 @@ export default({
         async loadInfo(){
             try{
                 const token = localStorage.getItem('token')
+                const config = require('../config')
 
                 if(!token){
                     this.visible = true
@@ -102,7 +106,7 @@ export default({
                 const strId = localStorage.getItem('userId')
                 const id = JSON.parse(strId)
 
-                const res = await fetch(`http://localhost:4500/api/user/getOne/${id}`)
+                const res = await fetch(config.hostname + `api/user/getOne/${id}`)
 
                 const data = await res.json()
                 if(data.error){
@@ -112,14 +116,65 @@ export default({
                 
                 this.email = data.user.email
                 this.username = data.user.username
-
-
-
-
+                this.userId = strId
+                this.avatar = data.user.avatar
 
             } catch(error){
                 return alert(error)
             }
+
+        },
+
+        misPeliculas(){
+            const strId = localStorage.getItem('userId')
+
+            const id = JSON.parse(strId)
+            this.$router.push(`/misPeliculas/${id}`)
+
+        },
+
+
+        misSeries(){
+            const strId = localStorage.getItem('userId')
+
+            const id = JSON.parse(strId)
+
+            this.$router.push(`/misSeries/${id}`)
+
+        },
+
+        explorar(){
+            const strId = localStorage.getItem('userId')
+
+            const id = JSON.parse(strId)
+
+            this.$router.push(`/explorar/${id}`)
+
+        },
+
+        chat(){
+            const strId = localStorage.getItem('userId')
+
+            const id = JSON.parse(strId)
+
+            this.$router.push(`/chat/${id}`)
+        },
+
+        ranking(){
+            const strId = localStorage.getItem('userId')
+
+            const id = JSON.parse(strId)
+
+            this.$router.push(`/ranking/${id}`)
+        },
+
+        perfil(){
+
+            const strId = localStorage.getItem('userId')
+
+            const id = JSON.parse(strId)
+
+            this.$router.push(`/miPerfil/${id}`)
 
         },
 
