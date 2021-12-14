@@ -1,5 +1,5 @@
 const config = {
-    hostname: "http://localhost:4500/",
+    hostname: "https://saveflix-client.herokuapp.com/",
 }
 
 module.exports = config

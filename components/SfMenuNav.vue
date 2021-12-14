@@ -54,10 +54,9 @@
                                 </v-col>
                                 <v-col cols="12">
                                     <v-dialog width="500">
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <v-btn class="ml-1 mt-n3" width="auto" height="50px" light block @click="editarPerfil" v-bind="attrs" v-on="on">EDITAR PERFIL</v-btn>
+                                        <template v-slot:activator="{ }">
+                                            <v-btn class="ml-1 mt-n3" width="auto" height="50px" light block @click="goToEditarPerfil()">EDITAR PERFIL</v-btn>
                                         </template>
-                                        <SfEditarPerfil/>
                                     </v-dialog>
 
                                 </v-col>
@@ -187,7 +186,12 @@ export default({
         },
         editarPerfil(){
             this.$route.router.go('/editarPerfil')
+        },
+
+        goToEditarPerfil(){
+            this.$router.push('/editProfilePage')
         }
+        
     }
 })
 </script>

@@ -29,7 +29,7 @@
                         </v-row>
                     </v-col>
                     <v-col cols="1">
-                        <v-btn color="white" style="color:black" class="mt-5">EDITAR PERFIL</v-btn>
+                        <v-btn color="white" style="color:black" class="mt-5" @click="goToEditProfilePage()">EDITAR PERFIL</v-btn>
                     </v-col>
                 </v-row>
         </v-card>
@@ -322,6 +322,11 @@ export default({
         goToDetailsPendiente(id){
 
             this.$router.push(`/pendienteDetails/${id}`)
+        },
+
+        goToEditProfilePage(){
+
+            this.$router.push('/editProfilePage')
         }
     }
 
