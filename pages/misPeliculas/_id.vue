@@ -6,10 +6,11 @@
                 <v-icon class="mr-4" size="35"> mdi-movie-open-star-outline </v-icon>
                 <v-app-bar-title class="font-weight-black mt-1" style="font-size:20px" > MIS PELICULAS </v-app-bar-title>
                 <v-spacer></v-spacer>
-                <v-btn color="red" @click="addMovie"> AÑADIR PELICULA </v-btn>
+                <v-btn color="rgb(229,9,20)" @click="addMovie"> AÑADIR PELICULA </v-btn>
             </v-app-bar>
             <v-card-text>
-                <v-row>
+                <h1 v-if="noMovies === true"> NO TIENES PELÍCULAS AÚN</h1>
+                <v-row v-if="noMovies === false">
                     <v-col cols=4  v-for="movie in movies" :key="movie.id" @click="goTo(movie._id)">
                         <v-list-item>
                             <v-list-item-content style="cursor: pointer" class="fondo">
@@ -31,9 +32,12 @@
 
 <script>
 export default ({
+    layout: 'movieP',
+
     data() {
         return{
-            movies: []
+            movies: [],
+            noMovies: "",
         }
     },
 
@@ -69,10 +73,16 @@ export default ({
                     this.movies.push(movie)
                 }
 
+                if(this.movies.length === 0){
+                    this.noMovies = true
+                } else {
+                    this.noMovies = false
+                }
+
 
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 

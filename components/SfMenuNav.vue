@@ -62,7 +62,7 @@
 
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-btn class="ml-1" width="auto" height="50px" color="red" block @click="logOut">CERRAR SESION</v-btn>
+                                    <v-btn class="ml-1" width="auto" height="50px" color="rgb(229,9,20)" block @click="logOut">CERRAR SESION</v-btn>
                                 </v-col>    
                             </v-row>
                         </v-list-item>

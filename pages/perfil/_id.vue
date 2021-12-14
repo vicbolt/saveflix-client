@@ -30,7 +30,7 @@
                     </v-col>
                     <v-col cols="1">
                         <v-btn v-if="!siguiendo" @click="follows()" color="green"  class="mt-5" style="color:black">SEGUIR</v-btn>
-                        <v-btn v-if="siguiendo"  @click="follows()" color="red" class="mt-5" style="color:black">DEJAR DE SEGUIR</v-btn>
+                        <v-btn v-if="siguiendo"  @click="follows()" color="rgb(229,9,20)" class="mt-5" style="color:black">DEJAR DE SEGUIR</v-btn>
                     </v-col>
                 </v-row>
         </v-card>
@@ -45,16 +45,9 @@
                         </v-app-bar>
                         <v-card-text>
                             <v-row>
-                                <v-col cols=4  v-for="movie in movies" :key="movie.id" @click="goTo(movie._id)">
-                                    <v-list-item>
-                                        <v-list-item-content style="cursor: pointer" class="fondo">
-                                            <v-img height="100px" style="border: 2px solid white" :src="movie.image"/>
-                                            <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movie.title}} </v-list-item-title>
-                                                    <v-progress-linear color="rgb(229,9,20)" v-model="movie.score" height="25">
-                                                        <strong> {{ Math.ceil(movie.score) }} <v-icon color="white" size="15"> mdi-heart </v-icon> </strong>
-                                                </v-progress-linear>
-                                        </v-list-item-content>
-                                    </v-list-item>
+                                <v-col cols="3"  v-for="movie in movies" :key="movie.id" @click="goTo(movie._id)" style="cursor: pointer" >
+                                    <v-img height="160px" style="border: 2px solid white" :src="movie.image"/>
+                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movie.title}} </v-list-item-title>
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -71,16 +64,9 @@
 
                         <v-card-text>
                             <v-row>
-                                <v-col @click="goTo(serial._id)" cols=4 v-for="serial in serials" :key="serial.id">
-                                    <v-list-item>
-                                        <v-list-item-content style="cursor: pointer" class="fondo">
-                                            <v-img height="100px" style="border: 2px solid white" :src="serial.image" />
-                                            <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{serial.title}} </v-list-item-title>
-                                                <v-progress-linear color="rgb(229,9,20)" v-model="serial.score" height="25">
-                                                    <strong> {{ Math.ceil(serial.score) }} <v-icon color="white" size="15"> mdi-heart </v-icon> </strong>
-                                                    </v-progress-linear>
-                                        </v-list-item-content>
-                                    </v-list-item>
+                                <v-col @click="goTo(serial._id)" cols="3" v-for="serial in serials" :key="serial.id" style="cursor: pointer">
+                                    <v-img height="160px" style="border: 2px solid white" :src="serial.image" />
+                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{serial.title}} </v-list-item-title>
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -144,7 +130,7 @@ export default({
                 }
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 
@@ -171,7 +157,7 @@ export default({
 
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 

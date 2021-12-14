@@ -71,7 +71,7 @@ export default ({
                 }
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 

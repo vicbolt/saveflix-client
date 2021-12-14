@@ -2,7 +2,7 @@
     <div class="sf-mi-perfil">
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5">
-                <v-row style="background: linear-gradient(180deg, red, rgb(209, 53, 53)">
+                <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53)">
                     <v-col cols="5"  style="background-color: ; ">
                         <v-row>
                             <v-avatar size="100" class="ml-6 mr-3 p-4" color="rgb(209, 53, 53)"> 
@@ -44,16 +44,9 @@
                         </v-app-bar>
                         <v-card-text>
                             <v-row>
-                                <v-col cols=4  v-for="movie in movies" :key="movie.id" @click="goTo(movie._id)">
-                                    <v-list-item>
-                                        <v-list-item-content style="cursor: pointer" class="fondo">
-                                            <v-img height="100px" style="border: 2px solid white" :src="movie.image"/>
-                                            <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movie.title}} </v-list-item-title>
-                                                    <v-progress-linear color="rgb(229,9,20)" v-model="movie.score" height="25">
-                                                        <strong> {{ Math.ceil(movie.score) }} <v-icon color="white" size="15"> mdi-heart </v-icon> </strong>
-                                                </v-progress-linear>
-                                        </v-list-item-content>
-                                    </v-list-item>
+                                <v-col cols="3"  v-for="movie in movies" :key="movie.id" @click="goToDetails(movie._id)" style="cursor: pointer" >
+                                    <v-img height="160px" style="border: 2px solid white" :src="movie.image"/>
+                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movie.title}} </v-list-item-title>
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -70,16 +63,43 @@
 
                         <v-card-text>
                             <v-row>
-                                <v-col @click="goTo(serial._id)" cols=4 v-for="serial in serials" :key="serial.id">
-                                    <v-list-item>
-                                        <v-list-item-content style="cursor: pointer" class="fondo">
-                                            <v-img height="100px" style="border: 2px solid white" :src="serial.image" />
-                                            <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{serial.title}} </v-list-item-title>
-                                                <v-progress-linear color="rgb(229,9,20)" v-model="serial.score" height="25">
-                                                    <strong> {{ Math.ceil(serial.score) }} <v-icon color="white" size="15"> mdi-heart </v-icon> </strong>
-                                                    </v-progress-linear>
-                                        </v-list-item-content>
-                                    </v-list-item>
+                                <v-col @click="goToDetails(serial._id)" cols="3" v-for="serial in serials" :key="serial.id"  style="cursor: pointer">
+                                    <v-img height="160px" style="border: 2px solid white" :src="serial.image" />
+                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{serial.title}} </v-list-item-title>
+                                </v-col>
+                            </v-row>
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+                <v-col cols="6">
+                    <v-card elevation="2">
+                        <v-app-bar shaped style=" background-color:white">
+                            <v-icon class="mr-4" size="35" color="black"> mdi-television-classic </v-icon>
+                            <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> PELICULAS PENDIENTES </v-card-title>
+                        </v-app-bar>
+
+                        <v-card-text>
+                            <v-row>
+                                <v-col @click="goToDetailsPendiente(movieP._id)" cols="3" v-for="movieP in moviesP" :key="movieP.id"  style="cursor: pointer">
+                                    <v-img height="160px" style="border: 2px solid white" :src="movieP.image" />
+                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movieP.title}} </v-list-item-title>
+                                </v-col>
+                            </v-row>
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+                    <v-col cols="6">
+                    <v-card elevation="2">
+                        <v-app-bar shaped style=" background-color:white">
+                            <v-icon class="mr-4" size="35" color="black"> mdi-television-classic </v-icon>
+                            <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> SERIES PENDIENTES </v-card-title>
+                        </v-app-bar>
+
+                        <v-card-text>
+                            <v-row>
+                                <v-col  cols="3"  @click="goToDetailsPendiente(serialP._id)" v-for="serialP in serialsP" :key="serialP.id" style="cursor: pointer">
+                                    <v-img height="160px" style="border: 2px solid white" :src="serialP.image" />
+                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{serialP.title}} </v-list-item-title>
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -102,6 +122,8 @@ export default({
         return{
             movies: [],
             serials: [],
+            moviesP: [],
+            serialsP: [],
             username: "",
             following: "",
             followers: "",
@@ -116,6 +138,8 @@ export default({
         await this.loadMovies()
         await this.loadSerials()
         await this.loadUserDetails()
+        await this.loadMoviesP()
+        await this.loadSerialsP()
         
     },
 
@@ -145,7 +169,7 @@ export default({
                 }
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 
@@ -173,7 +197,7 @@ export default({
 
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 
@@ -218,7 +242,62 @@ export default({
 
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
+            }
+        },
+
+        async loadMoviesP(){
+            try{
+
+                const userId = JSON.parse(localStorage.getItem("userId"))
+
+                const config = require('/config')
+
+                const res = await fetch(config.hostname + `api/moviePendiente/getAll/${userId}`)
+
+                const data = await res.json()
+                if(data.error){
+                    return console.log(data.error)
+                }
+
+                const moviesP = data.moviesPendientes
+
+                for(const movieP of moviesP){
+                    this.moviesP.push(movieP)
+                }
+
+
+
+            }catch(error){
+                return console.log(error)
+            }
+        },
+
+
+        async loadSerialsP(){
+            try{
+
+                const userId = JSON.parse(localStorage.getItem("userId"))
+
+                const config = require('/config')
+
+                const res = await fetch(config.hostname + `api/serialPendiente/getAll/${userId}`)
+
+                const data = await res.json()
+                if(data.error){
+                    return console.log(data.error)
+                }
+
+                const serialsP = data.serialsP
+
+                for(const serialP of serialsP){
+                    this.serialsP.push(serialP)
+                }
+
+
+
+            }catch(error){
+                return console.log(error)
             }
         },
 
@@ -234,6 +313,16 @@ export default({
             localStorage.setItem("ownerId", this.userId)
             this.$router.push(`/following/${this.userId}`)
         },
+
+        goToDetails(id){
+            
+            this.$router.push(`/details/${id}`)
+        },
+
+        goToDetailsPendiente(id){
+
+            this.$router.push(`/pendienteDetails/${id}`)
+        }
     }
 
 })

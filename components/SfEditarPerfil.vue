@@ -21,7 +21,7 @@
 
     <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn id="boton" type="submit" color="red" block @click="guardar"> GUARDAR CAMBIOS </v-btn>
+        <v-btn id="boton" type="submit" color="rgb(229,9,20)" block @click="guardar"> GUARDAR CAMBIOS </v-btn>
     </v-card-actions>
 </v-card>
 </template>
@@ -59,7 +59,7 @@ export default ({
                 
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         
     },
@@ -105,7 +105,7 @@ export default ({
                 this.$router.push(`/explorar/${id}`)
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         }
     }

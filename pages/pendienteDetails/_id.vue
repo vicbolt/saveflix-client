@@ -1,8 +1,7 @@
 <template>
-    <div class="sf-details">
+    <div class="sf-pendiente-details">
 
-        <SfDetails :post="post" />
-        <SfComments :post="post" /> 
+        <SfPendienteDetails :post="post" />
 
     </div>
 </template>
@@ -14,24 +13,24 @@ export default ({
     async asyncData(ctx) {
 
         try{
-            const paramsId = ctx.params.id
+            const id = ctx.params.id
 
             const config = require('/config')
             
-            const res = await fetch(config.hostname + `api/movie/getOne/${paramsId}`)
+            const res = await fetch(config.hostname + `api/moviePendiente/getOne/${id}`)
             const data = await res.json()
             
-            if(data.movie !== null){
+            if(data.movieP !== null){
                 if(data.error){
                     console.log(data.error)
                 }
 
                 return {
-                    post: data.movie,
+                    post: data.movieP,
                 }
             } else {
 
-                const res2 = await fetch(config.hostname + `api/serial/getOne/${paramsId}`)
+                const res2 = await fetch(config.hostname + `api/serialPendiente/getOne/${id}`)
                 const data2 = await res2.json()
                 
                 if(data2.error){
@@ -39,7 +38,7 @@ export default ({
                 }
 
                 return {
-                    post: data2.serial
+                    post: data2.serialP
                 }
             }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-edit">
+    <div class="sf-edit-pendiente">
 
         <v-card>
             <v-app-bar>
@@ -40,7 +40,7 @@
                         </v-row>
                     </v-col>
 
-                    <v-btn color="rgb(229,9,20)" @click="update()" block> GUARDAR </v-btn>
+                    <v-btn color="rgb(229,9,20)" @click="addPostP()" block> GUARDAR </v-btn>
                 </v-row>
             </v-card-text>
         </v-card>
@@ -80,66 +80,101 @@ export default ({
             this.knowledge = this.score
         },
 
-
-        async update(){
+        async addPostP(){
             try{
-                const config = require('../config')
-
-                const userId = JSON.parse(localStorage.getItem("userId"))
-
-                const body = JSON.stringify({
-                    title: this.title,
-                    description: this.description,
-                    director: this.director,
-                    image: this.image,
-                    score: this.score,
-                    owner: userId
-                })
-
-                const id = this.post._id
-                console.log(this.post.post)
 
                 if(this.post.post === "movie"){
-                    
-                    const res = await fetch(config.hostname + `api/movie/update/${id}`, {
-                        method: 'put',
+
+                    const userId = JSON.parse(localStorage.getItem("userId"))
+
+                    const body = JSON.stringify({
+                        title: this.title,
+                        director: this.director,
+                        description: this.description,
+                        score: this.score,
+                        userId: userId,
+                        image: this.image
+                    })
+
+                    const config = require('../config')
+
+                    const res = await fetch(config.hostname + 'api/movie/duplicate', {
+                        method: "post",
                         headers: {
-                            'Content-type': 'application/json'
+                            'Content-Type' : "application/json"
                         },
-                        body,
+                        body
                     })
 
                     const data = await res.json()
                     if(data.error){
-                        return alert(data.error)
+                        return console.log(data.error)
                     }
 
-                    alert('El post se ha guardado con éxito')
-                    return this.$router.push(`/misPeliculas/${this.userId}`)
+                    const res1 = await fetch(config.hostname +  `api/moviePendiente/remove/${this.post._id}`, {
+                        method: "delete",
+                        headers: {
+                            'Content-Type': "application/json"
+                        }
+                    })
+
+                    const data1 = await res1.json()
+                    if(data1.error){
+                        return console.log(data1.error)
+                    }
+                    
+                    alert('El post se ha añadido a tus películas vistas')
+                    return this.$router.push(`/misPeliculas/${userId}`)
 
                 } else {
 
-                    const res = await fetch(config.hostname + `api/serial/update/${id}`, {
-                        method: 'put',
+                    const userId = JSON.parse(localStorage.getItem("userId"))
+
+                    const body = JSON.stringify({
+                        title: this.title,
+                        director: this.director,
+                        description: this.description,
+                        score: this.score,
+                        userId: userId,
+                        image: this.image
+                    })
+
+                    const config = require('../config')
+
+                    const res = await fetch(config.hostname + 'api/serial/duplicate', {
+                        method: "post",
                         headers: {
-                            'Content-type': 'application/json'
+                            'Content-Type' : "application/json"
                         },
-                        body,
+                        body
                     })
 
                     const data = await res.json()
                     if(data.error){
-                        return alert(data.error)
+                        return console.log(data.error)
                     }
 
-                    alert('El post se ha guardado con éxito')
-                    return this.$router.push(`/misSeries/${this.userId}`)
+                    const res1 = await fetch(config.hostname +  `api/serialPendiente/remove/${this.post._id}`, {
+                        method: "delete",
+                        headers: {
+                            'Content-Type': "application/json"
+                        }
+                    })
+
+                    const data1 = await res1.json()
+                    if(data1.error){
+                        return console.log(data1.error)
+                    }
+                    
+                    alert('El post se ha añadido a tus series vistas')
+                    return this.$router.push(`/misSeries/${userId}`)
                 }
 
             }catch(error){
                 return console.log(error)
             }
-        }
+        },
+        
 
     }
 

@@ -10,7 +10,7 @@
         <v-card>
             <v-row>
                 <v-col @click="goTo(title._id)"  cols=4 v-for="title in titles" :key="title.id" >
-                    <SfCard id="post" style="cursor: pointer"  :image="title.image" :title="title.title" :score="title.score" />
+                    <SfCard id="post" style="cursor: pointer"  :image="title.image" :title="title.title" :score="title.score" :tag="title.post" />
                 </v-col>
                            
             </v-row>

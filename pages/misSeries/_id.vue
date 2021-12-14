@@ -6,11 +6,12 @@
                     <v-icon class="mr-4" size="35"> mdi-television-classic </v-icon>
                     <v-card-title class="font-weight-black mt-1" style="font-size:25px"> MIS SERIES </v-card-title>
                     <v-spacer></v-spacer>
-                    <v-btn color="red" @click="addSerial">AÑADIR SERIE</v-btn>
+                    <v-btn color="rgb(229,9,20)" @click="addSerial">AÑADIR SERIE</v-btn>
                 </v-app-bar>
 
             <v-card-text>
-                <v-row>
+                <h1 v-if="noSeries === true"> NO TIENES SERIES AÚN</h1>
+                <v-row v-if="noSeries === false">
                     <v-col @click="goTo(serial._id)" cols=4 v-for="serial in serials" :key="serial.id">
                         <v-list-item>
                             <v-list-item-content style="cursor: pointer" class="fondo">
@@ -36,9 +37,12 @@
 <script>
 
 export default ({
+    layout: "serialP",
+    
     data() {
       return {
-          serials: []
+          serials: [],
+          noSeries: "",
       }  
     },
 
@@ -69,6 +73,12 @@ export default ({
                 this.serials = []
                 for(const serial of data.serials){
                     this.serials.push(serial)
+                }
+
+                if(this.serials.length === 0){
+                    this.noSeries = true
+                } else {
+                    this.noSeries = false
                 }
 
             }catch(error){

@@ -37,7 +37,7 @@
                         </v-row>
                     </v-col>
 
-                    <v-btn color="red" @click="upload" block> SUBIR SERIE </v-btn>
+                    <v-btn color="rgb(229,9,20)" @click="upload" block> SUBIR SERIE </v-btn>
                 </v-row>
             </v-card-text>
         </v-card>
@@ -99,7 +99,7 @@ export default ({
                 this.$router.push('/misSeries')
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 

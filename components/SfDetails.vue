@@ -7,7 +7,7 @@
                     <v-app-bar-title class="font-weight-black mt-1" style="font-size:22px" > {{post.title}} </v-app-bar-title>
                     <v-spacer width="20px"></v-spacer>
                     <v-btn v-if="admin" @click="edit(post._id)" class="mr-2"><v-icon color="green">mdi-movie-edit-outline</v-icon></v-btn>
-                    <v-btn v-if="admin" @click="remove(post._id)"><v-icon color="red">mdi-trash-can-outline</v-icon></v-btn>
+                    <v-btn v-if="admin" @click="remove(post._id)"><v-icon color="rgb(229,9,20)">mdi-trash-can-outline</v-icon></v-btn>
             </v-app-bar>
 
             <v-card-text>
@@ -132,7 +132,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return res.json(data.error)
+                    return console.log(data.error)
                 }
 
             } else {
@@ -151,7 +151,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return res.json(data.error)
+                    return console.log(data.error)
                 }
 
             }
@@ -210,7 +210,7 @@ export default ({
                 }
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
 
@@ -261,10 +261,78 @@ export default ({
             }
 
             }catch(error){
-                return res.json(error)
+                return console.log(error)
             }
         },
+        
+        async addPost(){
+            try{
 
+                if(this.post.post === "movie"){
+                    const userId = JSON.parse(localStorage.getItem("userId"))
+
+                    const body = JSON.stringify({
+                        title: this.post.title,
+                        director: this.post.director,
+                        description: this.post.description,
+                        score: this.post.score,
+                        userId: userId,
+                        image: this.post.image
+                    })
+
+                    const config = require('../config')
+                    const res = await fetch(config.hostname + 'api/movie/duplicate', {
+                        method: "post",
+                        headers: {
+                            'Content-Type' : "application/json"
+                        },
+                        body
+                    })
+
+                    const data = await res.json()
+                    if(data.error){
+                        return console.log(data.error)
+                    }
+
+                    return this.$router.push(`/edit/${this.post._id}`)
+
+                } else {
+                    const userId = JSON.parse(localStorage.getItem("userId"))
+
+                    const body = JSON.stringify({
+                        title: this.post.title,
+                        director: this.post.director,
+                        description: this.post.description,
+                        score: this.post.score,
+                        userId: userId,
+                        image: this.post.image
+                    })
+
+                    const config = require('../config')
+                    const res = await fetch(config.hostname + 'api/serial/duplicate', {
+                        method: "post",
+                        headers: {
+                            'Content-Type' : "application/json"
+                        },
+                        body
+                    })
+
+                    const data = await res.json()
+                    if(data.error){
+                        return console.log(data.error)
+                    }
+
+                    return this.$router.push(`/edit/${this.post._id}`)
+
+
+                }
+
+
+
+            }catch(error){
+                return console.log(error)
+            }
+        },
         // async addPost(){
         //     try{
 
@@ -282,17 +350,20 @@ export default ({
         //                 formData.append('score', this.post.score)
         //                 formData.append('userId', userId)
         //                 formData.append('image', this.post.image)
+                        
 
 
-        //                 console.log(this.post.title)
-        //                 console.log(this.post.director)
-        //                 console.log(this.post.description)
-        //                 console.log(this.post.score)
-        //                 console.log(userId)
-        //                 console.log(this.post.image)
-        //                 console.log(this.post.post)
+        //                 // console.log(this.post.title)
+        //                 // console.log(this.post.director)
+        //                 // console.log(this.post.description)
+        //                 // console.log(this.post.score)
+        //                 // console.log(userId)
+        //                 // console.log(this.post.image)
+        //                 // console.log(this.post.post)
+                    
+        //             const config = require('../config')
 
-        //             const res = await fetch('http://localhost:4500/api/movie/duplicate', {
+        //             const res = await fetch(config.hostname + 'api/movie/duplicate', {
         //                 method: 'post',
         //                 body: formData
         //             })
@@ -309,7 +380,7 @@ export default ({
         //             }
 
         //     }catch(error){
-        //         return res.json(error)
+        //         return console.log(error)
         //     }
         // },
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-add-movie">
+    <div class="sf-add-movieP">
 
         <v-card>
             <v-app-bar>
@@ -22,25 +22,9 @@
                         <v-divider class="mb-1"></v-divider>
                         <v-text-field v-model="director" name="director" placeholder="Ej: 'Stanley Kubrick'" outlined />
 
-                        <h6 class="mt-n5">SINOPSIS</h6>
-                        <v-divider class="mb-1"></v-divider>
-                        <v-text-field v-model="description" placeholder="Escriba su opinión sobre la película" outlined height="100px" />
-
-                        <h6 class="mt-n5">PUNTUACIÓN</h6>
-                        <v-divider class="mb-1"></v-divider>
-                        <v-row>
-                            <v-col cols="2">
-                                <v-text-field v-model="score" :onkeydown="showScore()" :rules="scoreRules" height="30px" placeholder="0/100" outlined ></v-text-field>
-                            </v-col>
-                            <v-col cols="10">
-                                <v-progress-linear color="rgb(229,9,20)" v-model="knowledge" height="55">
-                                    <strong> {{ Math.ceil(knowledge) }} <v-icon class="mr-4 mb-1" size="15" color="white"> mdi-star </v-icon> </strong>
-                                </v-progress-linear>
-                            </v-col>
-                        </v-row>
                     </v-col>
 
-                    <v-btn color="rgb(229,9,20)" @click="upload" block> SUBIR PELICULA </v-btn>
+                    <v-btn color="rgb(229,9,20)" @click="upload" block> SUBIR A PELICULAS PENDIENTES </v-btn>
                 </v-row>
             </v-card-text>
         </v-card>
@@ -55,14 +39,7 @@ export default {
         return{
             title: "",
             director: "",
-            description: "",
-            score: "",
             image: undefined,
-            knowledge: "0",
-            scoreRules: [
-                v => ( v && v >= 0 ) || "El valor mínimo es 0",
-                v => ( v && v <= 100 ) || "El valor máximo es 100",
-            ],
         }
     },
 
@@ -81,12 +58,10 @@ export default {
                     formData.enctype = 'multipart/form-data'
                     formData.append('title', this.title)
                     formData.append('director', this.director)
-                    formData.append('description', this.description)
-                    formData.append('score', this.score)
                     formData.append('userId', userId)
                     formData.append('image', this.image)
 
-                const res = await fetch(config.hostname + 'api/movie/create', {
+                const res = await fetch(config.hostname + 'api/moviePendiente/create', {
                     method: 'post',
                     body: formData
                 })
@@ -96,7 +71,6 @@ export default {
                     return alert(data.error)
                 }
 
-                console.log(data.movie)
 
                 alert('El post se ha subido con éxito')
                 this.$router.push('/misPeliculas')
@@ -104,10 +78,6 @@ export default {
             }catch(error){
                 return console.log(error)
             }
-        },
-
-        showScore(){
-            this.knowledge = this.score
         },
 
 
