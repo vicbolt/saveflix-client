@@ -68,10 +68,11 @@ export default ({
                     if(data.error){
                         return alert(data.error)
                     } else {
-                        this.$router.push('/logIn')
+                        localStorage.setItem('email', this.email)
+                        this.$router.push('/activateCode')
                     }
                 
-                return alert("Se ha registrado con éxito")
+                return alert("Se ha enviado un correo electrónico con el código para activar su cuenta")
 
             } catch(error){
                 return res.status(500).json(error)

@@ -8,7 +8,7 @@
                         <v-app-bar-title class="font-weight-black mt-2" style="font-size: 15px"> <v-icon > mdi-clock</v-icon> SERIES PENDIENTES </v-app-bar-title>
                     </v-col>
                     <v-col cols="3">
-                        <v-btn color="rgb(229,9,20)" style="color:white" @click="goTo()"> AÑADIR</v-btn>
+                        <v-btn class="ml-n4" color="rgb(229,9,20)" style="color:white" @click="goTo()"> AÑADIR</v-btn>
                     </v-col>
                 </v-row>
             </v-app-bar>
@@ -46,11 +46,11 @@ export default({
         async loadSerialPendientes(){
             try{
 
-                const userId = JSON.parse(localStorage.getItem("userId"))
+                const id = JSON.parse(localStorage.getItem("userId"))
 
                 const config = require('../config')
 
-                const res = await fetch(config.hostname + `api/serialPendiente/getAll/${userId}`)
+                const res = await fetch(config.hostname + `api/serialPendiente/getAll/${id}`)
 
                 const data = await res.json()
                 if(data.error){
@@ -64,8 +64,6 @@ export default({
                 for(const serial of serialsP){
                     this.serials.push(serial)
                 }
-
-
 
             }catch(error){
                 return console.log(error)

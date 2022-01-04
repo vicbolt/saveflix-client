@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-mi-ranking">
+    <div class="sf-mi-ranking" v-if="visible">
 
         <v-row>
             <v-col cols=12>
@@ -38,12 +38,19 @@ export default ({
 
     data() {
         return {
+            visible: true,
             followers: [],
             userId: "",
         }
     },
 
     async beforeMount() {
+        const token = localStorage.getItem("token")
+            if(!token){
+                this.visible = false
+                return this.$router.push("logIn")
+            }
+
         await this.loadFollowers()
     },
 

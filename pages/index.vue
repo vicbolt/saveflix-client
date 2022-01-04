@@ -34,8 +34,10 @@ export default ({
 
             if(token){
                 this.$router.push(`/explorar/${id}`)
+            } else {
+                this.$router.push('/login')
             }
-            this.$router.push('/login')
+            
         }, 6500)
         
     }

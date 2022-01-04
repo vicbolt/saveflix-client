@@ -16,7 +16,7 @@
                         <v-list-item-content class="fondo">
                             <v-col cols="4" class="mt-3">
                                     <v-img height="420px" max-width="300px" style="border: 4px solid white" :src="post.image"></v-img>
-                                    <v-btn @click="goTo(post.user._id)">{{post.user.username}}</v-btn>
+                                    <v-btn @click="goTo(post.userId._id)">{{post.userId.username}}</v-btn>
                             </v-col>
                             <v-col cols="8">
                                     <h6 class="mb-1">DIRECTOR</h6>
@@ -56,7 +56,7 @@
                                         </v-col>
                                         <v-col cols="3">
                                             <v-row>
-                                                <v-btn v-if="admin2"  class="ml-7"  @click="addPost()">
+                                                <v-btn v-if="admin2"  class="ml-n12"  @click="addPost()">
                                                     <v-icon class="mr-4" size="20" color="white"> mdi-share-variant-outline </v-icon>
                                                     <p class="ml-n3 mt-4" style="font-size: 11px" > AÑADIR A MI LISTA </p>
                                                 </v-btn>
@@ -77,10 +77,10 @@
 export default ({
     data(){
         return{
-            userId: this.post.user._id,
+            userId: this.post.userId._id,
             admin: false,
             admin2: true,
-            postUser: this.post.user._id,
+            postUser: this.post.userId._id,
             postId: this.post._id
             
         }

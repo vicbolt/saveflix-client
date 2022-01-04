@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-details">
+    <div class="sf-details" v-if="visible">
 
         <SfDetails :post="post" />
         <SfComments :post="post" /> 
@@ -10,10 +10,19 @@
 <script>
 
 export default ({
+    data(){
+        return{
+            visible: true
+        }
+    },
 
     async asyncData(ctx) {
-
         try{
+            const token = localStorage.getItem("token")
+            if(!token){
+                this.visible = false
+                return this.$router.push("/logIn")
+            }
             const paramsId = ctx.params.id
 
             const config = require('/config')

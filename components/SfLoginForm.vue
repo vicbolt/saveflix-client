@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-login-form" v-if="visible">
+    <div class="sf-login-form">
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
@@ -29,21 +29,18 @@ export default ({
         return{
             email: "",
             password: "",
-            visible: true,
         }
     },
 
     beforeMount(){
-        
-        const token = localStorage.getItem('token')
-
-        const strId = localStorage.getItem('userId')
-        const id = JSON.parse(strId)
-
-        if(token){
-            this.visible = false
-            this.$router.push(`/explorar/${id}`)
+        const email = localStorage.getItem("email")
+        if(email){
+            this.email = email
+        } else {
+            this.email = ""
         }
+        
+
     },
 
     methods: {

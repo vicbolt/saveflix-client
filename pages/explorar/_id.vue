@@ -33,11 +33,12 @@ export default ({
     },
 
     async beforeMount(){
-        // const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token')
 
-        // if(!token){
-        //     this.visible = false
-        // }
+        if(!token){
+            this.visible = false
+            return this.$router.push("/logIn")
+        }
 
         await this.loadMoviesAndSerials()
     },
@@ -53,12 +54,12 @@ export default ({
 
                 const data1 = await res1.json()
                 if(data1.error){
-                    return alert(data1.error) 
+                    return console.log(data1.error) 
                 }
 
                 const data2 = await res2.json()
                 if(data2.error){
-                    return alert(data2.error) 
+                    return console.log(data2.error) 
                 }
 
                 for(const title of data1.movies){

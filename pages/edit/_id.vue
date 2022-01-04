@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-edit">
+    <div class="sf-edit" v-if="visible">
 
         <SfEdit :post="post"/>
 
@@ -9,9 +9,20 @@
 <script>
 
 export default ({
-    async asyncData(ctx) {
+    data(){
+        return{
+            visible: true
+        }
+    },
 
+    async asyncData(ctx) {
         try{
+            const token = localStorage.getItem("token")
+            if(!token){
+                this.visible = false
+                return this.$router.push("/logIn")
+            }
+            
             const paramsId = ctx.params.id
             const config = require('/config')
             

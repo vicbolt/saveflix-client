@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-mi-perfil">
+    <div class="sf-mi-perfil" v-if="visible">
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5">
                 <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53)">
@@ -13,15 +13,15 @@
                     </v-col>
                     <v-col cols="5">
                         <v-row class="mt-1">
-                            <v-col cols="4"> 
+                            <v-col cols="4" style="cursor: pointer"> 
                                 <h3 style="text-align: center">{{this.allPosts}}</h3>
                                 <h4 style="text-align: center">Publicaciones</h4>
                             </v-col>
-                            <v-col cols="4" class="ml-n5 mr-n5" @click="goToFollowers()"> 
+                            <v-col cols="4" style="cursor: pointer" class="ml-n5 mr-n5" @click="goToFollowers()"> 
                                 <h3 style="text-align: center">{{this.followers}}</h3>
                                 <h4 style="text-align: center">Seguidores</h4>
                             </v-col>
-                            <v-col cols="4" @click="goToFollowing()"> 
+                            <v-col cols="4" style="cursor: pointer" @click="goToFollowing()"> 
                                 <h3 style="text-align: center">{{this.following}}</h3>
                                 <h4 style="text-align: center">Siguiendo</h4>
                             </v-col>
@@ -120,6 +120,7 @@ export default({
 
     data(){
         return{
+            visible: true,
             movies: [],
             serials: [],
             moviesP: [],
@@ -135,6 +136,12 @@ export default({
 
     async beforeMount(){
 
+        const token = localStorage.getItem("token")
+        if(!token){
+            this.visible = false
+            return this.$router.push("logIn")
+        }
+
         await this.loadMovies()
         await this.loadSerials()
         await this.loadUserDetails()
@@ -142,10 +149,6 @@ export default({
         await this.loadSerialsP()
         
     },
-
-    // beforeDestroy(){
-    //     localStorage.removeItem("ownerId")
-    // },
 
     methods:{
         async loadSerials(){

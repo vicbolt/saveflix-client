@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-mi-ranking">
+    <div class="sf-mi-ranking" v-if="visible">
 
         <v-row>
             <v-col cols=6>
@@ -22,7 +22,7 @@
                                     <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px; color:white;"> {{movie.title}} </p>
                                 </v-col> 
                                 <v-col cols="3" >
-                                    <h4 class="ml-15 mt-2" style="font-size:20px; text-align:center"> {{movie.score}} <br> <v-icon color="rgb(229,9,20)">mdi-heart</v-icon></h4> 
+                                    <h4 class="ml-10 mt-2" style="font-size:20px; text-align:center"> {{movie.score}} <br> <v-icon color="rgb(229,9,20)">mdi-heart</v-icon></h4> 
                                 </v-col>
                                 <div>
                                     <v-divider></v-divider>
@@ -53,7 +53,7 @@
                                     <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px; color:white;"> {{serial.title}} </p> 
                                 </v-col> 
                                 <v-col cols="3" >
-                                    <h4 class="ml-15 mt-2" style="font-size:20px; text-align:center"> {{serial.score}} <br> <v-icon color="rgb(229,9,20)">mdi-heart</v-icon></h4> 
+                                    <h4 class="ml-10 mt-2" style="font-size:20px; text-align:center"> {{serial.score}} <br> <v-icon color="rgb(229,9,20)">mdi-heart</v-icon></h4> 
                                 </v-col>
                                 <div>
                                 <v-divider></v-divider>
@@ -75,6 +75,7 @@ export default ({
 
     data(){
         return{
+            visible: true,
             ranking: [],
             serialRanking: [],
             moviePosition: 1,
@@ -83,6 +84,12 @@ export default ({
     },
 
     async beforeMount(){
+        const token = localStorage.getItem("token")
+            if(!token){
+                this.visible = false
+                return this.$router.push("/logIn")
+            }
+            
         await this.moviesRanking()
         await this.serialsRanking()
 

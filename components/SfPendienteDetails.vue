@@ -33,10 +33,10 @@
 export default ({
     data(){
         return{
-            userId: this.post.user._id,
+            userId: this.post.userId._id,
             admin: false,
             admin2: true,
-            postUser: this.post.user._id,
+            postUser: this.post.userId._id,
             postId: this.post._id
             
         }

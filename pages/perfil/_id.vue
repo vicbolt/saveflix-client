@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-mi-perfil">
+    <div class="sf-mi-perfil" v-if="visible">
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5">
                 <v-row style="background: linear-gradient(180deg, rgb53, 53, 53), rgb(83, 72, 72)">
@@ -87,6 +87,7 @@ export default({
 
     data(){
         return{
+            visible: true,
             movies: [],
             serials: [],
             username: "",
@@ -101,6 +102,11 @@ export default({
     },
 
     async beforeMount(){
+        const token = localStorage.getItem("token")
+        if(!token){
+            this.visible = false
+            return this.$router.push("/logIn")
+        }
 
         await this.loadMovies()
         await this.loadSerials()

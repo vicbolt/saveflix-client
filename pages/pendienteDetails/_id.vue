@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-pendiente-details">
+    <div class="sf-pendiente-details" v-if="visible">
 
         <SfPendienteDetails :post="post" />
 
@@ -10,9 +10,21 @@
 
 export default ({
 
+    data(){
+        return{
+            visible: true
+        }
+    },
+
     async asyncData(ctx) {
 
         try{
+            const token = localStorage.getItem("token")
+            if(!token){
+                this.visible = false
+                return this.$router.push("/logIn")
+            }
+
             const id = ctx.params.id
 
             const config = require('/config')

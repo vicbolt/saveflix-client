@@ -14,7 +14,7 @@
                         <v-img class="imagen" :src="post.image" width="70px" height="70px" />
                     </v-col>
                     <v-col cols="8" class="ml-n5">
-                        <p class="mt-2"> <strong> {{post.user.username}} </strong> ha subido <strong> {{post.title}} </strong></p>
+                        <p class="mt-2"> <strong> {{post.userId.username}} </strong> ha subido <strong> {{post.title}} </strong></p>
                     </v-col> 
                 </v-row>
                 <v-divider class="mt-4 mb-4"></v-divider>

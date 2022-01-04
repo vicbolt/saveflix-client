@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-edit-pendiente">
+    <div class="sf-edit-pendiente" v-if="visible">
 
         <SfEditPendiente :post="post"/>
 
@@ -9,9 +9,22 @@
 <script>
 
 export default ({
+    data(){
+        return{
+            visible: true,
+        }
+    },
+    
     async asyncData(ctx) {
 
         try{
+
+            const token = localStorage.getItem("token")
+            if(!token){
+                this.visible = false
+                return this.$router.push("logIn")
+            }
+
             const paramsId = ctx.params.id
             const config = require('/config')
             

@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-mis-peliculas">
+    <div class="sf-mis-peliculas" v-if="visible">
 
         <v-card elevation="2">
             <v-app-bar shaped>
@@ -36,16 +36,22 @@ export default ({
 
     data() {
         return{
+            visible: true,
             movies: [],
             noMovies: "",
         }
     },
 
     async beforeMount(){
+
+        const token = localStorage.getItem("token")
+        if(!token){
+            this.visible = false
+            return this.$router.push("/logIn")
+        }
+
         await this.loadMovies()
         
-
-
     },
 
     methods: {
@@ -60,7 +66,9 @@ export default ({
 
                 const paramsId = JSON.parse(strParamsId)
 
-                const res = await fetch(`http://localhost:4500/api/movie/getAll/${paramsId}`)
+                const config = require('/config')
+
+                const res = await fetch(config.hostname + `api/movie/getAll/${paramsId}`)
 
                 const data = await res.json()
                 if(data.error){

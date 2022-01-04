@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-edit-profile-page">
+    <div class="sf-edit-profile-page" v-if="visible">
 
         <v-row>
             <v-col cols="8 offset-2">
@@ -56,6 +56,7 @@ export default ({
 
     data(){
         return{
+            visible: true,
             email: "",
             username: "",
             currentPassword: "",
@@ -66,6 +67,11 @@ export default ({
     },
 
     async beforeMount(){
+        const token = localStorage.getItem("token")
+        if(!token){
+            this.visible = false
+            return this.$router.push("/logIn")
+        }
 
         await this.loadUserDetails()
     },

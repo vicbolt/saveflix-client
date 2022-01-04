@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-mis-series">
+    <div class="sf-mis-series" v-if="visible">
 
         <v-card elevation="2">
                 <v-app-bar shaped>
@@ -41,12 +41,18 @@ export default ({
     
     data() {
       return {
+          visible: true,
           serials: [],
           noSeries: "",
       }  
     },
 
     async beforeMount(){
+        const token = localStorage.getItem("token")
+        if(!token){
+            this.visible = false
+            return this.$router.push("/logIn")
+        }
         await this.loadSerials()
     },
 
