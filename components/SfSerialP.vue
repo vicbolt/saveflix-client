@@ -59,8 +59,6 @@ export default({
 
                 const serialsP = data.serialsP
 
-                console.log(serialsP)
-
                 for(const serial of serialsP){
                     this.serials.push(serial)
                 }

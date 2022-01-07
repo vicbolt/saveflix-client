@@ -97,7 +97,6 @@ export default ({
                 })
 
                 const id = this.post._id
-                console.log(this.post.post)
 
                 if(this.post.post === "movie"){
                     

@@ -67,11 +67,7 @@ export default {
                 for(const post of posts){
                     this.posts.push(post)
                 }
-
-                // console.log(movies)
-                // console.log(serials)
-                // console.log(posts)
-
+                
             } catch(error){
                 return res1.json(error)
             }
