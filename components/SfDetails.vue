@@ -3,11 +3,16 @@
 
         <v-card>
             <v-app-bar shaped style="background: white; color: black">
-                    <v-icon class="mr-4" size="35" color="black"> mdi-star </v-icon>
-                    <v-app-bar-title class="font-weight-black mt-1" style="font-size:22px" > {{post.title}} </v-app-bar-title>
-                    <v-spacer width="20px"></v-spacer>
-                    <v-btn v-if="admin" @click="edit(post._id)" class="mr-2"><v-icon color="green">mdi-movie-edit-outline</v-icon></v-btn>
+                <v-row>
+                    <v-col cols="9">
+                        <h2 class="font-weight-black mt-1" style="font-size:22px" ><v-icon class="mr-4 mb-1" size="35" color="black"> mdi-star </v-icon> {{post.title}} </h2>
+                    </v-col>
+                    
+                    <v-col cols="3">
+                    <v-btn v-if="admin"  @click="edit(post._id)" class="mr-2"><v-icon color="green">mdi-movie-edit-outline</v-icon></v-btn>
                     <v-btn v-if="admin" @click="remove(post._id)"><v-icon color="rgb(229,9,20)">mdi-trash-can-outline</v-icon></v-btn>
+                    </v-col>
+                </v-row>
             </v-app-bar>
 
             <v-card-text>
@@ -36,9 +41,10 @@
                                     <v-row class="mt-4" style="width: 740px;">
                                         <v-col cols="3" >
                                             <v-row >
-                                                <v-btn class="ml-2" @click="like(post._id)">
-                                                    <v-icon class="mr-4" size="20" color="white"> mdi-heart </v-icon>
-                                                    <p class="ml-n3 mt-4">{{post.likes}}</p>
+                                                <v-btn class="ml-2" @click="like(post._id, post.userId._id)">
+                                                    <v-icon v-if="this.liked" class="mr-4" size="20" color="red"> mdi-heart </v-icon>
+                                                    <v-icon v-if="!this.liked" class="mr-4" size="20" color="white"> mdi-heart </v-icon>
+                                                    <p class="ml-n3 mt-4">{{post.likes.length}}</p>
                                                 </v-btn>
                                             </v-row>
                                         </v-col>
@@ -77,24 +83,27 @@
 export default ({
     data(){
         return{
-            userId: this.post.userId._id,
             admin: false,
             admin2: true,
-            postUser: this.post.userId._id,
+            ownerId: "",
+            liked: "",
             postId: this.post._id
-            
         }
     },
+
     props: {
         post: {
             type: Object,
             required: true
         }
     },
+    
 
     async beforeMount(){
         try{
 
+        //LIKED OR NOT
+        await this.likedOrNot()
 
         //ADMIN? (MUESTRA U OCULTA LOS BOTONES DE EDITAR Y ELIMINAR DEPENDIENDO SI ES UNA PUBLICACION TUYA O NO)
 
@@ -102,13 +111,12 @@ export default ({
 
         const userId = JSON.parse(strUserId)
 
-        const postUser = this.postUser
+        const postUser = this.post.userId._id
 
         if(userId === postUser){
             this.admin = true
             this.admin2 = false
         }
-
 
         // VIEWS
         const config = require('../config')
@@ -156,7 +164,6 @@ export default ({
 
             }
 
-
             }catch(error){
                 return console.log(error)
             }
@@ -165,6 +172,46 @@ export default ({
 
 
     methods:{
+
+        async likedOrNot(){
+            try{
+                const userId = localStorage.getItem("userId")
+                const postId = this.postId
+                const config = require('../config')
+
+                const res = await fetch(config.hostname + `api/movie/getOne/${postId}`)
+                const data = await res.json()
+
+                if(data.movie !== null){
+
+                    if(data.movie.likes.includes(JSON.parse(userId))){
+                        this.liked = true
+                        
+                    } else {
+                        this.liked = false
+                    }
+
+                } else {
+
+                    const res = await fetch(config.hostname + `api/serial/getOne/${postId}`)
+                    const data = await res.json()
+
+                    if(data.serial !== null){
+
+                        if(data.serial.likes.includes(JSON.parse(userId))){
+                            this.liked = true
+                        } else {
+                            this.liked = false
+                        }
+                    }
+                }
+
+            }catch(error){
+                return console.log(error)
+            }
+        },
+
+
         async remove(postId){
             try{
 
@@ -177,10 +224,10 @@ export default ({
 
                 if(data.movie !== null){
                     const res = await fetch(config.hostname + `api/movie/remove/${postId}`,{
-                    method: 'delete',
-                    headers: {
-                        'Content-type':"application/json"
-                    }
+                        method: 'delete',
+                        headers: {
+                            'Content-type':"application/json"
+                        }
                     })
 
                     const data = await res.json()
@@ -214,7 +261,7 @@ export default ({
             }
         },
 
-        async like(postId){
+        async like(postId, userId){
             try{
                 const config = require('../config')
 
@@ -223,7 +270,11 @@ export default ({
 
                 if(data.movie !== null){
 
-                    const body = JSON.stringify({postId})
+                    const body = JSON.stringify({
+                        postId,
+                        userId
+                    })
+
 
                     const res = await fetch(config.hostname + 'api/movie/likes',{
                         method: 'post',
@@ -237,12 +288,16 @@ export default ({
                     if(data.error){
                         return alert(data.error)
                     }
-                    
-                this.$router.go(`/details/${postId}`)
+      
+
+                return this.$router.go()
 
                 } else {
 
-                    const body = JSON.stringify({postId})
+                    const body = JSON.stringify({
+                        postId,
+                        userId
+                    })
 
                     const res = await fetch(config.hostname + 'api/serial/likes',{
                         method: 'post',

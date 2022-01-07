@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-mi-perfil" v-if="visible">
+    <div class="sf-perfil" v-if="visible">
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5">
                 <v-row style="background: linear-gradient(180deg, rgb53, 53, 53), rgb(83, 72, 72)">

@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-add-movie">
+    <div class="sf-add-serial">
 
         <v-card>
             <v-app-bar>

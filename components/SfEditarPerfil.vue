@@ -1,29 +1,31 @@
 <template>
-    <v-card>
-    <v-card-title class="text-h5 white" style="color:black" > EDITAR PERFIL </v-card-title>
-    <v-card-text>
-        <h6 class="mt-4">NOMBRE DE USUARIO</h6>
-        <v-text-field v-text-field v-model="username" :placeholder="username" class="mb-n4" outlined/>
-        <h6>CORREO ELECTRÓNICO</h6>
-        <v-text-field v-model="email" :placeholder="email" class="mb-n4" outlined/>
-        <h6>CONTRASEÑA</h6>
-        <v-row>
-            <v-col cols="11">
-                <v-text-field v-model="password" :placeholder="password" :type="type" class="mb-n8" outlined/>
-            </v-col>
-            <v-col cols="1">
-                <v-icon color="white" size="30" class="ml-n4 mt-3" @click="show"> mdi-eye </v-icon>
-            </v-col>
-        </v-row>                      
-    </v-card-text>
+<div class="sf-edit-perfil">
+        <v-card>
+            <v-card-title class="text-h5 white" style="color:black" > EDITAR PERFIL </v-card-title>
+            <v-card-text>
+                <h6 class="mt-4">NOMBRE DE USUARIO</h6>
+                <v-text-field v-text-field v-model="username" :placeholder="username" class="mb-n4" outlined/>
+                <h6>CORREO ELECTRÓNICO</h6>
+                <v-text-field v-model="email" :placeholder="email" class="mb-n4" outlined/>
+                <h6>CONTRASEÑA</h6>
+                <v-row>
+                    <v-col cols="11">
+                        <v-text-field v-model="password" :placeholder="password" :type="type" class="mb-n8" outlined/>
+                    </v-col>
+                    <v-col cols="1">
+                        <v-icon color="white" size="30" class="ml-n4 mt-3" @click="show"> mdi-eye </v-icon>
+                    </v-col>
+                </v-row>                      
+            </v-card-text>
 
-    <v-divider></v-divider>
+            <v-divider></v-divider>
 
-    <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn id="boton" type="submit" color="rgb(229,9,20)" block @click="guardar"> GUARDAR CAMBIOS </v-btn>
-    </v-card-actions>
-</v-card>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn id="boton" type="submit" color="rgb(229,9,20)" block @click="guardar"> GUARDAR CAMBIOS </v-btn>
+            </v-card-actions>
+    </v-card>
+</div>
 </template>
 
 <script>

@@ -14,6 +14,10 @@
             <div class="enlace">
             <a href="/signUp"> ¿No tienes una cuenta? Regístrate para continuar</a>
             </div>
+
+            <div class="enlace">
+                <a href="/activateCode"> Haga click aquí para activar una cuenta</a>
+            </div>
             </v-col>
 
             <v-col></v-col>
@@ -65,7 +69,7 @@ export default ({
                 const data = await res.json()
                 if(data.error){
                     alert(data.error)
-                    this.$router.push('/logIn')
+                    return this.$router.push('/logIn')
                 }
 
                 if(data.token){
@@ -74,6 +78,7 @@ export default ({
                     
                 }
 
+                localStorage.removeItem("email")
                 this.$router.push('/')
 
                 

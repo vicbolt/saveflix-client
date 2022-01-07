@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-add-movie" v-if="visible">
+    <div class="sf-add-serial" v-if="visible">
 
         <SfAddSerial/>
 

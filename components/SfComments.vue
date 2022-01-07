@@ -15,16 +15,21 @@
                 <v-divider class="mb-6" ></v-divider>
 
                 <v-card-text>
-                    <v-row v-for="comment in comments" :key="comment._id">
+                    <v-row v-for="comment in comments" :key="comment._id" class="mb-3" style="background-color: rgb(37, 37, 37 ); border-radius: 50px">
                         <v-col cols="2">
-                            <v-img class="imagen" :src="comment.user.avatar" width="70px" height="70px" />
+                            <v-img class="imagen ml-4" :src="comment.user.avatar" width="80px" height="80px" />
                         </v-col>
                         <v-col cols="10">
-                            <p class="font-weight-black mt-2 ml-n7" style="background:white; color:black"> {{comment.user.username}} </p>
-                            <p class="ml-n7 mt-n3"> {{comment.message}} </p>
+                            <v-row>
+                            <p class="font-weight-black mt-5"  style=" font-size: 17px; color:white; width: auto"> {{comment.user.username}}</p> <p class="font-weight-black mt-5 ml-2">ha comentado:</p>
+                            <v-spacer></v-spacer>
+                            <p class="mt-5 mr-5" style="font-size:11px"> {{comment.date}} </p>
+                            <v-btn v-if="comment.user._id === userId || ownerId === userId " @click="removeComment(comment._id)" class=" font-weight-black mt-n2" style="background-color: red; min-width:1px; width:30px; min-height:1px; height: 30px; border-radius:100px; text-align:center "> <v-icon class="" size="18px">mdi-trash-can-outline</v-icon></v-btn>
+                            </v-row>
+                            <p class=""> {{comment.message}} </p>
                         </v-col>
                     </v-row>
-                    <v-divider class="mt-4 mb-4"></v-divider>
+
                 </v-card-text>
             </v-card>
 
@@ -38,6 +43,8 @@ export default ({
         return{
             message: "",
             comments: [],
+            ownerId: localStorage.getItem("ownerId"),
+            userId: JSON.parse(localStorage.getItem("userId"))
         }
     },
 
@@ -49,10 +56,13 @@ export default ({
     },
 
     async beforeMount(){
+
         await this.getComments()
+       
     },
 
     methods: {
+
         async sendComment(postId){
             try{
                 const config = require('../config')
@@ -140,8 +150,15 @@ export default ({
                     }
 
                     for(const comment of data1.comments){
+
+                        console.log(comment.user._id)
+                        console.log(comment.post.userId)
+
+
                         this.comments.push(comment)
                     }
+                
+
                 } else {
 
                     const postId = this.post._id
@@ -162,8 +179,58 @@ export default ({
                 return console.log(error)
             }
         },
+
+        async removeComment(commentId){
+            try{
+
+                const config = require('../config')
+
+                const postId = this.post._id
+
+                const res = await fetch(config.hostname + `api/movie/getOne/${postId}`)
+                const data = await res.json()
+
+                if(data.movie !== null){
+                    const res = await fetch(config.hostname + `api/movieComment/remove/${commentId}`, {
+                        method: 'delete',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+
+                    const data = await res.json()
+                    if(data.error){
+                        return alert(data.error)
+                    }
+
+                    return alert("El comentario ha sido borrado con éxito")
+
+                } else {
+                    const res = await fetch(config.hostname + `api/serialComment/remove/${commentId}`, {
+                        method: 'delete',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+
+                    const data = await res.json()
+                    if(data.error){
+                        return alert(data.error)
+                    }
+
+                    return alert("El comentario ha sido borrado con éxito")
+
+                }
+
+            }catch(error){
+                return console.log(error)
+            }
+        },
+
+
     }
 })
+
 </script>
 
 <style scoped>

@@ -42,7 +42,7 @@
                             <v-icon class="mr-4" size="35" color="black"> mdi-movie-open-star-outline </v-icon>
                             <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> MIS PELICULAS </v-card-title>
                         </v-app-bar>
-                        <v-card-text>
+                        <v-card-text> 
                             <v-row>
                                 <v-col cols="3"  v-for="movie in movies" :key="movie.id" @click="goToDetails(movie._id)" style="cursor: pointer" >
                                     <v-img height="160px" style="border: 2px solid white" :src="movie.image"/>

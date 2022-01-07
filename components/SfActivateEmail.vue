@@ -1,13 +1,13 @@
 <template>
-    <div class="sf-activate-code">
+    <div class="sf-activate-email">
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
-            <h1> ACTIVAR LA CUENTA </h1>
+            <h1> ACTIVAR NUEVO EMAIL </h1>
+            <h5 style="text-align: center; color: gray"> Inserte el código enviado a la nueva dirección de email</h5>
             <v-row>
             <v-col></v-col>
             <v-col cols="5">
-            <v-text-field v-model="email" placeholder="Correo electrónico" />
             <v-row>
                 <v-col cols="2">
                     <v-text-field class="code" v-on:keyup="validateA()" v-model="A" />
@@ -32,7 +32,7 @@
             <v-btn id="boton" block @click="activar"> ACTIVAR </v-btn>
 
             <div class="enlace">
-            <a href="/reactivateCode"> ¿No ha recibido el código? Haga click aquí para reenviarlo </a>
+            <a href="/reactivateEmail"> ¿No ha recibido el código? Haga click aquí para reenviarlo </a>
             </div>
             </v-col>
 
@@ -80,12 +80,17 @@ export default ({
 
                 const config = require('../config')
 
+                const email = localStorage.getItem("email")
+
+                const oldEmail = localStorage.getItem("oldEmail")
+
                 const body = JSON.stringify({
-                    email: this.email,
+                    oldEmail: oldEmail,
+                    email: email,
                     code: this.code
                 })
 
-                const res = await fetch(config.hostname + 'api/user/activateCode', {
+                const res = await fetch(config.hostname + 'api/user/activateEmail', {
                     method: 'post',
                     headers:{
                         'Content-Type': 'application/json',
@@ -107,6 +112,7 @@ export default ({
                     return console.log(error)
                 } 
             },
+
 
             validateA(){
 

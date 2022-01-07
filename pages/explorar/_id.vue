@@ -1,10 +1,24 @@
 <template>
     <div class="sf-explorar" v-if="visible">
 
-    <v-card elevation="2">
+    <v-card >
         <v-app-bar shaped>
-            <v-icon class="mr-4 mb-2" size="35"> mdi-shuriken </v-icon>
-            <v-app-bar-title class="font-weight-black mb-2" style="font-size:25px"> EXPLORAR </v-app-bar-title>
+            <v-row>
+                <v-col cols="7">
+                    <v-row>
+                    <v-icon class="mr-4 mt-3" size="35"> mdi-shuriken </v-icon>
+                    <v-app-bar-title class="font-weight-black mt-3" style="font-size:25px"> EXPLORAR </v-app-bar-title>
+                    </v-row>
+                </v-col>
+                <v-col cols="5">
+                    <v-row>
+                            <v-text-field v-model="search" placeholder="Buscar por título" type="text" class="mt-3" v-on:keyup.enter="buscar"></v-text-field>
+                            <v-btn class="ml-2 mt-2" color="red" height="40px" min-width="25px" @click="buscar"> <v-icon size="20px">mdi-movie-search-outline</v-icon> </v-btn>
+                    </v-row>
+                </v-col>
+            </v-row>
+
+
         </v-app-bar>
 
         <v-card>
@@ -28,7 +42,8 @@ export default ({
     data(){
         return {
             visible: true,
-            titles: []
+            titles: [],
+            search: "",
         }
     },
 
@@ -44,6 +59,7 @@ export default ({
     },
 
     methods: {
+
         async loadMoviesAndSerials(){
             try{
 
@@ -88,6 +104,29 @@ export default ({
  
             }catch(error){
                 return res1.json(error)
+            }
+        },
+
+        async buscar(){
+            try{
+                const config = require('/config')
+
+                const title1 = this.search
+                const title = title1.replace(/ /g, "").toUpperCase()
+
+                //BUSCAR PELICULA
+                const res = await fetch(config.hostname + `api/movie/search/${title}`)
+                const data = await res.json()
+                if(data.error){
+                    return alert(data.error)
+                }
+
+                this.$router.push(`/details/${data}`)
+
+                
+                
+            }catch(error){
+                return console.log(error)
             }
         },
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-login-form">
+    <div class="sf-signUp-form">
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form >

@@ -120,12 +120,12 @@ export default ({
                 })
 
                 const data = await res.json()
-                if(data.error){
-                    return alert(data.error)
-                }
 
-                alert('El usuario se ha modificado')
-                return this.$router.push(`/miPerfil/${id}`)
+                    localStorage.setItem("email", this.email)
+                    localStorage.setItem("oldEmail", data.user.email)
+                    alert("Inserte el código enviado a su email")
+                    this.$router.push('/activateEmail')
+
 
             }catch(error){
                 return console.log(error)

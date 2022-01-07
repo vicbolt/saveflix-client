@@ -1,5 +1,5 @@
 <template>
-    <div class="sf-mi-ranking" v-if="visible">
+    <div class="sf-followers" v-if="visible">
 
         <v-row>
             <v-col cols=12>

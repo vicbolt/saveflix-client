@@ -48,8 +48,6 @@ export default ({
                     console.log(data1.error)
                 }
 
-                console.log("hola")
-
                 return {
                     post: data1.serialP
                 }

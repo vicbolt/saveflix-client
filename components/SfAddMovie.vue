@@ -96,8 +96,6 @@ export default {
                     return alert(data.error)
                 }
 
-                console.log(data.movie)
-
                 alert('El post se ha subido con éxito')
                 this.$router.push('/misPeliculas')
 
