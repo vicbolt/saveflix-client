@@ -104,12 +104,15 @@ export default {
                     description: this.description,
                     score: this.score,
                     userId: userId,
-                    image: this.url,
+                    image: this.url
                 })
 
                 const res = await fetch(config.hostname + 'api/movie/create', {
                     method: 'post',
-                    body,
+                    headers: {
+                        "Content-Type" : "application/json"
+                    },
+                    body
                 })
 
                 const data = await res.json()
