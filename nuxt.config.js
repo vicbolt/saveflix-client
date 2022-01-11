@@ -15,7 +15,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: 'https://w7.pngwing.com/pngs/203/764/png-transparent-computer-icons-user-encapsulated-postscript-age-icon-text-number-sign.png' }
     ],
     link:[
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap'}
