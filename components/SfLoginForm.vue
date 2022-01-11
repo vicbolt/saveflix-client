@@ -1,8 +1,8 @@
 <template>
     <div class="sf-login-form">
 
-            <v-alert v-if="this.error" type="error" border="top" color="red lighten-2" dark> {{this.error}} </v-alert>
-            <v-alert v-if="this.msg" type="error" border="top" color="red lighten-2" dark> {{this.msg}} </v-alert>
+            <v-alert v-if="this.error" class="text-center" type="error" border="top" color="red lighten-2" dismissible dark> {{this.error}} </v-alert>
+            <v-alert v-if="this.msg" class="text-center" type="error" border="top" color="red lighten-2" dismissible dark> {{this.msg}} </v-alert>
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
