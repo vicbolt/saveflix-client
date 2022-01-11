@@ -73,7 +73,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 this.serials = []
@@ -93,6 +93,7 @@ export default ({
         },
 
         goTo(serialId){
+            localStorage.setItem("postId", serialId)
             this.$router.push(`/details/${serialId}`)
         }
     }

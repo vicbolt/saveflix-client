@@ -1,6 +1,9 @@
 <template>
     <div class="sf-mi-ranking" v-if="visible">
 
+        <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+
+
         <v-row>
             <v-col cols=6>
             <v-card elevation="2">
@@ -80,6 +83,7 @@ export default ({
             serialRanking: [],
             moviePosition: 1,
             serialPosition: 1,
+            error: "",
         }
     },
 
@@ -108,7 +112,7 @@ export default ({
 
             const data = await res.json()
             if(data.error){
-                return alert(data.error)
+                return this.error = data.error
             }
 
             this.movies = []
@@ -134,7 +138,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 this.serials = []
@@ -148,9 +152,9 @@ export default ({
             }
         },
 
-        goTo(titleId){
-
-            this.$router.push(`/details/${titleId}`)
+        goTo(postId){
+            localStorage.setItem("postId", postId)
+            this.$router.push(`/details/${postId}`)
         }
     }
 })

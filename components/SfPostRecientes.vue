@@ -74,8 +74,9 @@ export default {
         },
 
     goTo(postId){
-        console.log(postId)
-        this.$router.push(`/details/${postId}`)
+        localStorage.removeItem("postId")
+        localStorage.setItem("postId", postId)
+        this.$router.go(`/details/${postId}`)
     }
     },
 

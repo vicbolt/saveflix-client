@@ -1,5 +1,8 @@
 <template>
     <div class="sf-perfil" v-if="visible">
+
+        <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5">
                 <v-row style="background: linear-gradient(180deg, rgb53, 53, 53), rgb(83, 72, 72)">
@@ -41,7 +44,7 @@
                     <v-card elevation="2">
                         <v-app-bar shaped style=" background-color:white; color: black">
                             <v-icon class="mr-4" size="35" color="black"> mdi-movie-open-star-outline </v-icon>
-                            <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> MIS PELICULAS </v-card-title>
+                            <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> PELICULAS </v-card-title>
                         </v-app-bar>
                         <v-card-text>
                             <v-row>
@@ -59,7 +62,7 @@
                     <v-card elevation="2">
                         <v-app-bar shaped style=" background-color:white">
                             <v-icon class="mr-4" size="35" color="black"> mdi-television-classic </v-icon>
-                            <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> MIS SERIES </v-card-title>
+                            <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> SERIES </v-card-title>
                         </v-app-bar>
 
                         <v-card-text>
@@ -97,6 +100,8 @@ export default({
             allPosts: "",
             ownerId: "",
             siguiendo: false,
+            error: "",
+
 
         }
     },
@@ -119,15 +124,14 @@ export default({
             try{
 
                 const config = require('/config')
-                const strParamsId = localStorage.getItem('userId')
+                const id = localStorage.getItem('ownerId')
 
-                const paramsId = JSON.parse(strParamsId)
 
-                const res = await fetch(config.hostname + `api/serial/getAll/${paramsId}`)
+                const res = await fetch(config.hostname + `api/serial/getAll/${id}`)
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 this.serials = []
@@ -145,15 +149,13 @@ export default({
 
                 const config = require('/config')
 
-                const strParamsId = localStorage.getItem('userId')
+                const id = localStorage.getItem('ownerId')
 
-                const paramsId = JSON.parse(strParamsId)
-
-                const res = await fetch(config.hostname + `api/movie/getAll/${paramsId}`)
+                const res = await fetch(config.hostname + `api/movie/getAll/${id}`)
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 this.movies = []
@@ -198,7 +200,7 @@ export default({
 
                 const data1 = await res1.json()
                 if(data1.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 const userId = JSON.parse(localStorage.getItem("userId"))
@@ -252,7 +254,7 @@ export default({
                 const data = await res.json()
                 if(data.error){
                     this.$router.go()
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 this.$router.go()

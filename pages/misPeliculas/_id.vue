@@ -1,6 +1,9 @@
 <template>
     <div class="sf-mis-peliculas" v-if="visible">
 
+    <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+
+
         <v-card elevation="2">
             <v-app-bar shaped>
                 <v-icon class="mr-4" size="35"> mdi-movie-open-star-outline </v-icon>
@@ -39,6 +42,7 @@ export default ({
             visible: true,
             movies: [],
             noMovies: "",
+            error: "",
         }
     },
 
@@ -72,7 +76,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error) 
+                    return this.error = data.error
                 }
                 
 
@@ -95,6 +99,7 @@ export default ({
         },
 
         goTo(movieId){
+            localStorage.setItem("postId", movieId)
             this.$router.push(`/details/${movieId}`)
         }
     }

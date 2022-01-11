@@ -1,5 +1,7 @@
 <template>
     <div class="sf-mi-perfil" v-if="visible">
+
+        <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5">
                 <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53)">
@@ -129,7 +131,8 @@ export default({
             following: "",
             followers: "",
             avatar: undefined,
-            allPosts: ""
+            allPosts: "",
+            error: "",
 
         }
     },
@@ -163,7 +166,7 @@ export default({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 this.serials = []
@@ -189,7 +192,7 @@ export default({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error) 
+                    return this.error = data.error
                 }
                 
 
@@ -232,7 +235,7 @@ export default({
 
                 const data1 = await res1.json()
                 if(data1.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 const followers = data1.seguidores
@@ -318,7 +321,7 @@ export default({
         },
 
         goToDetails(id){
-            
+            localStorage.setItem("postId", id)
             this.$router.push(`/details/${id}`)
         },
 

@@ -1,6 +1,8 @@
 <template>
     <div class="sf-reactivate-email">
 
+        <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
             <h1> REENVIAR CODIGO DE ACTIVACIÓN </h1>
@@ -27,6 +29,7 @@ export default ({
         return{
             email: "",
             oldEmail: "",
+            error: "",
         }
     },
 
@@ -62,7 +65,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 alert(`El código ha sido enviado a ${this.email}`)

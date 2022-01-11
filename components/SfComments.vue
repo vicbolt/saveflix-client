@@ -1,5 +1,8 @@
 <template>
     <div class="sf-comments">
+
+        <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+
         <v-divider class="mb-4"></v-divider>
             <v-card>
                 <v-app-bar>
@@ -10,7 +13,7 @@
 
                 <v-card-text>
                     <v-text-field v-model="message" outlined class="mt-1" placeholder="Escribe tu comentario"></v-text-field>
-                    <v-btn color="rgb(229,9,20)" class="mt-n6" block @click="sendComment(post._id)"> ENVIAR </v-btn>
+                    <v-btn color="rgb(229,9,20)" class="mt-n6" block @click="sendComment()"> ENVIAR </v-btn>
                 </v-card-text>
                 <v-divider class="mb-6" ></v-divider>
 
@@ -24,7 +27,7 @@
                             <p class="font-weight-black mt-5"  style=" font-size: 17px; color:white; width: auto"> {{comment.user.username}}</p> <p class="font-weight-black mt-5 ml-2">ha comentado:</p>
                             <v-spacer></v-spacer>
                             <p class="mt-5 mr-5" style="font-size:11px"> {{comment.date}} </p>
-                            <v-btn v-if="comment.user._id === userId || ownerId === userId " @click="removeComment(comment._id)" class=" font-weight-black mt-n2" style="background-color: red; min-width:1px; width:30px; min-height:1px; height: 30px; border-radius:100px; text-align:center "> <v-icon class="" size="18px">mdi-trash-can-outline</v-icon></v-btn>
+                            <v-btn v-if="comment.user._id === userId || comment.post.userId === userId " @click="removeComment(comment._id)" class=" font-weight-black mt-n2" style="background-color: red; min-width:1px; width:30px; min-height:1px; height: 30px; border-radius:100px; text-align:center "> <v-icon class="" size="18px">mdi-trash-can-outline</v-icon></v-btn>
                             </v-row>
                             <p class=""> {{comment.message}} </p>
                         </v-col>
@@ -43,19 +46,14 @@ export default ({
         return{
             message: "",
             comments: [],
-            ownerId: localStorage.getItem("ownerId"),
-            userId: JSON.parse(localStorage.getItem("userId"))
-        }
-    },
-
-    props: {
-        post: {
-            type: Object,
-            required: true
+            ownerId: "",
+            userId: "",
+            error: "",
         }
     },
 
     async beforeMount(){
+
 
         await this.getComments()
        
@@ -63,16 +61,18 @@ export default ({
 
     methods: {
 
-        async sendComment(postId){
+        async sendComment(){
             try{
                 const config = require('../config')
 
+                const postId = localStorage.getItem("postId")
+
+                const userId = JSON.parse(localStorage.getItem('userId'))
+                 
                 const res = await fetch(config.hostname + `api/movie/getOne/${postId}`)
                 const data = await res.json()
 
                 if(data.movie !== null){
-
-                    const userId = JSON.parse(localStorage.getItem('userId'))
 
                     const body = JSON.stringify({
                         userId,
@@ -90,12 +90,10 @@ export default ({
 
                     const data = await res1.json()
                     if(data.error){
-                        return alert(data.error)
+                        return this.error = data.error
                     }
 
-                    alert('El comentario ha sido enviado')
-
-                    this.$router.push(`/details/${this.postId}`)
+                    return this.$router.go()
 
                 } else {
                     const userId = JSON.parse(localStorage.getItem('userId'))
@@ -116,12 +114,12 @@ export default ({
 
                     const data1 = await res2.json()
                     if(data1.error){
-                        return alert(data1.error)
+                        return this.error = data.error
                     }
 
                     alert('El comentario ha sido enviado')
 
-                    this.$router.go(`/details/${this.postId}`)
+                    return this.$router.go()
                 }
 
             } catch(error){
@@ -134,43 +132,44 @@ export default ({
             try{
                 const config = require('../config')
 
-                const postId = this.post._id
+                const postId = localStorage.getItem("postId")
 
+                const userId = localStorage.getItem("userId")
+                
                 const res = await fetch(config.hostname + `api/movie/getOne/${postId}`)
                 const data = await res.json()
+                
 
                 if(data.movie !== null){
-                    const postId = this.post._id
 
-                    const res1 = await fetch(config.hostname + `api/movieComment/getComments/${postId}`)
+                    const res = await fetch(config.hostname + `api/movieComment/getComments/${postId}`)
 
-                    const data1 = await res1.json()
-                    if(data1.error){
-                        return alert(data1.error)
+                    const data = await res.json()
+                    if(data.error){
+                        return this.error = data.error
                     }
 
-                    for(const comment of data1.comments){
+                    this.userId = JSON.parse(userId)
 
-                        console.log(comment.user._id)
-                        console.log(comment.post.userId)
-
-
+                    for(const comment of data.comments){
+                        
                         this.comments.push(comment)
                     }
                 
+                    return 
 
                 } else {
 
-                    const postId = this.post._id
+                    const res = await fetch(config.hostname + `api/serialComment/getComments/${postId}`)
 
-                    const res2 = await fetch(config.hostname + `api/serialComment/getComments/${postId}`)
-
-                    const data2 = await res2.json()
-                    if(data2.error){
-                        return alert(data2.error)
+                    const data = await res.json()
+                    if(data.error){
+                        return this.error = data.error
                     }
 
-                    for(const comment of data2.comments){
+                    this.userId = JSON.parse(userId)
+
+                    for(const comment of data.comments){
                         this.comments.push(comment)
                     }
                 }
@@ -185,7 +184,7 @@ export default ({
 
                 const config = require('../config')
 
-                const postId = this.post._id
+                const postId = localStorage.getItem("postId")
 
                 const res = await fetch(config.hostname + `api/movie/getOne/${postId}`)
                 const data = await res.json()
@@ -200,10 +199,11 @@ export default ({
 
                     const data = await res.json()
                     if(data.error){
-                        return alert(data.error)
+                        return this.error = data.error
                     }
 
-                    return alert("El comentario ha sido borrado con éxito")
+                    alert("El comentario ha sido borrado con éxito")
+                    return this.$router.go()
 
                 } else {
                     const res = await fetch(config.hostname + `api/serialComment/remove/${commentId}`, {
@@ -215,10 +215,11 @@ export default ({
 
                     const data = await res.json()
                     if(data.error){
-                        return alert(data.error)
+                        return this.error = data.error
                     }
 
-                    return alert("El comentario ha sido borrado con éxito")
+                    alert("El comentario ha sido borrado con éxito")
+                    return this.$router.go()
 
                 }
 

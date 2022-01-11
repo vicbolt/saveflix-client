@@ -1,6 +1,8 @@
 <template>
     <div class="sf-edit-pendiente">
 
+         <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+
         <v-card>
             <v-app-bar>
                 <v-icon class="font-weight-black mr-2" size="40"> mdi-movie-edit-outline </v-icon>
@@ -54,6 +56,7 @@ export default ({
     data(){
         return{
             title: this.post.title,
+            searchTitle: this.post.searchTitle,
             director: this.post.director,
             description: this.post.description,
             image: this.post.image,
@@ -87,8 +90,10 @@ export default ({
 
                     const userId = JSON.parse(localStorage.getItem("userId"))
 
+
                     const body = JSON.stringify({
                         title: this.title,
+                        secarhTitle: this.title,
                         director: this.director,
                         description: this.description,
                         score: this.score,

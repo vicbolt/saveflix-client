@@ -1,6 +1,9 @@
 <template>
     <div class="sf-signUp-form">
 
+        <v-alert v-if="this.error" type="error" border="top" color="red lighten-2" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.msg" border="top" color="red lighten-2" dark> {{this.msg}} </v-alert>
+
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form >
             <h1 class="mb-2"> REGISTRO </h1>
@@ -41,6 +44,8 @@ export default ({
             password: "",
             password2: "",
             avatar: undefined,
+            error: "",
+            msg: ""
         }
     },
 
@@ -66,13 +71,19 @@ export default ({
 
                 const data = await res.json()
                     if(data.error){
-                        return alert(data.error)
+                        return this.error = data.error
                     } else {
                         localStorage.setItem('email', this.email)
-                        this.$router.push('/activateCode')
+                        this.msg = "La cuenta ha sido activada, inicie sesión para continuar"
+                        setTimeout(() => {
+                            this.$router.push('/activateCode')
+                        }, 2000);
+                        
                     }
+
                 
-                return alert("Se ha enviado un correo electrónico con el código para activar su cuenta")
+                
+
 
             } catch(error){
                 return res.status(500).json(error)

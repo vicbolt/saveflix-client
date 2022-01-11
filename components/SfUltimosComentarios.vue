@@ -8,7 +8,7 @@
             </v-app-bar>
 
             <v-list>
-                <div v-for="comment in comments" :key="comment.id" @click="goTo(comment.post)" style="cursor:pointer" class="mt-4">
+                <div v-for="comment in comments" :key="comment.id" @click="goTo(comment.post._id)" style="cursor:pointer" class="mt-4">
                     <v-row>
                         <v-col cols="4">
                             <v-img class="imagen" :src="comment.user.avatar" width="70px" height="70px" />
@@ -34,44 +34,49 @@ export default ({
     },
 
     async beforeMount(){
-        await this.ultimosComentarios()
+        
+        // await this.ultimosComentarios()
     },
 
     methods: {
+
        async ultimosComentarios(){
             try{
+
+                
                 const config = require('../config')
                 const res = await fetch(config.hostname + 'api/movieComment/latestComments')
 
                 const data = await res.json()
-
                 if(data.error){
-                    return alert(data.error)
+                    alert(data.error)
                 }
 
 
                 const res2 = await fetch(config.hostname + 'api/serialComment/latestComments')
                 const data2 = await res2.json()
                 if(data2.error){
-                    return alert(data2.error)
+                    alert(data2.error)
                 }
 
                 const allComments = data.comments.concat(data2.comments)
-
-                // const comentarios = allComments.sort({ createdAt: "desc" }) //¿PORQUE NO FUNCIONA?
+                
             
                 for(const comment of allComments){
                     this.comments.push(comment)
                 }
-        
 
+                
             }catch(error){
                 return console.log(error)
             }
         },
 
         goTo(postId){
-            this.$router.push(`/details/${postId}`)
+            
+            localStorage.removeItem("postId")
+            localStorage.setItem("postId", postId)
+            this.$router.go(`/details/${postId}`)
         }
     }
 })

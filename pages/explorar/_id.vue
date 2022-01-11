@@ -1,6 +1,8 @@
 <template>
     <div class="sf-explorar" v-if="visible">
 
+    <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+
     <v-card >
         <v-app-bar shaped>
             <v-row>
@@ -44,6 +46,7 @@ export default ({
             visible: true,
             titles: [],
             search: "",
+            error: ""
         }
     },
 
@@ -118,9 +121,10 @@ export default ({
                 const res = await fetch(config.hostname + `api/movie/search/${title}`)
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
+                localStorage.setItem("postId", data)
                 this.$router.push(`/details/${data}`)
 
                 
@@ -131,6 +135,7 @@ export default ({
         },
 
         goTo(movieId){
+            localStorage.setItem("postId", movieId)
             this.$router.push(`/details/${movieId}`)
         }
     }

@@ -1,6 +1,8 @@
 <template>
     <div class="sf-edit-profile-page" v-if="visible">
 
+        <v-alert v-if="this.error" type="error" border="top" color="red" > {{this.error}} </v-alert>
+
         <v-row>
             <v-col cols="8 offset-2">
                 <v-app-bar shaped class="d-flex justify-center mb-2" style="background-color:rgb(229,9,20)">
@@ -62,7 +64,8 @@ export default ({
             currentPassword: "",
             newPassword: "",
             newPassword2: "",
-            avatar: ""
+            avatar: "",
+            error: "",
         }
     },
 
@@ -152,7 +155,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 alert('El usuario se ha modificado')
@@ -185,7 +188,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                   return this.error = data.error
                 }
 
                 alert('El usuario se ha modificado')
@@ -217,7 +220,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 alert('El usuario se ha modificado')

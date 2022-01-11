@@ -1,6 +1,8 @@
 <template>
     <div class="sf-pendiente-details">
 
+         <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+
         <v-card>
             <v-app-bar shaped style="background: white; color: black">
                     <v-icon class="mr-4" size="35" color="black"> mdi-star </v-icon>
@@ -37,7 +39,8 @@ export default ({
             admin: false,
             admin2: true,
             postUser: this.post.userId._id,
-            postId: this.post._id
+            postId: this.post._id,
+            error: "",
             
         }
     },
@@ -76,7 +79,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
                 alert("El post ha sido borrado")
                 return this.$router.push(`/miPerfil/${this.post.userId}`)
@@ -91,7 +94,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
                 alert("El post ha sido borrado")
                 return this.$router.push(`/miPerfil/${this.post.userId}`)

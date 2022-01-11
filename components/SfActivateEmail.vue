@@ -1,6 +1,8 @@
 <template>
     <div class="sf-activate-email">
 
+        <v-alert v-if="this.error" border="top" type="error" color="red lighten-2" dark> {{this.error}} </v-alert>
+
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
             <h1> ACTIVAR NUEVO EMAIL </h1>
@@ -54,7 +56,8 @@ export default ({
             D: "",
             E: "",
             F: "",
-            code: ""
+            code: "",
+            error: "",
         }
     },
 
@@ -101,7 +104,7 @@ export default ({
                 const data = await res.json()
 
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 alert("La cuenta ha sido activada, inicie sesión para continuar")

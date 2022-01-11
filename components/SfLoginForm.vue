@@ -1,6 +1,9 @@
 <template>
     <div class="sf-login-form">
 
+            <v-alert v-if="this.error" type="error" border="top" color="red lighten-2" dark> {{this.error}} </v-alert>
+            <v-alert v-if="this.msg" type="error" border="top" color="red lighten-2" dark> {{this.msg}} </v-alert>
+
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
             <h1> INICIO DE SESIÓN </h1>
@@ -33,6 +36,8 @@ export default ({
         return{
             email: "",
             password: "",
+            error: "",
+            msg: "",
         }
     },
 
@@ -68,7 +73,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    alert(data.error)
+                    this.error = data.error
                     return this.$router.push('/logIn')
                 }
 
@@ -79,10 +84,11 @@ export default ({
                 }
 
                 localStorage.removeItem("email")
-                this.$router.push('/')
 
-                
-
+                setTimeout(() => {
+                    console.log("Holaa")
+                    this.$router.push('/');
+                }, 2000);
 
                 }catch (error) {
                     return console.log(error)

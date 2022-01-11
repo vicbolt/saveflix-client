@@ -1,5 +1,7 @@
 <template>
 <div class="sf-edit-perfil">
+
+     <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
         <v-card>
             <v-card-title class="text-h5 white" style="color:black" > EDITAR PERFIL </v-card-title>
             <v-card-text>
@@ -37,6 +39,7 @@ export default ({
             email: "",
             password: "",
             type: "password",
+            error: "",
         }
     },
 
@@ -52,7 +55,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 this.username = data.user.username
@@ -99,7 +102,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
                 alert('Los cambios se han guardado correctamente')

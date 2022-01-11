@@ -1,6 +1,8 @@
 <template>
     <div class="sf-add-movieP">
 
+        <v-alert v-if="this.error" border="top" type="error" color="red" dark> {{this.error}} </v-alert>
+
         <v-card>
             <v-app-bar>
                 <v-icon class="font-weight-black mr-2" size="40"> mdi-plus </v-icon>
@@ -40,6 +42,7 @@ export default {
             title: "",
             director: "",
             image: undefined,
+            error: "",
         }
     },
 
@@ -68,7 +71,7 @@ export default {
 
                 const data = await res.json()
                 if(data.error){
-                    return alert(data.error)
+                    return this.error = data.error
                 }
 
 
