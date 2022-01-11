@@ -28,7 +28,7 @@
                         <v-divider class="mb-1"></v-divider>
                         <v-text-field v-model="director" name="director" placeholder="Ej: 'Stanley Kubrick'" outlined />
 
-                        <h6 class="mt-n5">SINOPSIS</h6>
+                        <h6 class="mt-n5">OPINION</h6>
                         <v-divider class="mb-1"></v-divider>
                         <v-text-field v-model="description" placeholder="Escriba su opinión sobre la película" outlined height="100px" />
 
@@ -79,8 +79,6 @@ export default {
 
             try{
 
-                console.log(this.url)
-
                 const config = require('../config')
 
                 const strUserId = localStorage.getItem('userId')
@@ -96,8 +94,6 @@ export default {
                 //     formData.append('userId', userId)
                 //     formData.append('image', this.url)
 
-                console.log(this.title, this.director, this.description, this.score, userId, this.url)
-
                 const body = JSON.stringify({
                     title:  this.title,
                     director: this.director,
@@ -106,6 +102,8 @@ export default {
                     userId: userId,
                     image: this.url
                 })
+
+                console.log({body})
 
                 const res = await fetch(config.hostname + 'api/movie/create', {
                     method: 'post',

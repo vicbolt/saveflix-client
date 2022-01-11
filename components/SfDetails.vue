@@ -30,7 +30,7 @@
                                     <v-divider class="mb-1" style="width: 160px;"></v-divider>
                                         <h3 class="mb-6"> {{this.director}}</h3>
 
-                                    <h6 class="mb-1">SINOPSIS</h6>
+                                    <h6 class="mb-1">OPINION</h6>
                                     <v-divider class="mb-2" style="width: 560px;"></v-divider>
                                         <p style="max-width:560px; height:180px; text-align: justify; overflow: scroll" class="mb-10"> {{this.description}}</p>
                                     

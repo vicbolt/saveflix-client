@@ -23,7 +23,7 @@
                         <v-divider class="mb-1"></v-divider>
                         <v-text-field v-model="director" :placeholder="post.director" outlined /> 
 
-                        <h6 class="mt-n5">SINOPSIS</h6>
+                        <h6 class="mt-n5">OPINION</h6>
                         <v-divider class="mb-1"></v-divider>
                         <v-text-field v-model="description" :placeholder="post.description" outlined height="100px" />
 

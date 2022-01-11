@@ -12,7 +12,11 @@
             <v-card-text>
                 <v-row>
                     <v-col cols="4">
-                        <v-file-input v-model="image" class="mt-3" height="360px" outlined prepend-icon="" style="background: gray; border: 2px solid white" placeholder="AÑADIR PORTADA"/>
+                        <div class="file-container">
+                            <h3 v-if="!url" id="h3">SUBIR PORTADA</h3>
+                            <img id="img" v-if="url" :src="url" alt="Image not found" @click="picAgain">
+                            <input v-if="!url" type="file" @change="showImg" ref="file" id="imgBtn" class="mt-3" style="background: red; border: 2px solid white; overflow: hidden"/>
+                        </div>                    
                     </v-col>
 
                     <v-col cols="8">
@@ -22,7 +26,7 @@
                         <h6 class="mt-n5">DIRECTOR</h6>
                         <v-divider class="mb-1"></v-divider>
                         <v-text-field v-model="director" placeholder="Ej: 'Rubén Molina'" outlined />
-                        <h6 class="mt-n5">SINOPSIS</h6>
+                        <h6 class="mt-n5">OPINION</h6>
                         <v-divider class="mb-1"></v-divider>
                         <v-text-field v-model="description" placeholder="Escriba su opinión sobre la serie" outlined height="100px" />
                         <h6 class="mt-n5">PUNTUACIÓN</h6>
@@ -63,45 +67,76 @@ export default ({
                 v => ( v && v <= 100 ) || "El valor máximo es 100",
             ],
             error: "",
+            url: "",
         }
     },
 
     methods: {
         async upload(){
-
-            const strUserId = localStorage.getItem('userId')
-
-            const userId = JSON.parse(strUserId)
-            
-            const formData = new FormData()
-                formData.enctype = 'multipart/form-data'
-                formData.append('title', this.title)
-                formData.append('director', this.director)
-                formData.append('description', this.description)
-                formData.append('score', this.score)
-                formData.append('userId', userId)
-                formData.append('image', this.image)
-            
             try{
+                const strUserId = localStorage.getItem('userId')
 
-                const config = require('../config')
-
-                const res = await fetch(config.hostname + 'api/serial/create', {
-                    method: 'post',
-                    body: formData
+                const userId = JSON.parse(strUserId)
+                
+                // const formData = new FormData()
+                //     formData.enctype = 'multipart/form-data'
+                //     formData.append('title', this.title)
+                //     formData.append('director', this.director)
+                //     formData.append('description', this.description)
+                //     formData.append('score', this.score)
+                //     formData.append('userId', userId)
+                //     formData.append('image', this.image)
+                
+                const body = JSON.stringify({
+                    title:  this.title,
+                    director: this.director,
+                    description: this.description,
+                    score: this.score,
+                    userId: userId,
+                    image: this.url
                 })
 
-                const data = await res.json()
-                if(data.error){
-                    return this.error = data.error
+                    const config = require('../config')
+
+                    const res = await fetch(config.hostname + 'api/serial/create', {
+                        method: 'post',
+                        headers: {
+                            "Content-Type" : "application/json"
+                        },
+                        body
+                    })
+
+                    const data = await res.json()
+                    if(data.error){
+                        return this.error = data.error
+                    }
+
+                    alert('El post se ha subido con éxito')
+                    this.$router.push('/misSeries')
+
+                }catch(error){
+                    return console.log(error)
                 }
+            },
 
-                alert('El post se ha subido con éxito')
-                this.$router.push('/misSeries')
+                    showImg(){
 
-            }catch(error){
-                return console.log(error)
+            const file = this.$refs.file.files[0]
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                console.log(reader.result)
+                this.url = reader.result
+                console.log("ESTO ES THIS.URL" ,this.url)
             }
+
+            if(file){
+                reader.readAsDataURL(file)
+            }
+            
+        },
+
+        picAgain(){
+            this.url = ""
         },
 
         showScore(){
@@ -110,3 +145,35 @@ export default ({
     }
 })
 </script>
+
+<style scoped>
+
+.file-container{
+    background-color: rgb(58, 58, 58);
+    height: 405px;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#img{
+    height: 401px;
+    width: 281px;
+}
+
+#imgBtn{
+    color: rgb(0, 0, 0); opacity: 100%;
+    opacity: 0%;
+    height: 403px;
+    width: 283px;
+    cursor: pointer;
+}
+
+#h3{
+    margin-left: 100px;
+    text-align: center;
+    color: white;
+}
+
+</style>
