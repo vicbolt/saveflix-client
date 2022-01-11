@@ -2,7 +2,7 @@
     <div class="sf-signUp-form">
 
         <v-alert v-if="this.error" type="error" border="top" color="red lighten-2" dark> {{this.error}} </v-alert>
-        <v-alert v-if="this.msg" border="top" color="red lighten-2" dark> {{this.msg}} </v-alert>
+        <v-alert v-if="this.msg" border="top" type="success" color="red lighten-2" dark> {{this.msg}} </v-alert>
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form >

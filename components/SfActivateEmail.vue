@@ -2,6 +2,7 @@
     <div class="sf-activate-email">
 
         <v-alert v-if="this.error" border="top" type="error" color="red lighten-2" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.msg" border="top" type="success" color="green lighten-2" dark> {{this.msg}} </v-alert>
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
@@ -58,6 +59,7 @@ export default ({
             F: "",
             code: "",
             error: "",
+            msg: ""
         }
     },
 
@@ -106,10 +108,12 @@ export default ({
                 if(data.error){
                     return this.error = data.error
                 }
+                
+                this.msg = "La cuenta ha sido activada, inicie sesión para continuar"
 
-                alert("La cuenta ha sido activada, inicie sesión para continuar")
-                this.$router.push('/logIn')
-
+                setTimeout(() => {
+                    this.$router.push('/logIn');
+                }, 2000);
 
                 }catch (error) {
                     return console.log(error)
