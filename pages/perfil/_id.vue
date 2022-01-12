@@ -4,18 +4,18 @@
         <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
 
         <!-- BARRA DE TITULO -->
-        <v-card class="mt-5">
-                <v-row style="background: linear-gradient(180deg, rgb53, 53, 53), rgb(83, 72, 72)">
+        <v-card class="mt-5" shaped>
+                <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53); height: 130px">
                     <v-col cols="5"  style="background-color: ; ">
                         <v-row>
-                            <v-avatar size="100" class="ml-6 mr-3 p-4" color="rgb(209, 53, 53)"> 
+                            <v-avatar size="100" class="ml-6 mr-5 mt-4 " color="rgb(209, 53, 53)"> 
                                 <img class="avatar" :src="avatar" alt="avatar">
                             </v-avatar>
-                            <h2 class="mt-8"> {{this.username}} </h2>
+                            <h2 class="mt-10"> {{this.username}} </h2>
                         </v-row>                       
                     </v-col>
                     <v-col cols="5">
-                        <v-row class="mt-1">
+                        <v-row class="mt-5">
                             <v-col cols="4" > 
                                 <h3 style="text-align: center">{{this.allPosts}}</h3>
                                 <h4 style="text-align: center">Publicaciones</h4>
@@ -32,8 +32,8 @@
                         </v-row>
                     </v-col>
                     <v-col cols="1">
-                        <v-btn v-if="!siguiendo" @click="follows()" color="green"  class="mt-5" style="color:black">SEGUIR</v-btn>
-                        <v-btn v-if="siguiendo"  @click="follows()" color="rgb(229,9,20)" class="mt-5" style="color:black">DEJAR DE SEGUIR</v-btn>
+                        <v-btn v-if="!siguiendo" @click="follows()" color="green"  class="mt-10" style="color:black">SEGUIR</v-btn>
+                        <v-btn v-if="siguiendo"  @click="follows()" color="rgb(229,9,20)" class="mt-10" style="color:black">DEJAR DE SEGUIR</v-btn>
                     </v-col>
                 </v-row>
         </v-card>
@@ -288,5 +288,6 @@ export default({
 <style scoped>
 .avatar{
     padding: 2.2px;
+    border: 2px solid white;;
 }
 </style>

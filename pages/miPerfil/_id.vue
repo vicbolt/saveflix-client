@@ -3,18 +3,18 @@
 
         <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
         <!-- BARRA DE TITULO -->
-        <v-card class="mt-5">
-                <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53)">
-                    <v-col cols="5"  style="background-color: ; ">
+        <v-card class="mt-5" shaped>
+                <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53); height: 130px" >
+                    <v-col cols="5">
                         <v-row>
-                            <v-avatar size="100" class="ml-6 mr-3 p-4" color="rgb(209, 53, 53)"> 
-                                <img class="avatar" :src="avatar" alt="avatar">
+                            <v-avatar  size="100" class="ml-6 mr-5 mt-4 " color="rgb(209, 53, 53)"> 
+                                <img class="avatar"  :src="avatar" alt="avatar">
                             </v-avatar>
-                            <h2 class="mt-8"> {{this.username}} </h2>
+                            <h1 class="mt-10"> {{this.username}} </h1>
                         </v-row>                       
                     </v-col>
                     <v-col cols="5">
-                        <v-row class="mt-1">
+                        <v-row class="mt-5">
                             <v-col cols="4" style="cursor: pointer"> 
                                 <h3 style="text-align: center">{{this.allPosts}}</h3>
                                 <h4 style="text-align: center">Publicaciones</h4>
@@ -31,7 +31,7 @@
                         </v-row>
                     </v-col>
                     <v-col cols="1">
-                        <v-btn color="white" style="color:black" class="mt-5" @click="goToEditProfilePage()">EDITAR PERFIL</v-btn>
+                        <v-btn color="white" style="color:black" class="mt-10" outlined @click="goToEditProfilePage()">EDITAR PERFIL</v-btn>
                     </v-col>
                 </v-row>
         </v-card>
@@ -343,5 +343,6 @@ export default({
 <style scoped>
 .avatar{
     padding: 2.2px;
+    border: 2px solid white;
 }
 </style>

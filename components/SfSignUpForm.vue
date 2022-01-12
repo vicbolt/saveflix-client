@@ -2,7 +2,7 @@
     <div class="sf-signUp-form">
 
         <v-alert v-if="this.error" type="error" border="top" color="red lighten-2" dark> {{this.error}} </v-alert>
-        <v-alert v-if="this.msg" border="top" type="success" color="red lighten-2" dark> {{this.msg}} </v-alert>
+        <v-alert v-if="this.msg" border="top" type="success" color="green lighten-2" dark> {{this.msg}} </v-alert>
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form >
@@ -59,11 +59,10 @@ export default ({
                 try{
 
                 const body = JSON.stringify({
-                    title:  this.title,
-                    director: this.director,
-                    description: this.description,
-                    score: this.score,
-                    userId: userId,
+                    email: this.email,
+                    username: this.username,
+                    password: this.password,
+                    password2: this.password2,
                     avatar: this.url
                 })
 

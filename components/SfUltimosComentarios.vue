@@ -35,7 +35,7 @@ export default ({
 
     async beforeMount(){
         
-        // await this.ultimosComentarios()
+        await this.ultimosComentarios()
     },
 
     methods: {
