@@ -56,7 +56,6 @@ export default ({
 
     methods: {
         async submit(){
-
                 try{
 
                 const body = JSON.stringify({
@@ -65,7 +64,7 @@ export default ({
                     description: this.description,
                     score: this.score,
                     userId: userId,
-                    image: this.url
+                    avatar: this.url
                 })
 
                 const config = require('../config')
