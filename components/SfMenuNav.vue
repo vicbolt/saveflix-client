@@ -1,7 +1,7 @@
 <template>
     <div class="sf-menu-nav" v-if="visible">
 
-        <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.error" class="text-center" dismissible type="error" border="top" color="red" dark> {{this.error}} </v-alert>
 
         <v-app-bar class="barra" elevation="16" rounded >
             <a href="/">

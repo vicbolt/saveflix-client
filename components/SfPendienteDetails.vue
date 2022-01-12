@@ -1,7 +1,7 @@
 <template>
     <div class="sf-pendiente-details">
 
-         <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+         <v-alert v-if="this.error" class="text-center" dismissible type="error" border="top" color="red" dark> {{this.error}} </v-alert>
 
         <v-card>
             <v-app-bar shaped style="background: white; color: black">

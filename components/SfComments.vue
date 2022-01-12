@@ -1,7 +1,7 @@
 <template>
     <div class="sf-comments">
 
-        <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
 
         <v-divider class="mb-4"></v-divider>
             <v-card>

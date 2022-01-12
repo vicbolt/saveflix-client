@@ -1,7 +1,7 @@
 <template>
     <div class="sf-mi-perfil" v-if="visible">
 
-        <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5" shaped>
                 <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53); height: 130px" >

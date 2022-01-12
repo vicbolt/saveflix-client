@@ -1,7 +1,7 @@
 <template>
     <div class="sf-add-serial">
 
-    <v-alert v-if="this.error" border="top" color="red" type="error" dark> {{this.error}} </v-alert>
+    <v-alert v-if="this.error" border="top" class="text-center" dismissible color="red" type="error" dark> {{this.error}} </v-alert>
 
         <v-card>
             <v-app-bar>

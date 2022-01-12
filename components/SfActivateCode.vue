@@ -1,8 +1,8 @@
 <template>
     <div class="sf-activate-code">
 
-        <v-alert v-if="this.error" border="top" type="error" color="red lighten-2" dark> {{this.error}} </v-alert>
-        <v-alert v-if="this.msg" border="top" color="green lighten-2" dark> {{this.msg}} </v-alert>
+        <v-alert v-if="this.error" border="top" type="error" color="red lighten-2" dark class="text-center" dismissible> {{this.error}} </v-alert>
+        <v-alert v-if="this.msg" border="top" color="green lighten-2" class="text-center" dark dismissible> {{this.msg}} </v-alert>
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>

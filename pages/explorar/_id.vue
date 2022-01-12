@@ -1,7 +1,7 @@
 <template>
     <div class="sf-explorar" v-if="visible">
 
-    <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+    <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
 
     <v-card >
         <v-app-bar shaped>

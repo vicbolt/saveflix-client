@@ -1,7 +1,7 @@
 <template>
     <div class="sf-add-movieP">
 
-        <v-alert v-if="this.error" border="top" type="error" color="red" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.error" border="top" class="text-center" dismissible type="error" color="red" dark> {{this.error}} </v-alert>
 
         <v-card>
             <v-app-bar>

@@ -1,7 +1,7 @@
 <template>
     <div class="sf-edit">
 
-    <v-alert v-if="this.error" type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+    <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
         <v-card>
             <v-app-bar>
                 <v-icon class="font-weight-black mr-2" size="40"> mdi-movie-edit-outline </v-icon>
