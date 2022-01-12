@@ -118,8 +118,7 @@ export default {
                     return this.error = data.error
                 }
 
-                alert('El post se ha subido con éxito')
-                this.$router.push('/misPeliculas')
+                this.$router.push(`/misPeliculas/${userId}`)
 
             }catch(error){
                 return console.log(error)

@@ -1,7 +1,9 @@
 <template>
     <div class="sf-pendiente-details">
 
-         <v-alert v-if="this.error" class="text-center" dismissible type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.error" class="text-center" dismissible type="error" border="top" color="red" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.msg" type="info" class="text-center" dismissible border="top" color="green" dark> {{this.msg}} </v-alert>
+
 
         <v-card>
             <v-app-bar shaped style="background: white; color: black">
@@ -41,6 +43,7 @@ export default ({
             postUser: this.post.userId._id,
             postId: this.post._id,
             error: "",
+            msg: "",
             
         }
     },
@@ -81,8 +84,12 @@ export default ({
                 if(data.error){
                     return this.error = data.error
                 }
-                alert("El post ha sido borrado")
-                return this.$router.push(`/miPerfil/${this.post.userId}`)
+                this.msg = "El post ha sido borrado"
+
+                setTimeout(() => {
+                    this.$router.push(`/miPerfil/${this.post.userId}`)
+                }, 2000);
+
             } else {
 
                 const res = await fetch(config.hostname + `api/serialPendiente/remove/${this.post._id}`, {
@@ -96,8 +103,10 @@ export default ({
                 if(data.error){
                     return this.error = data.error
                 }
-                alert("El post ha sido borrado")
-                return this.$router.push(`/miPerfil/${this.post.userId}`)
+                this.msg = "El post ha sido borrado"
+                setTimeout(() => {
+                    this.$router.push(`/miPerfil/${this.post.userId}`)
+                }, 2000);
             }
 
             } catch (error){

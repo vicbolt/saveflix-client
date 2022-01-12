@@ -61,13 +61,6 @@ export default {
                 const strUserId = localStorage.getItem('userId')
 
                 const userId = JSON.parse(strUserId)
-                
-                // const formData = new FormData()
-                //     formData.enctype = 'multipart/form-data'
-                //     formData.append('title', this.title)
-                //     formData.append('director', this.director)
-                //     formData.append('userId', userId)
-                //     formData.append('image', this.image)
 
                 const body = JSON.stringify({
                     title:  this.title,
@@ -91,9 +84,8 @@ export default {
                     return this.error = data.error
                 }
 
-
-                alert('El post se ha subido con éxito')
-                this.$router.push('/misPeliculas')
+                this.$router.push(`/misPeliculas/${userId}`)
+              
 
             }catch(error){
                 return console.log(error)
@@ -107,7 +99,6 @@ export default {
             reader.onloadend = () => {
                 console.log(reader.result)
                 this.url = reader.result
-                console.log("ESTO ES THIS.URL" ,this.url)
             }
 
             if(file){

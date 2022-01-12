@@ -65,7 +65,7 @@ export default ({
                 const moviesData = await res1.json()
 
                 if(moviesData.error){
-                    return alert(moviesData.error)
+                    console.log(moviesData.error)
                 }
                 this.movies = moviesData.movies
 
@@ -76,7 +76,7 @@ export default ({
                 const serialsData = await res2.json()
 
                 if(serialsData.error){
-                    return alert(serialsData.error)
+                    console.log(serialsData.error)
                 }
                 this.serials = serialsData.serials
 

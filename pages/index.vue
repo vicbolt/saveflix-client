@@ -50,7 +50,7 @@ export default ({
 h1{
     margin-top: 20%;
     text-align: center;
-    color: rgb(173, 21, 21);
+    color: rgb(229,9,20);
     font-size: 700%;
     font-family: 'Bebas Neue';
     font-weight: 100;

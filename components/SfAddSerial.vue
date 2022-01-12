@@ -111,8 +111,7 @@ export default ({
                         return this.error = data.error
                     }
 
-                    alert('El post se ha subido con éxito')
-                    this.$router.push('/misSeries')
+                    this.$router.push(`/misSeries/${userId}`)
 
                 }catch(error){
                     return console.log(error)
@@ -126,7 +125,7 @@ export default ({
             reader.onloadend = () => {
                 console.log(reader.result)
                 this.url = reader.result
-                console.log("ESTO ES THIS.URL" ,this.url)
+                
             }
 
             if(file){

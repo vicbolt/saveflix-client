@@ -91,8 +91,6 @@ export default {
                     return this.error = data.error
                 }
 
-
-                alert('El post se ha subido con éxito')
                 this.$router.push(`/misSeries/${userId}`)
 
             }catch(error){

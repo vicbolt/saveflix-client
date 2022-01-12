@@ -2,6 +2,8 @@
     <div class="sf-edit-pendiente">
 
          <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.msg" type="info" class="text-center" dismissible border="top" color="green" dark> {{this.msg}} </v-alert>
+
 
         <v-card>
             <v-app-bar>
@@ -66,6 +68,8 @@ export default ({
                 v => ( v && v >= 0 ) || "El valor mínimo es 0",
                 v => ( v && v <= 100 ) || "El valor máximo es 100",
             ],
+            error: "",
+            msg: "",
         }
     },
 
@@ -128,8 +132,10 @@ export default ({
                         return console.log(data1.error)
                     }
                     
-                    alert('El post se ha añadido a tus películas vistas')
-                    return this.$router.push(`/misPeliculas/${userId}`)
+                    this.msg = 'El post se ha añadido a tus películas vistas'
+                    setTimeout(() => {
+                        this.$router.push(`/misPeliculas/${userId}`)
+                    }, 2000);
 
                 } else {
 
@@ -171,8 +177,10 @@ export default ({
                         return console.log(data1.error)
                     }
                     
-                    alert('El post se ha añadido a tus series vistas')
-                    return this.$router.push(`/misSeries/${userId}`)
+                    this.msg = 'El post se ha añadido a tus series vistas'
+                    setTimeout(() => {
+                        this.$router.push(`/misSeries/${userId}`)
+                    }, 2000);
                 }
 
             }catch(error){

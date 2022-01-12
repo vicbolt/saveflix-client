@@ -5,13 +5,15 @@
 
         <v-divider class="mb-4"></v-divider>
             <v-card>
+                    <v-alert v-if="this.msg" type="info" class="text-center" dismissible border="top" color="green" dark> {{this.msg}} </v-alert>
+
                 <v-app-bar>
                     <v-icon class="mr-4" size="25"> mdi-comment-plus-outline </v-icon>
                     <v-app-bar-title class="font-weight-black mt-1" style="font-size:15px"> DEJAR UN COMENTARIO </v-app-bar-title>
                     <v-spacer></v-spacer>
                 </v-app-bar>
-
                 <v-card-text>
+                    
                     <v-text-field v-model="message" outlined class="mt-1" placeholder="Escribe tu comentario"></v-text-field>
                     <v-btn color="rgb(229,9,20)" class="mt-n6" block @click="sendComment()"> ENVIAR </v-btn>
                 </v-card-text>
@@ -27,6 +29,7 @@
                             <p class="font-weight-black mt-5"  style=" font-size: 17px; color:white; width: auto"> {{comment.user.username}}</p> <p class="font-weight-black mt-5 ml-2">ha comentado:</p>
                             <v-spacer></v-spacer>
                             <p class="mt-5 mr-5" style="font-size:11px"> {{comment.date}} </p>
+
                             <v-btn v-if="comment.user._id === userId || comment.post.userId === userId " @click="removeComment(comment._id)" class=" font-weight-black mt-n2" style="background-color: red; min-width:1px; width:30px; min-height:1px; height: 30px; border-radius:100px; text-align:center "> <v-icon class="" size="18px">mdi-trash-can-outline</v-icon></v-btn>
                             </v-row>
                             <p class=""> {{comment.message}} </p>
@@ -49,11 +52,11 @@ export default ({
             ownerId: "",
             userId: "",
             error: "",
+            msg: "",
         }
     },
 
     async beforeMount(){
-
 
         await this.getComments()
        
@@ -93,7 +96,10 @@ export default ({
                         return this.error = data.error
                     }
 
-                    return this.$router.go()
+                    this.msg = 'El comentario ha sido enviado'
+                    setTimeout(() => {
+                        this.$router.go()
+                    }, 2000);
 
                 } else {
                     const userId = JSON.parse(localStorage.getItem('userId'))
@@ -117,9 +123,10 @@ export default ({
                         return this.error = data.error
                     }
 
-                    alert('El comentario ha sido enviado')
-
-                    return this.$router.go()
+                    this.msg = 'El comentario ha sido enviado'
+                    setTimeout(() => {
+                        this.$router.go()
+                    }, 2000);
                 }
 
             } catch(error){
@@ -202,8 +209,9 @@ export default ({
                         return this.error = data.error
                     }
 
-                    alert("El comentario ha sido borrado con éxito")
-                    return this.$router.go()
+                    setTimeout(() => {
+                        this.$router.go()
+                    }, 2000);
 
                 } else {
                     const res = await fetch(config.hostname + `api/serialComment/remove/${commentId}`, {
@@ -218,9 +226,9 @@ export default ({
                         return this.error = data.error
                     }
 
-                    alert("El comentario ha sido borrado con éxito")
-                    return this.$router.go()
-
+                    setTimeout(() => {
+                        this.$router.go()
+                    }, 2000);
                 }
 
             }catch(error){

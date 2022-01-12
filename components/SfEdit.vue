@@ -2,6 +2,7 @@
     <div class="sf-edit">
 
     <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
+    <v-alert v-if="this.msg" type="info" class="text-center" dismissible border="top" color="green" dark> {{this.msg}} </v-alert>
         <v-card>
             <v-app-bar>
                 <v-icon class="font-weight-black mr-2" size="40"> mdi-movie-edit-outline </v-icon>
@@ -65,6 +66,7 @@ export default ({
                 v => ( v && v <= 100 ) || "El valor máximo es 100",
             ],
             error: "",
+            msg: "",
         }
     },
 
@@ -117,8 +119,10 @@ export default ({
                         return this.error = data.error
                     }
 
-                    alert('El post se ha guardado con éxito')
-                    return this.$router.push(`/misPeliculas/${this.userId}`)
+                    this.msg = 'El post se ha guardado con éxito'
+                    setTimeout(() => {
+                        this.$router.push(`/misPeliculas/${this.userId}`)
+                    }, 2000);
 
                 } else {
 
@@ -135,8 +139,10 @@ export default ({
                         return this.error = data.error
                     }
 
-                    alert('El post se ha guardado con éxito')
-                    return this.$router.push(`/misSeries/${this.userId}`)
+                    this.msg = 'El post se ha guardado con éxito'
+                    setTimeout(() => {
+                        this.$router.push(`/misSeries/${this.userId}`)
+                    }, 2000);
                 }
 
             }catch(error){

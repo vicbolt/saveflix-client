@@ -50,12 +50,12 @@ export default {
 
                 const data1 = await res1.json()
                 if(data1.error){
-                    return alert(data1.error) 
+                    console.log(data1.error) 
                 }
 
                 const data2 = await res2.json()
                 if(data2.error){
-                    return alert(data2.error) 
+                     console.log(data2.error) 
                 }
 
                 const movies = data1.movies

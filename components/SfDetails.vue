@@ -2,6 +2,8 @@
     <div class="sf-details">
 
         <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
+        <v-alert v-if="this.msg" class="text-center" type="error" border="top" color="green" dismissible > {{this.msg}} </v-alert>
+
 
         <v-card>
             <v-app-bar shaped style="background: white; color: black">
@@ -103,6 +105,7 @@ export default ({
             views: "",
             paramsId: "",
             error: "",
+            msg: "",
         }
     },
 
@@ -313,8 +316,11 @@ export default ({
                         return this.error = data.error
                     }
 
-                    alert('El post ha sido borrado con éxito')
-                    this.$router.push('/misPeliculas')
+                    this.msg = 'El post ha sido borrado con éxito'
+
+                    setTimeout(() => {
+                        this.$router.push('/misPeliculas')
+                    }, 2000);
 
                 } else {
 
@@ -330,8 +336,10 @@ export default ({
                         return this.error = data.error
                     }
 
-                    alert('El post ha sido borrado con éxito')
-                    this.$router.push('/misSeries')
+                    this.msg = 'El post ha sido borrado con éxito'
+                    setTimeout(() => {
+                        this.$router.push('/misSeries')
+                    }, 2000);
                 }
 
             }catch(error){

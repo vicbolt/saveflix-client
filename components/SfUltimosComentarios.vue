@@ -49,14 +49,14 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    alert(data.error)
+                    console.log(data.error)
                 }
 
 
                 const res2 = await fetch(config.hostname + 'api/serialComment/latestComments')
                 const data2 = await res2.json()
                 if(data2.error){
-                    alert(data2.error)
+                    console.log(data2.error)
                 }
 
                 const allComments = data.comments.concat(data2.comments)

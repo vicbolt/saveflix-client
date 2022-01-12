@@ -310,8 +310,8 @@ export default ({
 
                 this.msg5 = "El perfil se ha borrado correctamente, esperamos volver a verte pronto"
 
-                localStorage.removeItem()
-                
+                localStorage.clear()
+
                 setTimeout(() => {
                     this.$router.push('/logIn')
                 }, 2000);
