@@ -83,9 +83,9 @@ export default ({
     },
 
     mounted() {
-        this.socket = this.$nuxtSocket({
-            channel: '/index'
-        })
+        // this.socket = this.$nuxtSocket({
+        //     channel: '/index'
+        // })
 
         /* Listen for events: */
         // this.socket.on('connection', (socket) => {
