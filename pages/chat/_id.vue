@@ -1,6 +1,7 @@
 <template>
     <div class="sf-chat" v-if="visible">
         <v-row>
+
             <!-- CHAT INPUT -->
             <v-col cols="8">
                 <v-card elevation="2" shaped class="mb-5">
@@ -15,14 +16,16 @@
                         </v-row>
                     </v-app-bar>
                     <v-card height="300px">
-
+                        <div>
+                            <p>hola</p>
+                        </div>
                     </v-card>
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field placeholder="Escribe un mensaje" class="ml-3"></v-text-field>
+                            <v-text-field v-model="message" placeholder="Escribe un mensaje" class="ml-3"></v-text-field>
                         </v-col>
                         <v-col cols="2">
-                            <v-btn color="rgb(229,9,20)" class="mt-4" width="28px"> ENVIAR </v-btn>
+                            <v-btn  color="rgb(229,9,20)" class="mt-4" width="28px"> ENVIAR </v-btn>
                         </v-col>
                     </v-row>
 
@@ -63,7 +66,8 @@ export default ({
     data() {
         return{
             visible: true,
-            following: []
+            following: [],
+            message: "",
         }
     },
 
@@ -78,7 +82,25 @@ export default ({
         }
     },
 
+    mounted() {
+        this.socket = this.$nuxtSocket({
+            channel: '/index'
+        })
+
+        /* Listen for events: */
+        // this.socket.on('connection', (socket) => {
+        //     console.log("socket", socket._id)
+        // })
+    },
+
     methods: {
+
+        // emit() {
+        //     this.socket.emit('message', {
+        //         message: this.message,
+        //         username: this.follower.username
+        //     })
+        // },
 
         async loadFollowing(){
 
