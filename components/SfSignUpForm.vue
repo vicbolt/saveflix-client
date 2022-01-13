@@ -24,7 +24,7 @@
                 <v-col cols="9"></v-col>
             </v-row>
             
-            <v-btn id="boton" @click="submit" block> REGISTRARME </v-btn>
+            <v-btn id="boton" :disabled="active" @click="submit"  block> REGISTRARME </v-btn>
 
             <div class="enlace">
             <a href="/logIn"> ¿Ya tienes una cuenta? ¡Inicia sesión para continuar!</a>
@@ -51,12 +51,14 @@ export default ({
             error: "",
             msg: "",
             url: "",
+            active: false
         }
     },
 
     methods: {
         async submit(){
-                try{
+            try{
+                this.active = true
 
                 const body = JSON.stringify({
                     email: this.email,
@@ -78,7 +80,11 @@ export default ({
 
                 const data = await res.json()
                     if(data.error){
-                        return this.error = data.error
+                        this.error = data.error
+                        setTimeout(() => {
+                            this.$router.go()
+                        }, 2000);
+
                     } else {
                         localStorage.setItem('email', this.email)
                         this.msg = "La cuenta ha sido activada, inicie sesión para continuar"
@@ -102,11 +108,9 @@ export default ({
                 this.url = reader.result
                 console.log("ESTO ES THIS.URL" ,this.url)
             }
-
             if(file){
                 reader.readAsDataURL(file)
             }
-            
         },
 
         picAgain(){

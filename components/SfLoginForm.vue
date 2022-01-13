@@ -12,7 +12,7 @@
             <v-col cols="5">
             <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
             <v-text-field type="password" v-model="password" placeholder="Contraseña" outlined class="mb-n3"/>  
-            <v-btn id="boton" block @click="login"> INICIAR SESIÓN</v-btn>
+            <v-btn id="boton" :disabled="active" block @click="login"> INICIAR SESIÓN</v-btn>
 
             <div class="enlace">
             <a href="/signUp"> ¿No tienes una cuenta? Regístrate para continuar</a>
@@ -38,6 +38,7 @@ export default ({
             password: "",
             error: "",
             msg: "",
+            active: false
         }
     },
 
@@ -56,6 +57,8 @@ export default ({
 
         async login(){
             try{
+                this.active = true
+
                 const config = require('../config')
 
                 const body = JSON.stringify({
@@ -73,8 +76,12 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
+                    
                     this.error = data.error
-                    return this.$router.push('/logIn')
+
+                    setTimeout(() => {
+                        this.$router.go()
+                    }, 2000);
                 }
 
                 if(data.token){

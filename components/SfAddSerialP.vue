@@ -30,7 +30,7 @@
 
                     </v-col>
 
-                    <v-btn color="rgb(229,9,20)" @click="upload" block> SUBIR A SERIES PENDIENTES </v-btn>
+                    <v-btn color="rgb(229,9,20)" :disabled="active" @click="upload" block> SUBIR A SERIES PENDIENTES </v-btn>
                 </v-row>
             </v-card-text>
         </v-card>
@@ -47,7 +47,8 @@ export default {
             director: "",
             image: undefined,
             error: "",
-            url: ""
+            url: "",
+            active: false
         }
     },
 
@@ -55,6 +56,8 @@ export default {
         async upload(){
 
             try{
+
+                this.active = true
 
                 const config = require('../config')
 
@@ -88,6 +91,7 @@ export default {
 
                 const data = await res.json()
                 if(data.error){
+                    this.active = false
                     return this.error = data.error
                 }
 

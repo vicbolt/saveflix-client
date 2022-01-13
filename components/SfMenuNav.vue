@@ -7,17 +7,35 @@
             <a href="/">
             <img height="50em" width="130em" src="@/assets/images/logotipoWeb.png" />
             </a>
-            <div class="ml-5px">
-            <v-btn id="Btn" class="font-weight-black ml-15" width="10em" height="50px" @click="explorar()">
-            <v-badge color="pink" dot>EXPLORAR</v-badge>
-            </v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="misPeliculas()">MIS PELICULAS</v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="misSeries()">MIS SERIES</v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="ranking()">MI RANKING</v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="chat()">
-            <v-badge color="pink" dot>CHAT</v-badge>
-            </v-btn>
-            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="perfil()">MI PERFIL</v-btn>
+            <div class="">
+                <v-row class="mt-2">
+                    <v-col cols="1" class="mr-13 ml-n10">
+                        <v-btn id="Btn" class="font-weight-black ml-15" width="10em" height="50px" @click="explorar()"> EXPLORAR </v-btn>
+                    </v-col>
+                    <v-col cols="1" class="mr-13 ml-13">    
+                        <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="misPeliculas()">MIS PELICULAS</v-btn>
+                    </v-col>
+                    <v-col cols="1" class="mr-13">
+                        <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="misSeries()">MIS SERIES</v-btn>
+                    </v-col>
+                    <v-col cols="1" class="mr-13">
+                        <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="ranking()">MI RANKING</v-btn>
+                    </v-col>
+                    <v-col cols="1" class="mr-13">
+                        <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="chat()">CHAT </v-btn>
+                <!-- <v-badge color="pink" dot>CHAT</v-badge> -->
+                    </v-col>
+                    <v-col cols="1" class="mr-16">
+                        <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="perfil()">MI PERFIL</v-btn>
+                    </v-col>
+                    <v-col cols="1" class="mt-3 ml-5">
+                        <v-text-field v-model="search" width="10em" placeholder="USUARIO" type="text" v-on:keyup.enter="buscar"></v-text-field>
+                    </v-col>
+                    <v-col cols="1" class="mt-3">
+                        <v-btn color="red" @click="buscar"> <v-icon size="20px">mdi-movie-search-outline</v-icon> </v-btn>
+                    </v-col>
+                </v-row>
+               
             </div>
 
             <v-spacer></v-spacer>
@@ -85,6 +103,8 @@ export default({
             userId: "",
             avatar: undefined,
             error: "",
+            search: "",
+
         }
     },
 
@@ -144,6 +164,37 @@ export default({
             this.$router.push(`/misSeries/${id}`)
 
         },
+
+
+        async buscar(){
+            try{
+                const config = require('../config')
+
+                const typeUsername = this.search
+                const username = typeUsername.replace(/ /g, "").toUpperCase()
+
+            
+                //BUSCAR USUARIO
+                const res = await fetch(config.hostname + `api/user/search/${username}`)
+                const data = await res.json()
+                if(data.error){
+                    return this.error = data.error
+                }
+
+                const userId = JSON.parse(localStorage.getItem("userId"))
+
+                if(data === userId){
+                    this.$router.push(`/miPerfil/${data}`)
+                } else{
+                    this.$router.push(`/perfil/${data}`)
+                }
+
+                
+            }catch(error){
+                return console.log(error)
+            }
+        },
+
 
         explorar(){
             const strId = localStorage.getItem('userId')

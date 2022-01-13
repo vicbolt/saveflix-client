@@ -43,7 +43,7 @@
                         </v-row>
                     </v-col>
 
-                    <v-btn color="rgb(229,9,20)" @click="upload" block> SUBIR SERIE </v-btn>
+                    <v-btn color="rgb(229,9,20)" :disabled="active" @click="upload" block> SUBIR SERIE </v-btn>
                 </v-row>
             </v-card-text>
         </v-card>
@@ -68,12 +68,14 @@ export default ({
             ],
             error: "",
             url: "",
+            active: false
         }
     },
 
     methods: {
         async upload(){
             try{
+                this.active = true
                 const strUserId = localStorage.getItem('userId')
 
                 const userId = JSON.parse(strUserId)
@@ -108,6 +110,7 @@ export default ({
 
                     const data = await res.json()
                     if(data.error){
+                        this.active = false
                         return this.error = data.error
                     }
 

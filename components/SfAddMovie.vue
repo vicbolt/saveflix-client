@@ -46,7 +46,7 @@
                         </v-row>
                     </v-col>
 
-                    <v-btn color="rgb(229,9,20)" @click="upload" block> SUBIR PELICULA </v-btn>
+                    <v-btn color="rgb(229,9,20)" :disabled="active" @click="upload" block> SUBIR PELICULA </v-btn>
                 </v-row>
             </v-card-text>
         </v-card>
@@ -71,6 +71,7 @@ export default {
             ],
             error: "",
             url: "",
+            active: false
         }
     },
 
@@ -78,21 +79,13 @@ export default {
         async upload(){
 
             try{
+                this.active = true
 
                 const config = require('../config')
 
                 const strUserId = localStorage.getItem('userId')
 
                 const userId = JSON.parse(strUserId)
-                
-                // const formData = new FormData()
-                //     formData.enctype = 'multipart/form-data'
-                //     formData.append('title', this.title)
-                //     formData.append('director', this.director)
-                //     formData.append('description', this.description)
-                //     formData.append('score', this.score)
-                //     formData.append('userId', userId)
-                //     formData.append('image', this.url)
 
                 const body = JSON.stringify({
                     title:  this.title,
@@ -102,8 +95,6 @@ export default {
                     userId: userId,
                     image: this.url
                 })
-
-                console.log({body})
 
                 const res = await fetch(config.hostname + 'api/movie/create', {
                     method: 'post',
@@ -115,6 +106,7 @@ export default {
 
                 const data = await res.json()
                 if(data.error){
+                    this.active = false
                     return this.error = data.error
                 }
 
