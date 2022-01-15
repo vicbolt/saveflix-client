@@ -60,74 +60,74 @@
 </template>
 
 <script>
-export default ({
-    layout: 'soloMenu',
+// export default ({
+//     layout: 'soloMenu',
     
-    data() {
-        return{
-            visible: true,
-            following: [],
-            message: "",
-        }
-    },
+//     data() {
+//         return{
+//             visible: true,
+//             following: [],
+//             message: "",
+//         }
+//     },
 
-   async beforeMount(){
+//    async beforeMount(){
 
-        await this.loadFollowing()
+//         await this.loadFollowing()
 
-        const token = localStorage.getItem('token')
+//         const token = localStorage.getItem('token')
 
-        if(!token){
-            this.visible = false
-        }
-    },
+//         if(!token){
+//             this.visible = false
+//         }
+//     },
 
-    mounted() {
-        const 
+//     mounted() {
+//         const 
 
-        /* Listen for events: */
-        // this.socket.on('connection', (socket) => {
-        //     console.log("socket", socket._id)
-        // })
-    },
+//         /* Listen for events: */
+//         // this.socket.on('connection', (socket) => {
+//         //     console.log("socket", socket._id)
+//         // })
+//     },
 
-    methods: {
+//     methods: {
 
-        // emit() {
-        //     this.socket.emit('message', {
-        //         message: this.message,
-        //         username: this.follower.username
-        //     })
-        // },
+//         // emit() {
+//         //     this.socket.emit('message', {
+//         //         message: this.message,
+//         //         username: this.follower.username
+//         //     })
+//         // },
 
-        async loadFollowing(){
+//         async loadFollowing(){
 
-            try{
-                const config = require('/config')
-                const id = JSON.parse(localStorage.getItem("userId"))
+//             try{
+//                 const config = require('/config')
+//                 const id = JSON.parse(localStorage.getItem("userId"))
 
                 
 
-                const res = await fetch(config.hostname + `api/user/following/${id}`)
+//                 const res = await fetch(config.hostname + `api/user/following/${id}`)
 
-                const data = await res.json()
-                if(data.error){
-                    console.log(data.error)
-                }
+//                 const data = await res.json()
+//                 if(data.error){
+//                     console.log(data.error)
+//                 }
 
-                const siguiendo = data.seguidores
+//                 const siguiendo = data.seguidores
 
 
-                for(const follower of siguiendo){
-                    this.following.push(follower)
-                }
+//                 for(const follower of siguiendo){
+//                     this.following.push(follower)
+//                 }
 
-            }catch(error){
-                return console.log(error)
-            }
-        },
-    }
-})
+//             }catch(error){
+//                 return console.log(error)
+//             }
+//         },
+//     }
+// })
 </script>
 
 <style scoped>
