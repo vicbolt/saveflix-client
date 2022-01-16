@@ -73,9 +73,10 @@ export default ({
                 const res = await fetch(config.hostname + 'api/user/signUp', {
                     method: 'post',
                     headers: {
-                        "Content-Type" : "application/json"
+                        "Content-Type" : "application/json",
+                        "Access-Control-Allow-Origin": "*",
                     },
-                    body
+                    body,
                 })
 
                 const data = await res.json()
