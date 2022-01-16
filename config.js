@@ -1,5 +1,5 @@
 const config = {
-    hostname: "https://saveflix-server.herokuapp.com/http/access-control-allow-origin/",
+    hostname: "https://saveflix-server.herokuapp.com/",
 }
 
 module.exports = config
