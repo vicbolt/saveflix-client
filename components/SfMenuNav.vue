@@ -183,9 +183,13 @@ export default({
 
                 const userId = JSON.parse(localStorage.getItem("userId"))
 
+                console.log(data)s
+
                 if(data === userId){
                     this.$router.push(`/miPerfil/${data}`)
                 } else{
+
+                localStorage.setItem("ownerId", data)
                     this.$router.push(`/perfil/${data}`)
                 }
 
