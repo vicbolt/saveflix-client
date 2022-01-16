@@ -43,13 +43,21 @@ export default ({
     },
 
     beforeMount(){
+
+        console.log(this.$vuetify.breakpoint.name)
+
         const email = localStorage.getItem("email")
         if(email){
             this.email = email
         } else {
             this.email = ""
         }
-        
+    },
+
+    watch: {
+        'this.$vuetify.breakpoint.name'(value){
+             console.log(this.$vuetify.breakpoint.name)
+        }
 
     },
 
