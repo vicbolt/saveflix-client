@@ -93,8 +93,7 @@ export default ({
                 localStorage.removeItem("email")
 
                 setTimeout(() => {
-                    console.log("Holaa")
-                    this.$router.push('/');
+                    this.$router.push(`/explorar/${userId}`);
                 }, 2000);
 
                 }catch (error) {

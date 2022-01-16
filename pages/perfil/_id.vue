@@ -112,10 +112,11 @@ export default({
             this.visible = false
             return this.$router.push("/logIn")
         }
-
+        
+        await this.loadUserDetails()
         await this.loadMovies()
         await this.loadSerials()
-        await this.loadUserDetails()
+        
         
     },
 
