@@ -45,6 +45,7 @@ export default ({
     beforeMount(){
 
         console.log(this.$vuetify.breakpoint.name)
+        console.log("hola")
 
         const email = localStorage.getItem("email")
         if(email){
