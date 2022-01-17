@@ -51,18 +51,17 @@ export default ({
         }
     },
 
-        watch: {
-            '$vuetify.breakpoint.name'(value){
-                console.log(value)
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
 
-                if( value === "xl" || value === "lg" || value === 'md'){
-                    this.formulario = "6 offset-3"
-                    this.enlace = "font-size: 15px"
-                } else {
-                    this.formulario = "10 offset-1"
-                    this.enlace = "font-size: 12px"
-                }
-            
+            if( value === "xl" || value === "lg" || value === 'md'){
+                this.formulario = "6 offset-3"
+                this.enlace = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.enlace = "font-size: 12px"
+            }
         }
     },
 
@@ -100,13 +99,12 @@ export default ({
                 if(data.token){
                     localStorage.setItem('token', JSON.stringify(data.token))
                     localStorage.setItem('userId', JSON.stringify(data.userId))
-                    
                 }
 
                 localStorage.removeItem("email")
 
                 setTimeout(() => {
-                    this.$router.push(`/explorar/${userId}`);
+                    this.$router.push(`/explorar/${data.userId}`);
                 }, 2000);
 
                 }catch (error) {
