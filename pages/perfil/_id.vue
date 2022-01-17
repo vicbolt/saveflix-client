@@ -32,7 +32,7 @@
                         </v-row>
                     </v-col>
                     <v-col cols="1">
-                        <v-btn v-if="!siguiendo" @click="follows()" color="green"  class="mt-10" style="color:black">SEGUIR</v-btn>
+                        <v-btn v-if="!siguiendo" @click="follows()" color="green"  class="mt-10" style="color:white; border: 2px solid white">SEGUIR</v-btn>
                         <v-btn v-if="siguiendo"  @click="follows()" color="rgb(229,9,20)" class="mt-10 ml-n8" style="color:white; border: 2px solid white">DEJAR DE SEGUIR</v-btn>
                     </v-col>
                 </v-row>
