@@ -39,13 +39,11 @@ export default ({
             error: "",
             msg: "",
             active: false,
-            tamaño: this.$vuetify.breakpoint.name
+            
         }
     },
 
     beforeMount(){
-
-        console.log(this.tamaño)
 
         const email = localStorage.getItem("email")
         if(email){
@@ -53,6 +51,13 @@ export default ({
         } else {
             this.email = ""
         }
+    },
+
+        watch: {
+            '$vuetify.breakpoint.name'(value){
+            console.log({ name: value })
+        }
+
     },
 
 
@@ -106,12 +111,6 @@ export default ({
             }
         },
 
-            watch: {
-                'this.$vuetify.breakpoint.name'(value){
-             console.log(this.$vuetify.breakpoint.name)
-        }
-
-    },
     })
 
 </script>
