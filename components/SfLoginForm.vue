@@ -38,14 +38,14 @@ export default ({
             password: "",
             error: "",
             msg: "",
-            active: false
+            active: false,
+            tamaño: this.$vuetify.breakpoint.name
         }
     },
 
     beforeMount(){
 
-        console.log(this.$vuetify.breakpoint.name)
-        console.log("hola")
+        console.log(this.tamaño)
 
         const email = localStorage.getItem("email")
         if(email){
@@ -55,12 +55,7 @@ export default ({
         }
     },
 
-    watch: {
-        'this.$vuetify.breakpoint.name'(value){
-             console.log(this.$vuetify.breakpoint.name)
-        }
 
-    },
 
     methods: {
 
@@ -110,6 +105,13 @@ export default ({
                 } 
             }
         },
+
+            watch: {
+                'this.$vuetify.breakpoint.name'(value){
+             console.log(this.$vuetify.breakpoint.name)
+        }
+
+    },
     })
 
 </script>
