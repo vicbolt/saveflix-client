@@ -8,8 +8,8 @@
         <v-form>
             <h1> INICIO DE SESIÓN </h1>
             <v-row>
-            <v-col></v-col>
-            <v-col cols="5">
+            
+            <v-col cols="5 offset">
             <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
             <v-text-field type="password" v-model="password" placeholder="Contraseña" outlined class="mb-n3"/>  
             <v-btn id="boton" :disabled="active" block @click="login"> INICIAR SESIÓN</v-btn>
@@ -23,7 +23,7 @@
             </div>
             </v-col>
 
-            <v-col></v-col>
+            
             </v-row>
         </v-form>
 
@@ -39,6 +39,7 @@ export default ({
             error: "",
             msg: "",
             active: false,
+            size: this.$vuetify.breakpoint.name
             
         }
     },
@@ -57,6 +58,8 @@ export default ({
             '$vuetify.breakpoint.name'(value){
             console.log({ name: value })
         }
+
+
 
     },
 
