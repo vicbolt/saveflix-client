@@ -5,11 +5,12 @@
         <v-alert v-if="this.msg" border="top" color="green lighten-2" class="text-center" dark dismissible> {{this.msg}} </v-alert>
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
+
+
         <v-form>
             <h1> ACTIVAR LA CUENTA </h1>
             <v-row>
-            <v-col></v-col>
-            <v-col cols="5">
+            <v-col :cols="formulario">
             <v-text-field v-model="email" placeholder="Correo electrónico" />
             <v-row>
                 <v-col cols="2">
@@ -35,11 +36,10 @@
             <v-btn id="boton" block @click="activar"> ACTIVAR </v-btn>
 
             <div class="enlace">
-            <a href="/reactivateCode"> ¿No ha recibido el código? Haga click aquí para reenviarlo </a>
+            <a href="/reactivateCode" :style="enlace"> ¿No ha recibido el código? Haga click aquí para reenviarlo </a>
             </div>
             </v-col>
 
-            <v-col></v-col>
             </v-row>
         </v-form>
 
@@ -60,6 +60,9 @@ export default ({
             code: "",
             error: "",
             msg: "",
+            formulario: "",
+            enlace: ""
+
         }
     },
 
@@ -72,6 +75,20 @@ export default ({
             this.email = ""
         }
         
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xl" || value === "lg" || value === 'md'){
+                this.formulario = "6 offset-3"
+                this.enlace = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.enlace = "font-size: 12px"
+            }
+        }
     },
 
     methods: {

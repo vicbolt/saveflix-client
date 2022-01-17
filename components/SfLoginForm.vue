@@ -1,25 +1,25 @@
 <template>
-    <div class="sf-login-form">
+    <div class="sf-login-form mt-4">
 
             <v-alert v-if="this.error" class="text-center" dismissible type="error" border="top" color="red"  dark> {{this.error}} </v-alert>
             <v-alert v-if="this.msg" class="text-center" dismissible type="error" border="top" color="green"  dark> {{this.msg}} </v-alert>
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
-            <h1> INICIO DE SESIÓN </h1>
+            <h1 class="mb-4"> INICIO DE SESIÓN </h1>
             <v-row>
             
-            <v-col cols="5 offset">
+            <v-col :cols="formulario">
             <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
             <v-text-field type="password" v-model="password" placeholder="Contraseña" outlined class="mb-n3"/>  
             <v-btn id="boton" :disabled="active" block @click="login"> INICIAR SESIÓN</v-btn>
 
             <div class="enlace">
-            <a href="/signUp"> ¿No tienes una cuenta? Regístrate para continuar</a>
+            <a href="/signUp" :style="enlace"> ¿No tienes una cuenta? Regístrate para continuar</a>
             </div>
 
-            <div class="enlace">
-                <a href="/activateCode"> Haga click aquí para activar una cuenta</a>
+            <div class="enlace mt-2">
+                <a href="/activateCode" :style="enlace" > Haga click aquí para activar una cuenta</a>
             </div>
             </v-col>
 
@@ -39,7 +39,8 @@ export default ({
             error: "",
             msg: "",
             active: false,
-            size: this.$vuetify.breakpoint.name
+            formulario: "",
+            enlace: "",
             
         }
     },
@@ -56,14 +57,18 @@ export default ({
 
         watch: {
             '$vuetify.breakpoint.name'(value){
-            console.log({ name: value })
+                console.log(value)
+
+                if( value === "xl" || value === "lg" || value === 'md'){
+                    this.formulario = "6 offset-3"
+                    this.enlace = "font-size: 15px"
+                } else {
+                    this.formulario = "10 offset-1"
+                    this.enlace = "font-size: 12px"
+                }
+            
         }
-
-
-
     },
-
-
 
     methods: {
 

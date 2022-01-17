@@ -7,34 +7,36 @@
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form >
             <h1 class="mb-2"> REGISTRO </h1>
+
             <v-row>
-            <v-col cols="6 offset-3">
-            <v-text-field v-model="email" type="email" placeholder="Correo Electrónico" outlined class="mb-n4"/>
-            <v-text-field v-model="username" placeholder="Nombre de usuario" outlined class="mb-n2"/>
-            <v-text-field v-model="password" type="password" placeholder="Contraseña" outlined class="mb-n4"/>
-            <v-text-field v-model="password2" type="password" placeholder="Repita la contraseña" outlined class="mb-n2"/>
+                <v-col :cols="formulario">
+                    <v-text-field v-model="email" type="email" placeholder="Correo Electrónico" outlined class="mb-n4"/>
+                    <v-text-field v-model="username" placeholder="Nombre de usuario" outlined class="mb-n2"/>
+                    <v-text-field v-model="password" type="password" placeholder="Contraseña" outlined class="mb-n4"/>
+                    <v-text-field v-model="password2" type="password" placeholder="Repita la contraseña" outlined class="mb-n2"/>
+                </v-col>
+            </v-row>
+
             <v-row>
-                <v-col cols="8" id="center">
+                <v-col :cols="formulario" id="center">
                     <div class="file-container">
                         <h5 v-if="!url" id="h5">SUBIR AVATAR</h5>
                         <img id="img" v-if="url" :src="url" alt="Image not found" @click="picAgain">
                         <input v-if="!url" type="file" @change="showImg" ref="file" id="imgBtn" class="mt-3" style="background: red; border: 2px solid white; overflow: hidden"/>
                     </div>                   
                 </v-col>
-                <v-col cols="9"></v-col>
             </v-row>
             
-            <v-btn id="boton" :disabled="active" @click="submit"  block> REGISTRARME </v-btn>
+            <v-row>
+                <v-col :cols="formulario">
+                <v-btn id="boton" :disabled="active" @click="submit"  block> REGISTRARME </v-btn>
 
-            <div class="enlace">
-            <a href="/logIn"> ¿Ya tienes una cuenta? ¡Inicia sesión para continuar!</a>
-            </div>
-            </v-col>
-        
+                <div class="enlace">
+                <a href="/logIn" :style="enlace"> ¿Ya tienes una cuenta? ¡Inicia sesión para continuar!</a>
+                </div>
+                </v-col>
             </v-row>
-
         </v-form>
-
     </div>
 </template>
 
@@ -51,7 +53,23 @@ export default ({
             error: "",
             msg: "",
             url: "",
-            active: false
+            active: false,
+            formulario: "",
+            enlace: "",
+        }
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xl" || value === "lg" || value === 'md'){
+                this.formulario = "6 offset-3"
+                this.enlace = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.enlace = "font-size: 12px"
+            }
         }
     },
 

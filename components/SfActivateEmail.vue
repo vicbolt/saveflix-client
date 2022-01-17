@@ -9,37 +9,34 @@
             <h1> ACTIVAR NUEVO EMAIL </h1>
             <h5 style="text-align: center; color: gray"> Inserte el código enviado a la nueva dirección de email</h5>
             <v-row>
-            <v-col></v-col>
-            <v-col cols="5">
-            <v-row>
-                <v-col cols="2">
-                    <v-text-field class="code" v-on:keyup="validateA()" v-model="A" />
-                </v-col>
-                <v-col cols="2">
-                    <v-text-field ref="B" class="code" v-on:keyup="validateB()" v-model="B" />
-                </v-col>
-                <v-col cols="2">
-                    <v-text-field ref="C" class="code" v-on:keyup="validateC()" v-model="C" />
-                </v-col>
-                <v-col cols="2">
-                    <v-text-field ref="D" class="code" v-on:keyup="validateD()" v-model="D" />
-                </v-col>
-                <v-col cols="2">
-                    <v-text-field ref="E" class="code" v-on:keyup="validateE()" v-model="E" />
-                </v-col>
-                <v-col cols="2">
-                    <v-text-field ref="F" class="code" v-on:keyup="validateF()" v-model="F" />
-                </v-col>
-            </v-row>
-            
-            <v-btn id="boton" block @click="activar"> ACTIVAR </v-btn>
+                <v-col :cols="formulario">
+                <v-row>
+                    <v-col cols="2">
+                        <v-text-field class="code" v-on:keyup="validateA()" v-model="A" />
+                    </v-col>
+                    <v-col cols="2">
+                        <v-text-field ref="B" class="code" v-on:keyup="validateB()" v-model="B" />
+                    </v-col>
+                    <v-col cols="2">
+                        <v-text-field ref="C" class="code" v-on:keyup="validateC()" v-model="C" />
+                    </v-col>
+                    <v-col cols="2">
+                        <v-text-field ref="D" class="code" v-on:keyup="validateD()" v-model="D" />
+                    </v-col>
+                    <v-col cols="2">
+                        <v-text-field ref="E" class="code" v-on:keyup="validateE()" v-model="E" />
+                    </v-col>
+                    <v-col cols="2">
+                        <v-text-field ref="F" class="code" v-on:keyup="validateF()" v-model="F" />
+                    </v-col>
+                </v-row>
+                
+                <v-btn id="boton" block @click="activar"> ACTIVAR </v-btn>
 
-            <div class="enlace">
-            <a href="/reactivateEmail"> ¿No ha recibido el código? Haga click aquí para reenviarlo </a>
-            </div>
-            </v-col>
-
-            <v-col></v-col>
+                <div class="enlace">
+                <a href="/reactivateEmail" :style="enlace"> ¿No ha recibido el código? Haga click aquí para reenviarlo </a>
+                </div>
+                </v-col>
             </v-row>
         </v-form>
 
@@ -59,7 +56,9 @@ export default ({
             F: "",
             code: "",
             error: "",
-            msg: ""
+            msg: "",
+            formulario: "",
+            enlace: ""
         }
     },
 
@@ -72,6 +71,20 @@ export default ({
             this.email = ""
         }
         
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xl" || value === "lg" || value === 'md'){
+                this.formulario = "6 offset-3"
+                this.enlace = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.enlace = "font-size: 12px"
+            }
+        }
     },
 
     methods: {
