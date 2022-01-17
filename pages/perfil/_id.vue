@@ -6,7 +6,7 @@
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5" shaped>
                 <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53); height: 130px">
-                    <v-col cols="5"  style="background-color: ; ">
+                    <v-col cols="5">
                         <v-row>
                             <v-avatar size="100" class="ml-6 mr-5 mt-4 " color="rgb(209, 53, 53)"> 
                                 <img class="avatar" :src="avatar" alt="avatar">
@@ -33,7 +33,7 @@
                     </v-col>
                     <v-col cols="1">
                         <v-btn v-if="!siguiendo" @click="follows()" color="green"  class="mt-10" style="color:black">SEGUIR</v-btn>
-                        <v-btn v-if="siguiendo"  @click="follows()" color="rgb(229,9,20)" class="mt-10" style="color:black">DEJAR DE SEGUIR</v-btn>
+                        <v-btn v-if="siguiendo"  @click="follows()" color="rgb(229,9,20)" class="mt-10 ml-n8" style="color:white; border: 2px solid white">DEJAR DE SEGUIR</v-btn>
                     </v-col>
                 </v-row>
         </v-card>
@@ -116,14 +116,12 @@ export default({
         await this.loadUserDetails()
         await this.loadMovies()
         await this.loadSerials()
-        
-        
     },
 
     methods:{
+
         async loadSerials(){
             try{
-
                 const config = require('/config')
                 const id = localStorage.getItem('ownerId')
 
@@ -207,15 +205,13 @@ export default({
                 const userId = JSON.parse(localStorage.getItem("userId"))
                 const followers = data1.seguidores
 
-
                 if(followers.length > 0){
                     console.log(followers[0]._id === userId )
                     for(let i = 0; i < followers.length; i++){
-                    if(followers[i]._id === userId){
-                        this.siguiendo = true
-                     }
-               }
-
+                        if(followers[i]._id === userId){
+                            this.siguiendo = true
+                        }
+                    }
                 }
 
                 this.followers = followers.length
