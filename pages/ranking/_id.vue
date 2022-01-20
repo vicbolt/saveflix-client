@@ -5,7 +5,7 @@
 
 
         <v-row>
-            <v-col cols=6>
+            <v-col :cols="listaPeliculas">
             <v-card elevation="2">
                 <v-app-bar shaped class="d-flex justify-center mb-2" style="background-color:rgb(229,9,20)">
                     <v-icon class="mr-4" size="30"> mdi-star </v-icon>
@@ -15,17 +15,17 @@
                 <v-card-text>
                         <div v-for="(movie, index) in ranking" :key="movie.id"  @click="goTo(movie._id)" id="background"  class="container-movies mb-5" :style="{backgroundImage:`url(${ movie.image })` }">
                             <v-row style="background-color: rgb(0,0,0,0.9); cursor: pointer" class="mr-0">
-                                <v-col cols="1" style="background-color:rgb(229,9,20)">
+                                <v-col :cols="posicionM" style="background-color:rgb(229,9,20)">
                                     <h1 class="text-center mt-6" style="color:white;">{{index + 1}}</h1>
                                 </v-col>
-                                <v-col cols="3">
+                                <v-col :cols="imagenM">
                                     <v-img class="imagen" style="border-radius:100%" :src="movie.image" width="70px" height="70px" />
                                 </v-col>
-                                <v-col cols="5">
+                                <v-col :cols="tituloM">
                                     <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px; color:white;"> {{movie.title}} </p>
                                 </v-col> 
-                                <v-col cols="3" >
-                                    <h4 class="ml-10 mt-2" style="font-size:20px; text-align:center"> {{movie.score}} <br> <v-icon color="rgb(229,9,20)">mdi-heart</v-icon></h4> 
+                                <v-col :cols="puntuacionM" >
+                                    <h4 class=" mt-2" :style="fontSize"> {{movie.score}} <br> <v-icon color="rgb(229,9,20)">mdi-heart</v-icon></h4> 
                                 </v-col>
                                 <div>
                                     <v-divider></v-divider>
@@ -36,7 +36,7 @@
             </v-card>
             </v-col>
 
-            <v-col cols=6>
+            <v-col :cols="listaSeries">
             <v-card elevation="2">
                 <v-app-bar shaped class="d-flex justify-center mb-2" style="font-size: 25px; background-color:rgb(229,9,20)" >
                     <v-icon class="mr-4" size="30"> mdi-star </v-icon>
@@ -46,16 +46,16 @@
                 <v-card-text>
                         <div v-for="serial, index in serialRanking" :key="serial.id" @click="goTo(serial._id)" id="background"  class="container-movies mb-5" :style="{backgroundImage:`url(${serial.image})`}">
                             <v-row style="background-color: rgb(0,0,0,0.9); cursor: pointer" class="mr-0">
-                                <v-col cols="1" style="background-color:rgb(229,9,20)" >
+                                <v-col :cols="posicionS" style="background-color:rgb(229,9,20)" >
                                         <h1  class="text-center mt-6" style="color:white;">{{index + 1}}</h1>
                                 </v-col>
-                                <v-col cols="3">
+                                <v-col :cols="imagenS">
                                     <v-img class="imagen" style="border-radius:100%" :src="serial.image" width="70px" height="70px" />
                                 </v-col>
-                                <v-col cols="5">
-                                    <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px; color:white;"> {{serial.title}} </p> 
+                                <v-col :cols="tituloS">
+                                    <p class="mt-5 ml-n4 font-weight-black" style="font-size: 18px; color:white;" > {{serial.title}} </p> 
                                 </v-col> 
-                                <v-col cols="3" >
+                                <v-col :cols="puntuacionS" >
                                     <h4 class="ml-10 mt-2" style="font-size:20px; text-align:center"> {{serial.score}} <br> <v-icon color="rgb(229,9,20)">mdi-heart</v-icon></h4> 
                                 </v-col>
                                 <div>
@@ -84,6 +84,23 @@ export default ({
             moviePosition: 1,
             serialPosition: 1,
             error: "",
+
+            listaPeliculas: "6",
+            listaSeries: "6",
+
+            fontSize: "font-size:20px; text-align:center",
+
+            posicionM : "1",
+            imagenM: "3",
+            tituloM: "5",
+            puntuacionM: "3",
+
+            posicionS : "1",
+            imagenS: "3",
+            tituloS: "5",
+            puntuacionS: "3"
+
+
         }
     },
 
@@ -97,6 +114,27 @@ export default ({
         await this.moviesRanking()
         await this.serialsRanking()
 
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+  
+            if(value === "sm") {
+                this.listaPeliculas = "12"
+                this.listaSeries = "12"
+            } else if ( value === "xs"){
+                this.listaSeries = "12"
+                this.listaPeliculas = "12"
+
+                this.posicionM = "1"
+                this.imagenM = "4"
+                this.tituloM = "3"
+                this.puntuacionM = "3"
+                this.fontSize = "font-size:10px; text-align:center"
+            
+            }
+        }
     },
 
     methods: {

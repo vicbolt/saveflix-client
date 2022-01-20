@@ -8,18 +8,21 @@
         <v-form>
             <h1 class="mb-4"> INICIO DE SESIÓN </h1>
             <v-row>
+                
                 <v-col :cols="formulario">
-                <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
-                <v-text-field type="password" v-model="password" placeholder="Contraseña" outlined class="mb-n3"/>  
-                <v-btn id="boton" :disabled="active" block @click="login"> INICIAR SESIÓN</v-btn>
+                    
+                    <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
+                    <v-text-field type="password" v-model="password" placeholder="Contraseña" outlined class="mb-n3"/>
+                    <v-btn id="boton" :disabled="active" block @click="login"> INICIAR SESIÓN</v-btn>
+                    <img v-if="loading" height="120em" src="@/static/load.gif" class="mb-6" />  
 
-                <div class="enlace">
-                <a href="/signUp" :style="enlace"> ¿No tienes una cuenta? Regístrate para continuar</a>
-                </div>
+                    <div class="enlace">
+                    <a href="/signUp" :style="enlace"> ¿No tienes una cuenta? Regístrate para continuar</a>
+                    </div>
 
-                <div class="enlace mt-2">
-                    <a href="/activateCode" :style="enlace" > Haga click aquí para activar una cuenta</a>
-                </div>
+                    <div class="enlace mt-2">
+                        <a href="/activateCode" :style="enlace" > Haga click aquí para activar una cuenta</a>
+                    </div>
                 </v-col>
             </v-row>
         </v-form>
@@ -36,8 +39,9 @@ export default ({
             error: "",
             msg: "",
             active: false,
-            formulario: "",
+            formulario: "6 offset-3",
             enlace: "",
+            loading: false
         }
     },
 
@@ -70,6 +74,7 @@ export default ({
         async login(){
             try{
                 this.active = true
+                this.loading = true
 
                 const config = require('../config')
 
@@ -88,7 +93,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
-                    
+                    this.loading = false
                     this.error = data.error
 
                     setTimeout(() => {

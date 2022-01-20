@@ -57,7 +57,7 @@ export default ({
             code: "",
             error: "",
             msg: "",
-            formulario: "",
+            formulario: "6 offset-3",
             enlace: ""
         }
     },

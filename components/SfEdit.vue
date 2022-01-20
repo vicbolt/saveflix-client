@@ -11,11 +11,11 @@
 
             <v-card-text>
                 <v-row>
-                    <v-col cols="4">
-                        <v-img v-model="image" :src="image" class="mt-3" height="400px"/>
+                    <v-col :cols="imagen">
+                        <v-img height="420px" max-width="300px" v-model="image" :src="image" class="mt-3"/>
                     </v-col>
 
-                    <v-col cols="8">
+                    <v-col :cols="info">
                         <h6>TITULO DE LA PELICULA</h6>
                         <v-divider class="mb-1" ></v-divider>
                         <v-text-field v-model="title" :placeholder="post.title" outlined />
@@ -67,6 +67,19 @@ export default ({
             ],
             error: "",
             msg: "",
+            imagen: "4",
+            info: "8"
+        }
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+  
+            if(value === "md" || value === "sm" || value === "xs") {
+                this.imagen = "12"
+                this.info = "12"
+            }
         }
     },
 

@@ -4,29 +4,31 @@
     <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
 
     <v-card >
-        <v-app-bar shaped>
+        <v-app-bar height="auto" shaped>
             <v-row>
-                <v-col cols="7">
+                <v-col :cols="explorar">
                     <v-row>
-                    <v-icon class="mr-4 mt-3" size="35"> mdi-shuriken </v-icon>
-                    <v-app-bar-title class="font-weight-black mt-3" style="font-size:25px"> EXPLORAR </v-app-bar-title>
+                        <v-icon class="mr-4 mt-3" size="35"> mdi-shuriken </v-icon>
+                        <v-app-bar-title class="font-weight-black mt-3" :style="tamañoFuente"> EXPLORAR </v-app-bar-title>
                     </v-row>
                 </v-col>
-                <v-col cols="5">
+                <v-col :cols="buscador">
                     <v-row>
-                            <v-text-field v-model="search" placeholder="Buscar por título" type="text" class="mt-3" v-on:keyup.enter="buscar"></v-text-field>
-                            <v-btn class="ml-2 mt-2" color="red" height="40px" min-width="25px" @click="buscar"> <v-icon size="20px">mdi-movie-search-outline</v-icon> </v-btn>
+                        <v-text-field v-model="search" placeholder="Buscar por título" type="text" class="mt-3" v-on:keyup.enter="buscar"></v-text-field>
+                        <v-btn class="ml-2 mt-2" color="red" height="40px" min-width="25px" @click="buscar"> <v-icon size="20px">mdi-movie-search-outline</v-icon> </v-btn>
                     </v-row>
                 </v-col>
             </v-row>
 
 
         </v-app-bar>
-
+            <div v-if="loading" style="text-align:center">
+                <img height="120em" src="@/static/load.gif" class="mb-6" />  
+            </div>
         <v-card>
             <v-row>
-                <v-col @click="goTo(title._id)"  cols=4 v-for="title in titles" :key="title.id" >
-                    <SfCard id="post" style="cursor: pointer"  :image="title.image" :title="title.title" :score="title.score" :tag="title.post" />
+                <v-col @click="goTo(title._id)" :cols="cards" v-for="title in titles" :key="title.id">
+                    <SfCard id="post" style="cursor: pointer;" :image="title.image" :title="title.title" :score="title.score" :tag="title.post" />
                 </v-col>
                            
             </v-row>
@@ -46,7 +48,12 @@ export default ({
             visible: true,
             titles: [],
             search: "",
-            error: ""
+            error: "",
+            cards: "4",
+            tamañoFuente: "font-size:25px",
+            explorar: "7",
+            buscador: "5",
+            loading: false
         }
     },
 
@@ -57,8 +64,29 @@ export default ({
             this.visible = false
             return this.$router.push("/logIn")
         }
-
+        
+        this.loading = true
         await this.loadMoviesAndSerials()
+        this.loading = false
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xl" || value === "lg"){
+                this.cards = "4"
+                this.tamañoFuente = "font-size:25px"
+            } else if( value === "md" || value === "sm"){
+                this.cards = "6"
+                this.tamañoFuente = "font-size:25px"
+            } else if(value === "xs") {
+                this.cards = "12"
+                this.tamañoFuente = "font-size:20px"
+                this.explorar = "12"
+                this.buscador = "12"
+            }
+        }
     },
 
     methods: {

@@ -3,7 +3,7 @@
 
         <v-list-item>
             <v-list-item-content class="fondo">
-                <v-img height="280px"  :src="image">
+                <v-img height="360px" :src="image">
                      <v-btn v-if="tag === 'serial'" style="font-size: 9px" width="auto" height="auto"  color="rgb(229,9,20)"> SERIE</v-btn>
                      <v-btn v-if="tag === 'movie'" style="font-size: 9px" width="auto" height="auto"  color="rgb(229,9,20)"> PELICULA</v-btn>
                 </v-img>
@@ -22,7 +22,6 @@
 <script>
 
 export default {
-
 
     props: {
         image: {

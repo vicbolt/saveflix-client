@@ -10,17 +10,16 @@
             <v-list>
                 <div v-for="post in posts" :key="post.id" @click="goTo(post._id)" class="rs-recent-upload-container mt-4" style="cursor:pointer">
                 <v-row>
-                    <v-col cols="4">
-                        <v-img class="imagen" :src="post.image" width="70px" height="70px" />
+                    <v-col :cols="imagen">
+                        <v-img class="imagen " :src="post.image" width="70px" height="70px" />
                     </v-col>
-                    <v-col cols="8" class="ml-n5">
-                        <p class="mt-2"> <strong> {{post.userId.username}} </strong> ha subido <strong> {{post.title}} </strong></p>
+                    <v-col :cols="info" class="ml-n5">
+                        <p class="mt-2 ml-10" style="font-size: 15px"> <strong> {{post.userId.username}} </strong> ha subido <strong> {{post.title}} </strong></p>
                     </v-col> 
                 </v-row>
                 <v-divider class="mt-4 mb-4"></v-divider>
                 </div>
             </v-list>
-
         </v-card>
     </div>
 </template>
@@ -30,13 +29,27 @@
 export default {
     data() {
         return{
-            posts: []
+            posts: [],
+            imagen: "3",
+            info: "9"
+            
         }
     },
 
     async beforeMount(){
 
         await this.postRecientes()
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xl"){
+                this.imagen = "2"
+                this.info = "10"
+            }
+        }
     },
 
     methods: {

@@ -34,9 +34,14 @@
             </v-row>
             
             <v-btn id="boton" block @click="activar"> ACTIVAR </v-btn>
+            <img v-if="loading" height="120em" src="@/static/load.gif" class="mb-6" />  
+
 
             <div class="enlace">
-            <a href="/reactivateCode" :style="enlace"> ¿No ha recibido el código? Haga click aquí para reenviarlo </a>
+                <a href="/reactivateCode" :style="enlace"> ¿No ha recibido el código? Haga click aquí para reenviarlo </a>
+            </div>
+            <div class="enlace">
+                <a href="/logIn" :style="enlace"> Iniciar sesión </a>
             </div>
             </v-col>
 
@@ -60,8 +65,9 @@ export default ({
             code: "",
             error: "",
             msg: "",
-            formulario: "",
-            enlace: ""
+            formulario: "6 offset-3",
+            enlace: "font-size: 15px",
+            loading: false
 
         }
     },
@@ -96,6 +102,8 @@ export default ({
         async activar(){
             try{
                 
+                this.loading = true
+
                 const code = this.A + this.B + this.C + this.D + this.E + this.F
 
                 this.code = code
@@ -118,6 +126,7 @@ export default ({
                 const data = await res.json()
 
                 if(data.error){
+                    this.loading = false
                     return this.error = data.error
                 }
 

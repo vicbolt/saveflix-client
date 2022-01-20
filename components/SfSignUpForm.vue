@@ -30,6 +30,8 @@
             <v-row>
                 <v-col :cols="formulario">
                 <v-btn id="boton" :disabled="active" @click="submit"  block> REGISTRARME </v-btn>
+                <img v-if="loading" height="120em" src="@/static/load.gif" class="mb-6" />  
+
 
                 <div class="enlace">
                 <a href="/logIn" :style="enlace"> ¿Ya tienes una cuenta? ¡Inicia sesión para continuar!</a>
@@ -54,8 +56,9 @@ export default ({
             msg: "",
             url: "",
             active: false,
-            formulario: "",
+            formulario: "6 offset-3",
             enlace: "",
+            loading: false
         }
     },
 
@@ -77,6 +80,7 @@ export default ({
         async submit(){
             try{
                 this.active = true
+                this.loading = true
 
                 const body = JSON.stringify({
                     email: this.email,
@@ -99,6 +103,7 @@ export default ({
 
                 const data = await res.json()
                     if(data.error){
+                        this.loading = false
                         this.error = data.error
                         setTimeout(() => {
                             this.$router.go()
@@ -118,7 +123,7 @@ export default ({
             }
         },
 
-            showImg(){
+        showImg(){
 
             const file = this.$refs.file.files[0]
             const reader = new FileReader()

@@ -1,11 +1,10 @@
 <template>
     <div class="sf-perfil" v-if="visible">
-
         <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
 
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5" shaped>
-                <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53); height: 130px">
+                <v-row class="barra">
                     <v-col cols="5">
                         <v-row>
                             <v-avatar size="100" class="ml-6 mr-5 mt-4 " color="rgb(209, 53, 53)"> 
@@ -56,7 +55,6 @@
                         </v-card-text>
                     </v-card>
                 </v-col>
-
 
                 <v-col cols="6">
                     <v-card elevation="2">
@@ -286,5 +284,10 @@ export default({
 .avatar{
     padding: 2.2px;
     border: 2px solid white;;
+}
+
+.barra{
+    background-color:rgb(229,9,20);
+    height: 130px;
 }
 </style>

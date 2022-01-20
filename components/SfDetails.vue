@@ -23,26 +23,26 @@
                 <v-row>
                     <v-list-item>
                         <v-list-item-content class="fondo">
-                            <v-col cols="4" class="mt-3">
+                            <v-col :cols="imagen" class="mt-3">
                                     <v-img height="420px" max-width="300px" style="border: 4px solid white" :src="this.image"></v-img>
                                     <v-btn @click="goTo">{{this.ownerUsername}}</v-btn>
                             </v-col>
-                            <v-col cols="8">
+                            <v-col :cols="info">
                                     <h6 class="mb-1">DIRECTOR</h6>
-                                    <v-divider class="mb-1" style="width: 160px;"></v-divider>
+                                    <v-divider class="mb-1"></v-divider>
                                         <h3 class="mb-6"> {{this.director}}</h3>
 
                                     <h6 class="mb-1">OPINION</h6>
-                                    <v-divider class="mb-2" style="width: 560px;"></v-divider>
+                                    <v-divider class="mb-2" style="width: auto;"></v-divider>
                                         <p style="max-width:560px; height:180px; text-align: justify; overflow: scroll" class="mb-10"> {{this.description}}</p>
                                     
-                                    <h6 class="mb-1 mt-8">PUNTUACIÓN</h6>
-                                    <v-divider class="mb-1" style="width: 560px;"></v-divider>
-                                    <v-progress-linear color="rgb(229,9,20)" v-model="this.score" height="25" style="width: 560px;">
+                                    <h6 class="mb-1 ">PUNTUACIÓN</h6>
+                                    <v-divider class="mb-1" ></v-divider>
+                                    <v-progress-linear color="rgb(229,9,20)" v-model="this.score" height="25" >
                                             <strong> {{ Math.ceil(this.score) }} <v-icon class="mr-4 mb-1" size="15" color="white"> mdi-star </v-icon> </strong>
                                     </v-progress-linear>
 
-                                    <v-row class="mt-4" style="width: 740px;">
+                                    <v-row class="mt-4">
                                         <v-col cols="3" >
                                             <v-row >
                                                 <v-btn class="ml-2" @click="like">
@@ -106,6 +106,8 @@ export default ({
             paramsId: "",
             error: "",
             msg: "",
+            imagen: "4",
+            info: "8"
         }
     },
 
@@ -118,9 +120,18 @@ export default ({
             await this.likedOrNot()
 
             //TODO TOKEN
-
     },
 
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+  
+            if(value === "md" || value === "sm" || value === "xs") {
+                this.imagen = "12"
+                this.info = "12"
+            }
+        }
+    },
 
     methods:{
 

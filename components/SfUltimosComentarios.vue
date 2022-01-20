@@ -10,11 +10,11 @@
             <v-list>
                 <div v-for="comment in comments" :key="comment.id" @click="goTo(comment.post._id)" style="cursor:pointer" class="mt-4">
                     <v-row>
-                        <v-col cols="4">
+                        <v-col :cols="imagen">
                             <v-img class="imagen" :src="comment.user.avatar" width="70px" height="70px" />
                         </v-col>
-                        <v-col cols="8" class="ml-n5">
-                            <p class="mt-2"> <strong>  {{comment.user.username}} </strong> ha comentado en <strong> {{comment.post.title}} </strong> </p>
+                        <v-col :cols="info" class="ml-n5">
+                            <p class="mt-2 ml-10" style="font-size: 15px"> <strong>  {{comment.user.username}} </strong> ha comentado en <strong> {{comment.post.title}} </strong> </p>
                         </v-col>
                     </v-row>
                     <v-divider class="mt-4 mb-4"></v-divider>
@@ -29,13 +29,29 @@
 export default ({
     data() {
         return{
-            comments: []
+            comments: [],
+            imagen: "3",
+            info: "9"
         }
     },
 
     async beforeMount(){
         
         await this.ultimosComentarios()
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xl" || value == "sm"){
+                this.imagen = "2"
+                this.info = "10"
+            } else if (value === "xs"){
+                this.imagen = "3"
+                this.info = "9"
+            }
+        }
     },
 
     methods: {

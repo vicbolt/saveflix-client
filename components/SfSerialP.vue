@@ -15,9 +15,9 @@
 
                 <v-card-text>
                     <v-row>
-                        <v-col cols="3" v-for="serial in serials" :key="serial._id" class="mb-7">
+                        <v-col :cols="series" v-for="serial in serials" :key="serial._id" class="mb-7">
                                 <v-list-item-content style="cursor: pointer" class="mb-n12" @click="go(serial._id)">
-                                    <v-img height="130px" style="border: 2px solid white" :src="serial.image" />
+                                    <v-img :height="size" style="border: 2px solid white" :src="serial.image" />
                                     <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{serial.title}} </v-list-item-title>
                                 </v-list-item-content>
                         </v-col>
@@ -33,12 +33,37 @@
 export default({
     data(){
         return{
-            serials: []
+            serials: [],
+            series: "3",
+            size: "240px"
         }
     },
 
     async beforeMount(){
         await this.loadSerialPendientes()
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if(value === "xl"){
+                this.series = "3"
+                this.size = "240px"
+            } else if(value === "lg"){
+                this.series = "4"
+                this.size = "240px"
+            } else if(value === "md"){
+                this.series = "2"
+                this.size = "240px"
+            } else if(value === "sm"){
+                this.size = "240px"
+                this.series = "3"
+            } else if (value === "xs") {
+                this.size = "240px"
+                this.series = "4"
+            }
+        }
     },
 
     methods: {

@@ -4,11 +4,38 @@
 
         <v-container fluid>
             <v-row>
-                <v-col cols="8"> <Nuxt /> </v-col>
-                <v-col cols="4">
+                <v-col :cols="series"> <Nuxt /> </v-col>
+                <v-col :cols="seriesP">
                     <SfSerialP/>
                 </v-col>
             </v-row>
         </v-container>
     </v-app>
 </template>
+
+<script>
+
+export default({
+    data() {
+        return{
+            series: "8",
+            seriesP: "4"
+        }
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if(value === "xl" || value === "lg"){
+                this.series = "8"
+                this.seriesP = "4"
+
+            } else{
+                this.series = "12"
+                this.seriesP = "12"
+            }
+        }
+    },
+})
+</script>

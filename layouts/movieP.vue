@@ -4,11 +4,38 @@
 
         <v-container fluid>
             <v-row>
-                <v-col cols="8"> <Nuxt /> </v-col>
-                <v-col cols="4">
+                <v-col :cols="peliculas"> <Nuxt /> </v-col>
+                <v-col :cols="peliculasP">
                     <SfMoviesP/>
                 </v-col>
             </v-row>
         </v-container>
     </v-app>
 </template>
+
+<script>
+
+export default({
+    data() {
+        return{
+            peliculas: "8",
+            peliculasP: "4"
+        }
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if(value === "xl" || value === "lg"){
+                this.peliculas = "8"
+                this.peliculasP = "4"
+
+            } else{
+                this.peliculas = "12"
+                this.peliculasP = "12"
+            }
+        }
+    },
+})
+</script>

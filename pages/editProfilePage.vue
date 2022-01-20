@@ -46,7 +46,11 @@
             <h3 class="mb-4">AVATAR</h3>
             <v-alert v-if="this.error4" class="text-center" type="error" border="top" color="red" dismissible > {{this.error4}} </v-alert>
             <v-alert v-if="this.msg4" class="text-center" type="error" border="top" color="green" dismissible > {{this.msg4}} </v-alert>
-            <v-file-input prepend-icon="mdi-face-man-profile" :src="avatar" placeholder="AVATAR" filled/> 
+            <div class="file-container mb-4">
+                <h5 v-if="!url" id="h5">SUBIR AVATAR</h5>
+                <img id="img" v-if="url" :src="url" alt="Image not found" @click="picAgain">
+                <input v-if="!url" type="file" @change="showImg" ref="file" id="imgBtn" class="mt-3" style="background: red; border: 2px solid white; overflow: hidden"/>
+            </div>   
             <v-btn id="boton" @click="saveAvatar()"  block color="red"> GUARDAR </v-btn>
 
             <v-divider class="mt-7 mb-7"></v-divider>
@@ -89,7 +93,7 @@ export default ({
             currentPassword: "",
             newPassword: "",
             newPassword2: "",
-            avatar: "",
+            url: "",
             error: "",
             error1: "",
             error2: "",
@@ -103,6 +107,7 @@ export default ({
             msg4: "",
             msg5: "",
             alertMsg: "",
+            active: false
         }
     },
 
@@ -133,7 +138,7 @@ export default ({
 
             this.email = data.user.email
             this.username = data.user.username
-            this.avatar = data.user.avatar
+            this.url = data.user.avatar
             
 
             } catch(error){
@@ -247,20 +252,15 @@ export default ({
                 const id = JSON.parse(localStorage.getItem("userId"))
 
                 const body = JSON.stringify({
-                    avatar: this.avatar
+                    avatar: this.url
                 })
 
-                // const formData = new FormData()
-                //     formData.enctype = "multipart/form-data",
-                //     formData.append('avatar', this.avatar)
-
-                
                 const res = await fetch(config.hostname + `api/user/saveAvatar/${id}`,{
                     method: "put",
                     headers: {
                         'Content-Type': "application/json"
                     },
-                    body
+                    body,
                 })
 
                 const data = await res.json()
@@ -277,6 +277,24 @@ export default ({
             }catch(error){
                 return console.log(error)
             }
+        },
+
+        showImg(){
+
+            const file = this.$refs.file.files[0]
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                console.log(reader.result)
+                this.url = reader.result
+                console.log("ESTO ES THIS.URL" ,this.url)
+            }
+            if(file){
+                reader.readAsDataURL(file)
+            }
+        },
+
+        picAgain(){
+            this.url = ""
         },
 
         securityMsg(){
@@ -329,3 +347,41 @@ export default ({
     
 })
 </script>
+
+<style scoped>
+
+img{
+    margin-top: 10px;
+    display: block;
+    margin: auto;
+}
+
+.file-container{
+    background-color: rgb(255, 255, 255);
+    height: 107px;
+    width: 107px;
+    border: 2px solid white;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+#img{
+    border-radius: 100%;
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
+}
+
+#imgBtn{
+    position: absolute;
+    opacity: 0;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+</style>

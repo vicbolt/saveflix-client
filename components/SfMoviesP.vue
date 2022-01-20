@@ -8,17 +8,17 @@
                         <v-app-bar-title class="font-weight-black mt-2" style="font-size: 15px"> <v-icon > mdi-clock</v-icon> PELICULAS PENDIENTES </v-app-bar-title>
                     </v-col>
                     <v-col cols="3">
-                        <v-btn class="ml-n4"  color="rgb(229,9,20)" style="color:white" @click="goTo()"> AÑADIR</v-btn>
+                        <v-btn  color="rgb(229,9,20)" style="color:white" @click="goTo()"> AÑADIR</v-btn>
                     </v-col>
                 </v-row>
             </v-app-bar>
 
                 <v-card-text>
                     <v-row>
-                        <v-col cols="3" v-for="movie in movies" :key="movie._id" class="mb-7">
+                        <v-col :cols="peliculas" v-for="movie in movies" :key="movie._id" class="mb-7">
                                 <v-list-item-content style="cursor: pointer" class="mb-n12" @click="go(movie._id)">
-                                    <v-img height="130px" style="border: 2px solid white" :src="movie.image" />
-                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movie.title}} </v-list-item-title>
+                                    <v-img :height="size" style="border: 2px solid white" :src="movie.image" />
+                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:px"> {{movie.title}} </v-list-item-title>
                                 </v-list-item-content>
                         </v-col>
                     </v-row>
@@ -33,12 +33,37 @@
 export default({
     data(){
         return{
-            movies: []
+            movies: [],
+            peliculas: "3",
+            size: "240px"
         }
     },
 
     async beforeMount(){
         await this.loadMoviesPendientes()
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if(value === "xl"){
+                this.peliculas = "3"
+                this.size = "240px"
+            }else if(value === "lg"){
+                this.peliculas = "4"
+                this.size = "240px"
+            } else if(value === "md"){
+                this.peliculas = "2"
+                this.size = "240px"
+            } else if(value === "sm"){
+                this.size = "240px"
+                this.peliculas = "3"
+            } else if (value === "xs") {
+                this.size = "240px"
+                this.peliculas = "4"
+            }
+        }
     },
 
     methods: {

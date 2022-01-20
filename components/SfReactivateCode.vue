@@ -5,18 +5,17 @@
 
         <img height="120em" src="@/assets/images/logotipoWeb.png" class="mb-6" />
         <v-form>
-            <h1> REENVIAR CODIGO DE ACTIVACIÓN </h1>
+            <h1 :style="fontSize" class="mb-2"> REENVIAR CODIGO DE ACTIVACIÓN </h1>
             <v-row>
-            <v-col></v-col>
-                <v-col cols="5">
-                <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
-                <v-btn id="boton" block @click="reactivateCode"> ENVIAR DE NUEVO EL CODIGO </v-btn>
+                <v-col :cols="formulario">
+                    <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
+                    <v-btn id="boton" block @click="reactivateCode"> ENVIAR DE NUEVO EL CODIGO </v-btn>
+                    <img v-if="loading" height="120em" src="@/static/load.gif" class="mb-6" />  
                 </v-col>
-                <v-col></v-col>
             </v-row>
 
             <div class="enlace">
-                <a href="/logIn"> Inicio de Sesión</a>
+                <a href="/logIn"> INICIO DE SESIÓN</a>
             </div>
         </v-form>
 
@@ -29,6 +28,9 @@ export default ({
         return{
             email: "",
             error: "",
+            loading: false,
+            formulario: "6 offset-3",
+            fontSize: "font-size: 25px"
         }
     },
 
@@ -38,11 +40,25 @@ export default ({
         this.email = email
     },
 
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xl" || value === "lg" || value === 'md'){
+                this.formulario = "6 offset-3"
+            } else {
+                this.formulario = "10 offset-1"
+                this.fontSize = "font-size: 20px"
+            }
+        }
+    },
+
     methods: {
     
         async reactivateCode(){
             try{
-                
+                this.loading = true
+
                 const body = JSON.stringify({
                     email: this.email
                 })
@@ -59,6 +75,7 @@ export default ({
 
                 const data = await res.json()
                 if(data.error){
+                    this.loading = false
                     return this.error = data.error
                 }
 

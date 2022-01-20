@@ -21,19 +21,27 @@
 
                 <v-card-text>
                     <v-row v-for="comment in comments" :key="comment._id" class="mb-3" style="background-color: rgb(37, 37, 37 ); border-radius: 50px">
-                        <v-col cols="2">
-                            <v-img class="imagen ml-4" :src="comment.user.avatar" width="80px" height="80px" />
+                        <v-col :cols="avatar" v-if="!xs">
+                            <v-img class="imagen mr-1" :src="comment.user.avatar" width="100px" height="100px" />
                         </v-col>
-                        <v-col cols="10">
+                        <v-col :cols="content">
                             <v-row>
-                            <p class="font-weight-black mt-5"  style=" font-size: 17px; color:white; width: auto"> {{comment.user.username}}</p> <p class="font-weight-black mt-5 ml-2">ha comentado:</p>
-                            <v-spacer></v-spacer>
-                            <p class="mt-5 mr-5" style="font-size:11px"> {{comment.date}} </p>
-
-                            <v-btn v-if="comment.user._id === userId || comment.post.userId === userId " @click="removeComment(comment._id)" class=" font-weight-black mt-n2" style="background-color: red; min-width:1px; width:30px; min-height:1px; height: 30px; border-radius:100px; text-align:center "> <v-icon class="" size="18px">mdi-trash-can-outline</v-icon></v-btn>
+                                <v-col cols="6">
+                                    <p class="font-weight-black mt-5"  style=" font-size: 17px; color:white; width: auto"> {{comment.user.username}} ha comentado: </p>
+                                </v-col>
+                                <v-col cols="5">
+                                    <p  style="font-size:auto; text-align: right"> {{comment.date}} </p>
+                                </v-col>
+                                <v-col cols="1">
+                                    <v-btn v-if="comment.user._id === userId || comment.post.userId === userId " @click="removeComment(comment._id)" class=" font-weight-black mt-n2" style="background-color: red; min-width:1px; width:30px; min-height:1px; height: 30px; border-radius:100px; text-align:center "> <v-icon class="" size="18px">mdi-trash-can-outline</v-icon></v-btn>
+                                </v-col>
                             </v-row>
-                            <p class=""> {{comment.message}} </p>
-                        </v-col>
+                            <v-row class="mt-n5">
+                                <v-col cols="12">
+                                    <p> {{comment.message}} </p>
+                                </v-col>
+                            </v-row>
+                        </v-col> 
                     </v-row>
 
                 </v-card-text>
@@ -53,6 +61,10 @@ export default ({
             userId: "",
             error: "",
             msg: "",
+            avatar: "2",
+            content: "9",
+            xs: false
+            
         }
     },
 
@@ -60,6 +72,19 @@ export default ({
 
         await this.getComments()
        
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+  
+            if(value === "xs") {
+                this.xs = true
+                this.avatar = "12"
+                this.content = "12"
+               
+            }
+        }
     },
 
     methods: {

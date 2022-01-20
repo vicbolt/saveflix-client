@@ -11,15 +11,15 @@
 
             <v-card-text>
                 <v-row>
-                    <v-col cols="4">
-                        <div class="file-container">
+                    <v-col :cols="imagen">
+                        <div class="file-container" style="width: 280px">
                             <h3 v-if="!url" id="h3">SUBIR PORTADA</h3>
                             <img id="img" v-if="url" :src="url" alt="Image not found" @click="picAgain">
                             <input v-if="!url" type="file" @change="showImg" ref="file" id="imgBtn" class="mt-3" style="background: red; border: 2px solid white; overflow: hidden"/>
                         </div>
                     </v-col>
 
-                    <v-col cols="8">
+                    <v-col :cols="info">
                         <h6>TITULO DE LA PELICULA</h6>
                         <v-divider class="mb-1" ></v-divider>
                         <v-text-field v-model="title" name="title" placeholder="Ej: 'El resplandor'" outlined />
@@ -34,6 +34,9 @@
                 </v-row>
             </v-card-text>
         </v-card>
+            <div v-if="loading" style="text-align:center">
+                <img height="120em" src="@/static/load.gif" class="mb-6" />  
+            </div>
 
 
     </div>
@@ -48,7 +51,21 @@ export default {
             image: undefined,
             error: "",
             url: "",
-            active: false
+            active: false,
+            imagen: "4",
+            info: "8",
+            loading: false
+        }
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+  
+            if(value === "md" || value === "sm" || value === "xs") {
+                this.imagen = "12"
+                this.info = "12"
+            }
         }
     },
 
@@ -56,7 +73,7 @@ export default {
         async upload(){
 
             try{
-
+                this.loading = true
                 this.active = true
 
                 const config = require('../config')
@@ -84,6 +101,7 @@ export default {
 
                 const data = await res.json()
                 if(data.error){
+                    this.loading = false
                     this.active = false
                     return this.error = data.error
                 }

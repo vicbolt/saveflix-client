@@ -1,8 +1,39 @@
 <template>
     <div class="sf-menu-nav" v-if="visible">
-
         <v-alert v-if="this.error" class="text-center" dismissible type="error" border="top" color="red" dark> {{this.error}} </v-alert>
 
+        <div class="text-xs-center" v-if=" $vuetify.breakpoint.name === 'xs' || $vuetify.breakpoint.name === 'sm' || $vuetify.breakpoint.name === 'md' ">
+        <v-row>
+            <v-col cols="4">
+                    <v-menu offset-y>
+                        <template v-slot:activator="{ on }">
+                            <v-btn color="red" dark v-on="on"> MENU </v-btn>
+                        </template>
+                        <v-list>
+                            <v-btn id="Btn" class="font-weight-black" width="10em" height="50px" @click="explorar()"> EXPLORAR </v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black" width="10em" height="50px" @click="misPeliculas()">MIS PELICULAS</v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black" width="10em" height="50px" @click="misSeries()">MIS SERIES</v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="ranking()">MI RANKING</v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="chat()">CHAT </v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="perfil()">MI PERFIL</v-btn> <br>
+                        </v-list>
+                    </v-menu>
+            </v-col>
+            <v-col cols="8">
+                <v-row>
+                    <v-col cols="4"></v-col>
+                    <v-col cols="4">
+                        <v-text-field v-model="search" min-width="10em" placeholder="USUARIO" type="text" v-on:keyup.enter="buscar"></v-text-field>
+                    </v-col>
+                    <v-col cols="2" class="mt-3">
+                        <v-btn width="4em" color="red" @click="buscar"> <v-icon size="20px">mdi-movie-search-outline</v-icon> </v-btn>
+                    </v-col>
+                </v-row>
+        </v-col>
+        </v-row>
+        </div>
+
+        <div v-if=" $vuetify.breakpoint.name === 'xl' || $vuetify.breakpoint.name === 'lg'  ">
         <v-app-bar class="barra" elevation="16" rounded >
             <a href="/">
             <img height="50em" width="130em" src="@/assets/images/logotipoWeb.png" />
@@ -91,6 +122,9 @@
       
         </v-app-bar>
     </div>
+
+        </div>
+        
 </template>
 
 <script>
@@ -104,6 +138,7 @@ export default({
             avatar: undefined,
             error: "",
             search: "",
+            size: "lg"
 
         }
     },
@@ -112,6 +147,20 @@ export default({
 
         await this.loadInfo()
 
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if(value === "xl"){
+                this.size = "6 offset-3"
+                this.enlace = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.enlace = "font-size: 12px"
+            }
+        }
     },
 
     methods: {

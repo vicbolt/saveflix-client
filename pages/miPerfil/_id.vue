@@ -4,7 +4,7 @@
         <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5" shaped>
-                <v-row style="background: linear-gradient(180deg, rgb(229,9,20), rgb(209, 53, 53); height: 130px" >
+                <v-row class="barra">
                     <v-col cols="5">
                         <v-row>
                             <v-avatar  size="100" class="ml-6 mr-5 mt-4 " color="rgb(209, 53, 53)"> 
@@ -45,6 +45,9 @@
                             <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> MIS PELICULAS </v-card-title>
                         </v-app-bar>
                         <v-card-text> 
+                            <div v-if="loadingM" style="text-align:center">
+                                <img height="120em" src="@/static/load.gif" class="mb-6" />  
+                            </div>                            
                             <v-row>
                                 <v-col cols="3"  v-for="movie in movies" :key="movie.id" @click="goToDetails(movie._id)" style="cursor: pointer" >
                                     <v-img height="160px" style="border: 2px solid white" :src="movie.image"/>
@@ -64,6 +67,9 @@
                         </v-app-bar>
 
                         <v-card-text>
+                            <div v-if="loadingS" style="text-align:center">
+                                <img height="120em" src="@/static/load.gif" class="mb-6" />  
+                            </div>
                             <v-row>
                                 <v-col @click="goToDetails(serial._id)" cols="3" v-for="serial in serials" :key="serial.id"  style="cursor: pointer">
                                     <v-img height="160px" style="border: 2px solid white" :src="serial.image" />
@@ -81,6 +87,9 @@
                         </v-app-bar>
 
                         <v-card-text>
+                            <div v-if="loadingMP" style="text-align:center">
+                                <img height="120em" src="@/static/load.gif" class="mb-6" />  
+                            </div>
                             <v-row>
                                 <v-col @click="goToDetailsPendiente(movieP._id)" cols="3" v-for="movieP in moviesP" :key="movieP.id"  style="cursor: pointer">
                                     <v-img height="160px" style="border: 2px solid white" :src="movieP.image" />
@@ -98,6 +107,9 @@
                         </v-app-bar>
 
                         <v-card-text>
+                            <div v-if="loadingSP" style="text-align:center">
+                                <img height="120em" src="@/static/load.gif" class="mb-6" />  
+                            </div>
                             <v-row>
                                 <v-col  cols="3"  @click="goToDetailsPendiente(serialP._id)" v-for="serialP in serialsP" :key="serialP.id" style="cursor: pointer">
                                     <v-img height="160px" style="border: 2px solid white" :src="serialP.image" />
@@ -133,6 +145,10 @@ export default({
             avatar: undefined,
             allPosts: "",
             error: "",
+            loadingM: false,
+            loadingS: false,
+            loadingMP: false,
+            loadingSP: false
 
         }
     },
@@ -144,13 +160,20 @@ export default({
             this.visible = false
             return this.$router.push("logIn")
         }
-
-        await this.loadMovies()
-        await this.loadSerials()
-        await this.loadUserDetails()
-        await this.loadMoviesP()
-        await this.loadSerialsP()
+        this.loadingM = true
+        this.loadingS = true
+        this.loadingMP = true
+        this.loadingSP = true
         
+        await this.loadUserDetails()
+        await this.loadMovies()
+        this.loadingM = false
+        await this.loadSerials()
+        this.loadingS = false
+        await this.loadMoviesP()
+        this.loadingMP = false
+        await this.loadSerialsP()
+        this.loadingSP = false
     },
 
     methods:{
@@ -344,5 +367,10 @@ export default({
 .avatar{
     padding: 2.2px;
     border: 2px solid white;
+}
+
+.barra{
+    background-color:rgb(229,9,20);
+    height: 130px;
 }
 </style>
