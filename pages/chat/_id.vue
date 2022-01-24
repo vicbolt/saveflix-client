@@ -8,16 +8,16 @@
                     <v-app-bar>
                         <v-row>
                             <v-col cols="2">
-                                <v-img class="ml-n1" id="imagen" src="https://previews.123rf.com/images/jemastock/jemastock1705/jemastock170506999/78062109-cara-de-joven-aislado-sobre-fondo-blanco-expresi%C3%B3n-de-la-cara-hermosa-del-muchacho-ilustraci%C3%B3n-vecto.jpg" width="50px" height="50px" />
+                                <v-img class="ml-n1" id="imagen" :src="avatar" width="50px" height="50px" />
                             </v-col>
                             <v-col cols="10">
-                                <h3 class="font-weight-black mt-3 ml-n10"> PEDRO </h3>
+                                <h3 class="font-weight-black mt-3 ml-n10"> {{this.username}} </h3>
                             </v-col>
                         </v-row>
                     </v-app-bar>
                     <v-card height="300px">
-                        <div>
-                            <p>hola</p>
+                        <div v-for="mensaje in mensajes" :key="mensaje._id">
+                            <h5> {{mensaje.content}}</h5>
                         </div>
                     </v-card>
                     <v-row>
@@ -25,7 +25,7 @@
                             <v-text-field v-model="message" placeholder="Escribe un mensaje" class="ml-3"></v-text-field>
                         </v-col>
                         <v-col cols="2">
-                            <v-btn  color="rgb(229,9,20)" class="mt-4" width="28px"> ENVIAR </v-btn>
+                            <v-btn  color="rgb(229,9,20)" class="mt-4" width="28px" @click="createMsg"> ENVIAR </v-btn>
                         </v-col>
                     </v-row>
 
@@ -40,7 +40,7 @@
                         <v-icon> mdi-account-group</v-icon>
                         <v-card-title class="font-weight-black ml-5"> LISTA DE AMIGOS</v-card-title>
                     </v-app-bar>
-                    <v-row class="mt-2" v-for="follower in following" :key="follower._id">
+                    <v-row class="mt-2" v-for="follower in following" :key="follower._id" @click="textTo(follower.username, follower.avatar, follower._id)">
                         <v-col cols="4" >
                             <v-img id="imagen" class="ml-n" :src="follower.avatar" width="50px" height="50px" />
                         </v-col>
@@ -64,13 +64,17 @@ export default ({
         return{
             visible: true,
             following: [],
-            message: "",
+            mensajes: "",
+            username: "",
+            avatar: "",
         }
     },
 
    async beforeMount(){
 
         await this.loadFollowing()
+
+        await this.loadMsg()
 
         const token = localStorage.getItem('token')
 
@@ -79,22 +83,7 @@ export default ({
         }
     },
 
-    // mounted() {
-
-    //     /* Listen for events: */
-    //     this.socket.on('connection', (socket) => {
-    //         console.log("socket", socket._id)
-    //     })
-    // },
-
     methods: {
-
-        emit() {
-            this.socket.emit('message', {
-                message: this.message,
-                username: this.follower.username
-            })
-        },
 
         async loadFollowing(){
 
@@ -120,6 +109,84 @@ export default ({
                 return console.log(error)
             }
         },
+
+        textTo(username, avatar, id){
+
+            this.username = username
+            this.avatar = avatar
+
+            localStorage.setItem("textTo", id )
+
+        },
+
+        async loadMsg(){
+            try{
+                const config = require('/config')
+
+                const userOne = localStorage.getItem("userId")
+                const userTwo = localStorage.getItem("textTo")
+
+                const body = JSON.stringify({
+                    userOne,
+                    userTwo
+                })
+
+                const res = await fetch(config.hostname + 'api/msg/getMsg', {
+                    method: 'get',
+                    headers: {
+                        'Content-type' : 'application/json',
+                    },
+                    body,
+                })
+
+                const data = await res.json()
+                if(data.error){
+                    console.log(data.error)
+                }
+
+                const mensajesE = data.mensajes
+
+                for(const mensaje of mensajesE){
+                    this.mensajes.push(mensaje)
+                }
+
+            }catch(error){
+                return console.log(error)
+            }
+        },
+
+        async createMsg(){
+            try{
+
+                const config = require('/config')
+
+                const userOne = localStorage.getItem("userId")
+                const userTwo = localStorage.getItem("textTo")
+
+                const body = JSON.stringify({
+                    userOne,
+                    userTwo
+                })
+
+                const res = await fetch(config.hostname + 'api/msg/create', {
+                    method: 'post',
+                    headers: {
+                        'Content-type' : 'application/json',
+                    },
+                    body,
+                })
+
+                const data = await res.json()
+                if(data.error){
+                    console.log(data.error)
+                }
+
+                await this.loadMsg()
+
+            }catch(error){
+                return console.log(error)
+            }
+        }
     }
 })
 
