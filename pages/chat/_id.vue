@@ -173,9 +173,10 @@ export default ({
 
                 const res = await fetch(config.hostname + 'api/msg/create', {
                     method: 'post',
-                    mode: "no-cors",
+                    mode: "cors",
                     headers: {
                         'Content-type' : 'application/json',
+                        'Access-Control-Allow-Origin': '*'
                     },
                     body,
                 })

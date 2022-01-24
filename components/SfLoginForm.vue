@@ -85,6 +85,7 @@ export default ({
 
                 const res = await fetch(config.hostname + 'api/user/logIn', {
                     method: 'post',
+                    mode: 'no-cors',
                     headers:{
                         'Content-Type': 'application/json',
                     }, 
