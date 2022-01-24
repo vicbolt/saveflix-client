@@ -22,7 +22,7 @@
                     </v-card>
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="message" placeholder="Escribe un mensaje" class="ml-3"></v-text-field>
+                            <v-text-field v-model="content" placeholder="Escribe un mensaje" class="ml-3"></v-text-field>
                         </v-col>
                         <v-col cols="2">
                             <v-btn  color="rgb(229,9,20)" class="mt-4" width="28px" @click="createMsg"> ENVIAR </v-btn>
@@ -67,6 +67,7 @@ export default ({
             mensajes: "",
             username: "",
             avatar: "",
+            content: ""
         }
     },
 
@@ -162,14 +163,17 @@ export default ({
 
                 const userOne = localStorage.getItem("userId")
                 const userTwo = localStorage.getItem("textTo")
+                const content = this.content
 
                 const body = JSON.stringify({
                     userOne,
-                    userTwo
+                    userTwo,
+                    content
                 })
 
                 const res = await fetch(config.hostname + 'api/msg/create', {
                     method: 'post',
+                    mode: "no-cors",
                     headers: {
                         'Content-type' : 'application/json',
                     },
