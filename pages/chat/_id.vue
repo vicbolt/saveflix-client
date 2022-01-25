@@ -16,8 +16,11 @@
                         </v-row>
                     </v-app-bar>
                     <v-card height="300px">
-                        <div v-for="mensaje in mensajes" :key="mensaje._id">
-                            <h5> {{mensaje.content}}</h5>
+                        <div>
+                            <v-row v-for="mensaje in mensajes" :key="mensaje._id">
+                                <h4 style="align: right"> {{mensaje.content}} </h4>
+                            </v-row>
+                            
                         </div>
                     </v-card>
                     <v-row>
@@ -64,10 +67,10 @@ export default ({
         return{
             visible: true,
             following: [],
-            mensajes: "",
+            mensajes: [],
             username: "",
             avatar: "",
-            content: ""
+            content: "",
         }
     },
 
@@ -111,7 +114,9 @@ export default ({
             }
         },
 
-        textTo(username, avatar, id){
+        async textTo(username, avatar, id){
+
+            await this.loadMsg()
 
             this.username = username
             this.avatar = avatar
@@ -122,32 +127,23 @@ export default ({
 
         async loadMsg(){
             try{
+
+                this.mensajes = []
                 const config = require('/config')
 
-                const userOne = localStorage.getItem("userId")
+                const userOne = JSON.parse(localStorage.getItem("userId"))
                 const userTwo = localStorage.getItem("textTo")
 
-                const body = JSON.stringify({
-                    userOne,
-                    userTwo
-                })
+                console.log(userOne, userTwo)
 
-                const res = await fetch(config.hostname + 'api/msg/getMsg', {
-                    method: 'get',
-                    headers: {
-                        'Content-type' : 'application/json',
-                    },
-                    body,
-                })
+                const res = await fetch(config.hostname + `api/msg/getAll/${userOne}/${userTwo}`)
 
                 const data = await res.json()
                 if(data.error){
                     console.log(data.error)
                 }
 
-                const mensajesE = data.mensajes
-
-                for(const mensaje of mensajesE){
+                for(const mensaje of data.mensajes){
                     this.mensajes.push(mensaje)
                 }
 
@@ -161,9 +157,11 @@ export default ({
 
                 const config = require('/config')
 
-                const userOne = localStorage.getItem("userId")
+                const userOne = JSON.parse(localStorage.getItem("userId"))
                 const userTwo = localStorage.getItem("textTo")
                 const content = this.content
+
+                console.log(userOne, userTwo, this.content)
 
                 const body = JSON.stringify({
                     userOne,
