@@ -185,6 +185,7 @@ export default ({
                 }
 
                 await this.loadMsg()
+                this.content = ""
 
             }catch(error){
                 return console.log(error)
