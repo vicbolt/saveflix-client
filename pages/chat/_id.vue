@@ -125,14 +125,14 @@ export default ({
 
     },
 
-    watch: {
-        '$msgSize'(value){
-            if(value < this.msgSizeUpdated){
-                console.log("funsionaa")
-                this.loadMsg()
-            }
-        }
-    },
+    // watch: {
+    //     '$msgSize'(value){
+    //         if(value < this.msgSizeUpdated){
+    //             console.log("funsionaa")
+    //             this.loadMsg()
+    //         }
+    //     }
+    // },
 
     methods: {
 
@@ -250,7 +250,11 @@ export default ({
                 }
 
                 this.msgSizeUpdated = data.mensajes.length
-                return console.log("sizeUpdated: ", this.msgSizeUpdated)
+                console.log("msgSizeUpdated: ", this.msgSizeUpdated)
+
+                if(this.msgSize < this.msgSizeUpdated){
+                    await this.loadMsg()
+                }
 
             }catch(error){
                 return console.log(error)
