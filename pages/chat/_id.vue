@@ -2,7 +2,6 @@
     <div class="sf-chat" v-if="visible">
         <v-row>
 
-            <!-- CHAT INPUT -->
             <v-col cols="8">
                 <v-card elevation="2" shaped class="mb-5">
                     <v-app-bar>
@@ -16,7 +15,7 @@
                         </v-row>
                     </v-app-bar>
                     <v-card height="300px">
-                        <div id="scroll" style=" height: auto; width:760px; height:300px; overflow-y: scroll">
+                        <div id="scroll">
                             <v-row class="" v-for="mensaje in mensajes" :key="mensaje._id">
                                 <div class="userIdContainer mb-2" v-if="userId === mensaje.userOne" style="width:760px; align-content:right">
                                     <v-row >
@@ -49,7 +48,6 @@
                                         <v-col cols="8"></v-col>
                                     </v-row>
                                     <p class="p2 mb-3"> {{mensaje.content}} </p>
-
                                 </div>
                             </v-row>  
                         </div>
@@ -64,7 +62,8 @@
                     </v-row>
 
                 </v-card>
-            </v-col>
+
+            </v-col> 
 
             <!-- END CHAT INPUT -->
 
@@ -105,6 +104,8 @@ export default ({
             userId: "",
             avatarUser: "",
             usernameUser: "",
+            msgSize: "",
+            msgSizeUpdated: "",
         }
     },
 
@@ -121,14 +122,26 @@ export default ({
         await this.loadUser()
 
         await this.loadFollowing()
+
+    },
+
+    watch: {
+        '$msgSize'(value){
+            if(value < this.msgSizeUpdated){
+                console.log("funsionaa")
+                this.loadMsg()
+            }
+        }
     },
 
     methods: {
 
         toScroll(){
             const div = this.$el.querySelector("#scroll");
-            console.log(div.scrollHeight)
-            div.scrollTop = div.scrollHeight;
+            const altura = this.$el.querySelector("#scroll").scrollHeight
+
+            console.log(div, altura)
+            div.scrollTop = altura
         },
 
         async loadUser(){
@@ -178,10 +191,18 @@ export default ({
 
             await this.loadMsg()
 
+            await this.backLoadMsg()
+
+            this.toScroll()
+
             this.username = username
             this.avatar = avatar
 
             localStorage.setItem("textTo", id )
+
+            setInterval(async () => {
+                await this.backLoadMsg()}
+            , 4000)
 
         },
 
@@ -194,8 +215,6 @@ export default ({
                 const userOne = JSON.parse(localStorage.getItem("userId"))
                 const userTwo = localStorage.getItem("textTo")
 
-                console.log(userOne, userTwo)
-
                 const res = await fetch(config.hostname + `api/msg/getAll/${userOne}/${userTwo}`)
 
                 const data = await res.json()
@@ -203,11 +222,35 @@ export default ({
                     console.log(data.error)
                 }
 
+                this.msgSize = data.mensajes.length
+
+                console.log("size: ", this.msgSize)
+
                 for(const mensaje of data.mensajes){
                     this.mensajes.push(mensaje)
                 }
 
-                this.toScroll()
+            }catch(error){
+                return console.log(error)
+            }
+        },
+
+        async backLoadMsg(){
+            try{
+                
+                const config = require('/config')
+
+                const userOne = JSON.parse(localStorage.getItem("userId"))
+                const userTwo = localStorage.getItem("textTo")
+
+                const res = await fetch(config.hostname + `api/msg/getAll/${userOne}/${userTwo}`)
+                const data = await res.json()
+                if(data.error){
+                    console.log(data.error)
+                }
+
+                this.msgSizeUpdated = data.mensajes.length
+                return console.log("sizeUpdated: ", this.msgSizeUpdated)
 
             }catch(error){
                 return console.log(error)
@@ -247,6 +290,7 @@ export default ({
                 }
 
                 await this.loadMsg()
+                this.toScroll()
                 this.content = ""
 
             }catch(error){
@@ -281,6 +325,13 @@ export default ({
     padding: 15px;
     border-radius: 10%;
 
+}
+
+#scroll{
+    width: 760px;
+    max-height: 300px;
+    height: 100%;
+    overflow: scroll
 }
 
 .userIdContainer{
