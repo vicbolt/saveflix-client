@@ -165,7 +165,6 @@ export default ({
         async loadFollowing(){
 
             try{
-
                 const config = require('/config')
                 const id = JSON.parse(localStorage.getItem("userId"))
 
@@ -254,6 +253,7 @@ export default ({
 
                 if(this.msgSize < this.msgSizeUpdated){
                     await this.loadMsg()
+                    this.toScroll()
                 }
 
             }catch(error){
