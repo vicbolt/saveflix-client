@@ -201,7 +201,7 @@ export default ({
 
             setInterval(async () => {
                 await this.backLoadMsg()}
-            , 4000)
+            , 2000)
 
         },
 
