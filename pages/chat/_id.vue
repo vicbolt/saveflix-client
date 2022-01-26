@@ -16,11 +16,42 @@
                         </v-row>
                     </v-app-bar>
                     <v-card height="300px">
-                        <div>
-                            <v-row v-for="mensaje in mensajes" :key="mensaje._id">
-                                <h4 style="align: right"> {{mensaje.content}} </h4>
-                            </v-row>
-                            
+                        <div id="scroll" style=" height: auto; width:760px; height:300px; overflow-y: scroll">
+                            <v-row class="" v-for="mensaje in mensajes" :key="mensaje._id">
+                                <div class="userIdContainer mb-2" v-if="userId === mensaje.userOne" style="width:760px; align-content:right">
+                                    <v-row >
+                                        <v-col cols="9"></v-col>
+                                        <v-col cols="3" style="align-content:right">
+                                            <v-row>
+                                                <v-col cols="4" >
+                                                <v-img class="" id="imagen" :src="avatarUser" width="35px" height="35px" style="align-items:right" /> 
+                                                </v-col> 
+                                                <v-col cols="8" class="ml-n10">
+                                                <h4 style="text-align: right">{{usernameUser}}</h4>
+                                                </v-col>
+                                            </v-row>
+                                        </v-col>
+                                    </v-row>
+                                    <p class="p1">{{mensaje.content}} </p>
+                                </div>
+                                <div class="textToContainer mb-2" v-if="userId !== mensaje.userOne" style="width:760px; align-content: left">
+                                    <v-row >
+                                        <v-col cols="4">
+                                            <v-row>
+                                                <v-col cols="4">
+                                                <v-img  id="imagen" :src="avatar" width="35px" height="35px" /> 
+                                                </v-col> 
+                                                <v-col cols="8">
+                                                <h4>{{username}}</h4>
+                                                </v-col>
+                                            </v-row>
+                                        </v-col>
+                                        <v-col cols="8"></v-col>
+                                    </v-row>
+                                    <p class="p2 mb-3"> {{mensaje.content}} </p>
+
+                                </div>
+                            </v-row>  
                         </div>
                     </v-card>
                     <v-row>
@@ -71,23 +102,52 @@ export default ({
             username: "",
             avatar: "",
             content: "",
+            userId: "",
+            avatarUser: "",
+            usernameUser: "",
         }
     },
 
    async beforeMount(){
 
-        await this.loadFollowing()
-
-        await this.loadMsg()
-
         const token = localStorage.getItem('token')
-
         if(!token){
             this.visible = false
         }
+
+        const userId = JSON.parse(localStorage.getItem("userId"))
+        this.userId = userId
+
+        await this.loadUser()
+
+        await this.loadFollowing()
     },
 
     methods: {
+
+        toScroll(){
+            const div = this.$el.querySelector("#scroll");
+            console.log(div.scrollHeight)
+            div.scrollTop = div.scrollHeight;
+        },
+
+        async loadUser(){
+            try{
+                const config = require('/config')
+
+                const res = await fetch(config.hostname + `api/user/getOne/${this.userId}`)
+                const data = await res.json()
+                if(data.error){
+                    return console.log(data.error)
+                }
+
+                this.avatarUser = data.user.avatar
+                this.usernameUser = data.user.username
+            
+            }catch(error){
+                return console.log(error)
+            }
+        },
 
         async loadFollowing(){
 
@@ -147,6 +207,8 @@ export default ({
                     this.mensajes.push(mensaje)
                 }
 
+                this.toScroll()
+
             }catch(error){
                 return console.log(error)
             }
@@ -202,4 +264,35 @@ export default ({
     border-radius: 100%;
     margin-left: 2em;
 }
+
+.p1 {
+    width: auto;
+
+    text-align: right;
+
+    padding: 15px;
+    border-radius: 10%;
+
+}
+
+.p2{
+    width: auto;
+    text-align: left;
+    padding: 15px;
+    border-radius: 10%;
+
+}
+
+.userIdContainer{
+    padding-top: 7px;
+    background: rgb(36, 36, 36);
+    border-radius: 10%;
+}
+
+.textToContainer{
+    padding-top: 7px;
+    background: rgb(36, 36, 36);
+    border-radius: 10%;
+}
+
 </style>
