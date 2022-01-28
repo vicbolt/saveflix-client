@@ -15,8 +15,19 @@ export default ({
     data() {
         return{
             show: false,
-            style: "margin-top: 20%; text-align: center; color: rgb(229,9,20); font-size: 700%; font-family: 'Bebas Neue'; font-weight: 100;"
+            style: "margin-top: 20%; text-align: center; color: rgb(229,9,20); font-size: 500%; font-family: 'Bebas Neue'; font-weight: 100;"
         }     
+    },
+
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if(value === "xs"){
+               this.style = "margin-top: 20%; text-align: center; color: rgb(229,9,20); font-size: 300%; font-family: 'Bebas Neue'; font-weight: 100;"
+            }
+        }
     },
 
     mounted(){
@@ -44,15 +55,6 @@ export default ({
         
     },
 
-    watch: {
-        '$vuetify.breakpoint.name'(value){
-            console.log(value)
-
-            if( value === "xs"){
-               this.style = "margin-top: 20%; text-align: center; color: rgb(229,9,20); font-size: 300%; font-family: 'Bebas Neue'; font-weight: 100;"
-            }
-        }
-    },
 })
 </script>
 
