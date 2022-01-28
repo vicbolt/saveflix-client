@@ -1,42 +1,40 @@
 <template>
     <div class="sf-explorar" v-if="visible">
 
-    <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
-
-    <v-card >
-        <v-app-bar height="auto" shaped>
-            <v-row>
-                <v-col :cols="explorar">
-                    <v-row>
-                        <v-icon class="mr-4 mt-3" size="35"> mdi-shuriken </v-icon>
-                        <v-app-bar-title class="font-weight-black mt-3" :style="tamañoFuente"> EXPLORAR </v-app-bar-title>
-                    </v-row>
-                </v-col>
-                <v-col :cols="buscador">
-                    <v-row>
-                        <v-text-field v-model="search" placeholder="Buscar por título" type="text" class="mt-3" v-on:keyup.enter="buscar"></v-text-field>
-                        <v-btn class="ml-2 mt-2" color="red" height="40px" min-width="25px" @click="buscar"> <v-icon size="20px">mdi-movie-search-outline</v-icon> </v-btn>
-                    </v-row>
-                </v-col>
-            </v-row>
-
-
-        </v-app-bar>
-            <div v-if="loading" style="text-align:center">
-                <img height="120em" src="@/static/load.gif" class="mb-6" />  
-            </div>
+        <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
+        
         <v-card>
-            <v-row>
-                <v-col @click="goTo(title._id)" :cols="cards" v-for="title in titles" :key="title.id">
-                    <SfCard id="post" style="cursor: pointer;" :image="title.image" :title="title.title" :score="title.score" :tag="title.post" />
-                </v-col>
-                           
-            </v-row>
+            <v-app-bar height="auto" shaped>
+                <v-row>
+                    <v-col :cols="explorar">
+                        <v-row>
+                            <v-icon class="mr-4 mt-3" size="35"> mdi-shuriken </v-icon>
+                            <v-app-bar-title class="font-weight-black mt-3" :style="tamañoFuente"> EXPLORAR </v-app-bar-title>
+                        </v-row>
+                    </v-col>
+                    <v-col :cols="buscador">
+                        <v-row>
+                            <v-text-field v-model="search" placeholder="Buscar por título" type="text" class="mt-3" v-on:keyup.enter="buscar"></v-text-field>
+                            <v-btn class="ml-2 mt-2" color="red" height="40px" min-width="25px" @click="buscar"> <v-icon size="20px">mdi-movie-search-outline</v-icon> </v-btn>
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-app-bar>
+
+
+                <div v-if="loading" style="text-align:center">
+                    <img height="120em" src="@/static/load.gif" class="mb-6" />  
+                </div>
+            <v-card>
+                <v-row>
+                    <v-col @click="goTo(title._id)" :cols="cards" v-for="title in titles" :key="title.id">
+                        <SfCard id="post" style="cursor: pointer;" :image="title.image" :title="title.title" :score="title.score" :tag="title.post" />
+                    </v-col>
+                            
+                </v-row>
+            </v-card>
+
         </v-card>
-
-    </v-card>
-
-
     </div>
 </template>
 
@@ -53,7 +51,7 @@ export default ({
             tamañoFuente: "font-size:25px",
             explorar: "7",
             buscador: "5",
-            loading: false
+            loading: true
         }
     },
 
@@ -65,7 +63,6 @@ export default ({
             return this.$router.push("/logIn")
         }
         
-        this.loading = true
         await this.loadMoviesAndSerials()
         this.loading = false
     },
