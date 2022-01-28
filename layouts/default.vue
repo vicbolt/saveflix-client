@@ -19,8 +19,8 @@ export default ({
     data() {
         return {
             visible: true,
-            main: "8",
-            info: "4",
+            main: "",
+            info: "",
         }
     },
     

@@ -47,11 +47,12 @@ export default ({
             titles: [],
             search: "",
             error: "",
-            cards: "4",
+            cards: "",
             tamañoFuente: "font-size:25px",
-            explorar: "7",
-            buscador: "5",
-            loading: true
+            explorar: "",
+            buscador: "",
+            loading: true,
+            
         }
     },
 
@@ -62,6 +63,10 @@ export default ({
             this.visible = false
             return this.$router.push("/logIn")
         }
+
+        const value = JSON.stringify(this.$vuetify.breakpoint.name)
+        console.log(value)
+
         
         await this.loadMoviesAndSerials()
         this.loading = false
@@ -73,15 +78,19 @@ export default ({
 
             if( value === "xl" || value === "lg"){
                 this.cards = "4"
+                this.explorar = "7"
+                this.buscador = "5"
                 this.tamañoFuente = "font-size:25px"
             } else if( value === "md" || value === "sm"){
                 this.cards = "6"
+                this.explorar = "7"
+                this.buscador = "5"
                 this.tamañoFuente = "font-size:25px"
             } else if(value === "xs") {
                 this.cards = "12"
-                this.tamañoFuente = "font-size:20px"
                 this.explorar = "12"
                 this.buscador = "12"
+                this.tamañoFuente = "font-size:20px"
             }
         }
     },
