@@ -48,12 +48,17 @@ export default ({
             search: "",
             error: "",
             cards: "",
-            tamañoFuente: "font-size:25px",
+            tamañoFuente: "",
             explorar: "",
             buscador: "",
             loading: true,
+            value: this.$vuetify.breakpoint.name
             
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     async beforeMount(){
@@ -64,38 +69,66 @@ export default ({
             return this.$router.push("/logIn")
         }
 
-        const value = JSON.stringify(this.$vuetify.breakpoint.name)
-        console.log(value)
-
-        
         await this.loadMoviesAndSerials()
         this.loading = false
     },
 
     watch: {
         '$vuetify.breakpoint.name'(value){
-            console.log(value)
+            console.log("watch: ", value)
 
             if( value === "xl" || value === "lg"){
                 this.cards = "4"
                 this.explorar = "7"
                 this.buscador = "5"
                 this.tamañoFuente = "font-size:25px"
-            } else if( value === "md" || value === "sm"){
+            }
+            
+            if( value === "md" || value === "sm"){
                 this.cards = "6"
                 this.explorar = "7"
                 this.buscador = "5"
                 this.tamañoFuente = "font-size:25px"
-            } else if(value === "xs") {
+            }
+            
+            if(value === "xs") {
+                console.log("hola")
                 this.cards = "12"
                 this.explorar = "12"
                 this.buscador = "12"
+                console.log(this.buscador)
                 this.tamañoFuente = "font-size:20px"
             }
         }
     },
 
     methods: {
+
+        responsive(){
+
+            if( this.value === "xl" || this.value === "lg"){
+                this.cards = "4"
+                this.explorar = "7"
+                this.buscador = "5"
+                this.tamañoFuente = "font-size:25px"
+            }
+            
+            if( this.value === "md" || this.value === "sm"){
+                this.cards = "6"
+                this.explorar = "7"
+                this.buscador = "5"
+                this.tamañoFuente = "font-size:25px"
+            }
+            
+            if(this.value === "xs") {
+                console.log("hola")
+                this.cards = "12"
+                this.explorar = "12"
+                this.buscador = "12"
+                this.tamañoFuente = "font-size:20px"
+            }
+
+        },
 
         async loadMoviesAndSerials(){
             try{
@@ -181,7 +214,6 @@ export default ({
     color: black;
     padding: 2px;
 }
-
 
 .boton{
     background-color: rgb(18, 18, 18);
