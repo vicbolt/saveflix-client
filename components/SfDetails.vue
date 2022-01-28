@@ -7,16 +7,18 @@
 
         <v-card>
             <v-app-bar shaped style="background: white; color: black">
+
                 <v-row>
-                    <v-col cols="9">
+                    <v-col :cols="titulo">
                         <h2 class="font-weight-black mt-1" style="font-size:22px" ><v-icon class="mr-4 mb-1" size="35" color="black"> mdi-star </v-icon> {{this.title}} </h2>
                     </v-col>
                     
-                    <v-col cols="3">
-                    <v-btn v-if="admin"  @click="edit" class="mr-2"><v-icon color="green">mdi-movie-edit-outline</v-icon></v-btn>
-                    <v-btn v-if="admin" @click="remove"><v-icon color="rgb(229,9,20)">mdi-trash-can-outline</v-icon></v-btn>
+                    <v-col :cols="add" class="box" >
+                        <v-btn v-if="admin"  @click="edit" class="mr-2"><v-icon color="green">mdi-movie-edit-outline</v-icon></v-btn>
+                        <v-btn v-if="admin" @click="remove"><v-icon color="rgb(229,9,20)">mdi-trash-can-outline</v-icon></v-btn>
                     </v-col>
                 </v-row>
+
             </v-app-bar>
 
             <v-card-text>
