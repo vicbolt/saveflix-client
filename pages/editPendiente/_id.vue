@@ -16,15 +16,7 @@ export default ({
     },
     
     async asyncData(ctx) {
-
         try{
-
-            const token = localStorage.getItem("token")
-            if(!token){
-                this.visible = false
-                return this.$router.push("logIn")
-            }
-
             const paramsId = ctx.params.id
             const config = require('/config')
             
@@ -35,7 +27,6 @@ export default ({
                 if(data.error){
                     console.log(data.error)
                 }
-
                 return {
                     post: data.movieP,
                 }
@@ -47,7 +38,6 @@ export default ({
                 if(data1.error){
                     console.log(data1.error)
                 }
-
                 return {
                     post: data1.serialP
                 }
@@ -57,6 +47,15 @@ export default ({
             return console.log(error)
         }
     },
+
+    beforeMount(){
+    const token = localStorage.getItem('token')
+        if(!token){
+            this.visible = false
+            return this.$router.push("/logIn")
+
+        }
+    }
 
 })
 

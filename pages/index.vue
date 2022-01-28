@@ -1,10 +1,11 @@
 <template>
     <div id="example-1">
         <transition name="slide-fade">
-            <h1 v-if="show"> S A V E F L I X</h1>
+            <h1 v-if="show" :style="style"> S A V E F L I X</h1>
         </transition>
     </div>
 </template>
+
 
 <script>
 
@@ -14,6 +15,7 @@ export default ({
     data() {
         return{
             show: false,
+            style: "margin-top: 20%; text-align: center; color: rgb(229,9,20); font-size: 700%; font-family: 'Bebas Neue'; font-weight: 100;"
         }     
     },
 
@@ -40,13 +42,23 @@ export default ({
             
         }, 6500)
         
-    }
+    },
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xs"){
+               this.style = "margin-top: 20%; text-align: center; color: rgb(229,9,20); font-size: 300%; font-family: 'Bebas Neue'; font-weight: 100;"
+            }
+        }
+    },
 })
 </script>
 
 
 <style scoped>
-
+/* 
 h1{
     margin-top: 20%;
     text-align: center;
@@ -54,7 +66,7 @@ h1{
     font-size: 700%;
     font-family: 'Bebas Neue';
     font-weight: 100;
-}
+} */
 
 
 .slide-fade-enter-active {

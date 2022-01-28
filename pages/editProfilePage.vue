@@ -334,9 +334,6 @@ export default ({
                     this.$router.push('/logIn')
                 }, 2000);
 
-
-
-
             }catch(error){
                 return console.log(error)
             }

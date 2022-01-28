@@ -17,14 +17,7 @@ export default ({
     },
 
     async asyncData(ctx) {
-
         try{
-            const token = localStorage.getItem("token")
-            if(!token){
-                this.visible = false
-                return this.$router.push("/logIn")
-            }
-
             const id = ctx.params.id
 
             const config = require('/config')
@@ -60,7 +53,15 @@ export default ({
         }
     },
 
+    beforeMount(){
+        const token = localStorage.getItem("token")
+            if(!token){
+                this.visible = false
+                return this.$router.push("/logIn")
+            }
+    }
 })
+
 </script>
 
 

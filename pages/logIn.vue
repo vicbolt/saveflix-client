@@ -1,8 +1,6 @@
 <template>
     <div class="sf-logIn">
-
         <SfLoginForm />
-
     </div>
 </template>
 

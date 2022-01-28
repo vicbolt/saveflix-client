@@ -1,8 +1,6 @@
 <template>
     <div class="sf-activate-code">
-
         <SfActivateCode />
-
     </div>
 </template>
 

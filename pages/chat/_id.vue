@@ -54,10 +54,10 @@
                     </v-card>
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="content" placeholder="Escribe un mensaje" class="ml-3"></v-text-field>
+                            <v-text-field v-model="content" placeholder="Escribe un mensaje" class="ml-3" v-on:keyup.enter="createMsg"></v-text-field>
                         </v-col>
                         <v-col cols="2">
-                            <v-btn  color="rgb(229,9,20)" class="mt-4" width="28px" @click="createMsg"> ENVIAR </v-btn>
+                            <v-btn  color="rgb(229,9,20)" class="mt-4" width="28px" @click="createMsg" > ENVIAR </v-btn>
                         </v-col>
                     </v-row>
 
@@ -114,6 +114,8 @@ export default ({
         const token = localStorage.getItem('token')
         if(!token){
             this.visible = false
+            return this.$router.push("/logIn")
+
         }
 
         const userId = JSON.parse(localStorage.getItem("userId"))
@@ -264,6 +266,7 @@ export default ({
         async createMsg(){
             try{
 
+
                 const config = require('/config')
 
                 const userOne = JSON.parse(localStorage.getItem("userId"))
@@ -293,9 +296,7 @@ export default ({
                     console.log(data.error)
                 }
 
-                await this.loadMsg()
-                this.toScroll()
-                this.content = ""
+                this.content = "" 
 
             }catch(error){
                 return console.log(error)

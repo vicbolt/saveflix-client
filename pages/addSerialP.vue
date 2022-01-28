@@ -1,8 +1,6 @@
 <template>
     <div class="sf-add-serialP" v-if="visible">
-
         <SfAddSerialP/>
-
     </div>
 </template>
 
@@ -22,6 +20,5 @@ export default ({
                 return this.$router.push("/logIn")
             }
     }
-
 })
 </script>

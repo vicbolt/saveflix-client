@@ -1,8 +1,6 @@
 <template>
     <div class="sf-add-movieP" v-if="visible">
-
         <SfAddMovieP/>
-
     </div>
 </template>
 
@@ -23,6 +21,5 @@ export default ({
                 return this.$router.push("/logIn")
             }
     }
-
 })
 </script>

@@ -58,8 +58,8 @@ export default ({
     },
 
     async beforeMount(){
+        
         const token = localStorage.getItem('token')
-
         if(!token){
             this.visible = false
             return this.$router.push("/logIn")
@@ -93,7 +93,6 @@ export default ({
 
         async loadMoviesAndSerials(){
             try{
-
                 const config = require('/config')
 
                 const res1 = await fetch(config.hostname + `api/movie/explorar`)
@@ -155,8 +154,6 @@ export default ({
                 localStorage.setItem("postId", data)
                 this.$router.push(`/details/${data}`)
 
-                
-                
             }catch(error){
                 return console.log(error)
             }

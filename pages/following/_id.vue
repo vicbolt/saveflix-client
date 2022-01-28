@@ -58,7 +58,6 @@ export default ({
 
         async loadFollowers(){
             try{
-
                 const config = require('/config')
 
                 const userId = localStorage.getItem("ownerId")
@@ -95,14 +94,10 @@ export default ({
             } else {
                 this.$router.push(`/perfil/${seguidorId}`)
             }
-            
-        }
+        },
     }
-    
 })
 </script>
-
-
 
 <style scoped>
 

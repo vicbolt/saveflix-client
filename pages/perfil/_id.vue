@@ -125,7 +125,6 @@ export default({
 
 
                 const res = await fetch(config.hostname + `api/serial/getAll/${id}`)
-
                 const data = await res.json()
                 if(data.error){
                     return this.error = data.error
@@ -143,13 +142,11 @@ export default({
 
         async loadMovies(){
             try{
-
                 const config = require('/config')
 
                 const id = localStorage.getItem('ownerId')
 
                 const res = await fetch(config.hostname + `api/movie/getAll/${id}`)
-
                 const data = await res.json()
                 if(data.error){
                     return this.error = data.error
@@ -160,7 +157,6 @@ export default({
                     this.movies.push(movie)
                 }
 
-
             }catch(error){
                 return console.log(error)
             }
@@ -170,11 +166,9 @@ export default({
             try{
 
                 const config = require('/config')
-
                 const ownerId = localStorage.getItem('ownerId')
 
                 const res = await fetch(config.hostname + `api/user/getOne/${ownerId}`)
-
                 const data = await res.json()
                 if(data.error){
                         console.log(data.error)
@@ -275,7 +269,6 @@ export default({
             this.$router.push(`/following/${this.ownerId}`)
         },
     }
-
 })
 
 </script>

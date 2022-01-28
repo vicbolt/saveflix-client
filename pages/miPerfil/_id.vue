@@ -179,7 +179,6 @@ export default({
     methods:{
         async loadSerials(){
             try{
-
                 const config = require('/config')
                 const strParamsId = localStorage.getItem('userId')
 
@@ -204,7 +203,6 @@ export default({
 
         async loadMovies(){
             try{
-
                 const config = require('/config')
 
                 const strParamsId = localStorage.getItem('userId')
@@ -217,13 +215,11 @@ export default({
                 if(data.error){
                     return this.error = data.error
                 }
-                
-
+    
                 this.movies = []
                 for(const movie of data.movies){
                     this.movies.push(movie)
                 }
-
 
             }catch(error){
                 return console.log(error)
@@ -239,7 +235,6 @@ export default({
                 const userId = JSON.parse(strParamsId)
 
                 const res = await fetch(config.hostname + `api/user/getOne/${userId}`)
-
                 const data = await res.json()
                 if(data.error){
                         console.log(data.error)
@@ -251,8 +246,6 @@ export default({
                 this.avatar = user.avatar
                 this.following = user.following.length
                 this.userId = user._id
-
-                console.log(this.userId)
 
                 const res1 = await fetch(config.hostname + `api/user/followers/${userId}`)
 
@@ -268,7 +261,6 @@ export default({
                 const posts = this.movies.concat(this.serials)
 
                 this.allPosts = posts.length
-
 
             }catch(error){
                 return console.log(error)
@@ -294,8 +286,6 @@ export default({
                 for(const movieP of moviesP){
                     this.moviesP.push(movieP)
                 }
-
-
 
             }catch(error){
                 return console.log(error)
@@ -323,8 +313,6 @@ export default({
                     this.serialsP.push(serialP)
                 }
 
-
-
             }catch(error){
                 return console.log(error)
             }
@@ -333,7 +321,6 @@ export default({
         goToFollowers(){
 
             localStorage.setItem("ownerId", this.userId)
-
             this.$router.push(`/followers/${this.userId}`)
         },
 
@@ -349,18 +336,14 @@ export default({
         },
 
         goToDetailsPendiente(id){
-
             this.$router.push(`/pendienteDetails/${id}`)
         },
 
         goToEditProfilePage(){
-
             this.$router.push('/editProfilePage')
-        }
+        },
     }
-
 })
-
 </script>
 
 <style scoped>

@@ -1,9 +1,6 @@
 <template>
     <div class="sf-mi-ranking" v-if="visible">
-
         <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
-
-
         <v-row>
             <v-col :cols="listaPeliculas">
             <v-card elevation="2">
@@ -197,8 +194,6 @@ export default ({
     }
 })
 </script>
-
-
 
 <style scoped>
 

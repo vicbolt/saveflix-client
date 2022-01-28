@@ -1,8 +1,6 @@
 <template>
     <div class="sf-add-movie" v-if="visible">
-
         <SfAddMovie/>
-
     </div>
 </template>
 

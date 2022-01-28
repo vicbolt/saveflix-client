@@ -79,7 +79,6 @@ export default ({
             } else if(value === "sm" || value === "xs") {
                 this.series = "12"
                 this.size= "960px"
-
             }
         }
     },

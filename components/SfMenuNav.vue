@@ -101,9 +101,6 @@
                         <v-list-item>
                             <v-row>
                                 <v-col cols="12">
-                                    <v-btn class="ml-1" width="auto" height="50px" light block> AMIGOS</v-btn>
-                                </v-col>
-                                <v-col cols="12">
                                     <v-dialog width="500">
                                         <template v-slot:activator="{ }">
                                             <v-btn class="ml-1 mt-n3" width="auto" height="50px" light block @click="goToEditarPerfil()">EDITAR PERFIL</v-btn>

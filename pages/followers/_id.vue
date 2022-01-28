@@ -12,7 +12,6 @@
                 <v-card-text>
                         <div v-for="seguidor in followers" :key="seguidor.id" @click="goTo(seguidor._id)" id="background"  class="container-movies mb-5">
                             <v-row style="background-color: rgb(0,0,0,0.9); cursor: pointer" class="mr-0">
-
                                 <v-col cols="3">
                                     <v-img class="imagen" style="border-radius:100%" :src="seguidor.avatar" width="70px" height="70px" />
                                 </v-col>
@@ -28,7 +27,6 @@
             </v-card>
             </v-col>
         </v-row>
-
     </div>
 </template>
 

@@ -1,8 +1,6 @@
 <template>
     <div class="sf-reactivate-code">
-
         <SfReactivateCode />
-
     </div>
 </template>
 

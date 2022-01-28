@@ -61,9 +61,7 @@ export default ({
         }
 
         this.loading = true
-
         await this.loadMovies()
-
         this.loading = false
         
     },
@@ -83,7 +81,6 @@ export default ({
             } else if(value === "sm" || value === "xs") {
                 this.peliculas = "12"
                 this.size= "960px"
-
             }
         }
     },
@@ -95,21 +92,16 @@ export default ({
 
         async loadMovies(){
             try{
-
                 const strParamsId = localStorage.getItem('userId')
-
                 const paramsId = JSON.parse(strParamsId)
-
                 const config = require('/config')
 
                 const res = await fetch(config.hostname + `api/movie/getAll/${paramsId}`)
-
                 const data = await res.json()
                 if(data.error){
                     return this.error = data.error
                 }
                 
-
                 this.movies = []
                 for(const movie of data.movies){
                     this.movies.push(movie)
@@ -120,8 +112,6 @@ export default ({
                 } else {
                     this.noMovies = false
                 }
-
-
 
             }catch(error){
                 return console.log(error)
