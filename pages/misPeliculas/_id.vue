@@ -29,7 +29,7 @@
                     <v-col :cols="peliculas"  v-for="movie in movies" :key="movie.id" @click="goTo(movie._id)">
                         <v-list-item>
                             <v-list-item-content style="cursor: pointer;" class="fondo">
-                                <v-img height="360px" :src="movie.image"/>
+                                <v-img :height="size" :src="movie.image"/>
                                 <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:20px"> {{movie.title}} </v-list-item-title>
                                         <v-progress-linear color="rgb(229,9,20)" v-model="movie.score" height="25">
                                             <strong> {{ Math.ceil(movie.score) }} <v-icon color="white" size="15"> mdi-heart </v-icon> </strong>
@@ -59,6 +59,7 @@ export default ({
             size: "",
             titulo: "",
             add: "",
+            size: "",
             loading: true,
             value: this.$vuetify.breakpoint.name
         }
@@ -96,12 +97,16 @@ export default ({
                 this.add = "6"
                 this.peliculas = "6"
                 this.size = "820px"
-                
-            } else if(value === "sm" || value === "xs") {
+            } else if(value === "sm") {
                 this.titulo = "12"
                 this.add = "12"
                 this.peliculas = "12"
-                this.size= "960px"
+                this.size= "720px"
+            } else if(value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
+                this.peliculas = "12"
+                this.size= "360px"
             }
         }
     },

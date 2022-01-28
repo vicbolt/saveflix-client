@@ -2,12 +2,19 @@
     <div class="sf-mis-series" v-if="visible">
 
         <v-card elevation="2">
-                <v-app-bar shaped>
-                    <v-icon class="mr-4" size="35"> mdi-television-classic </v-icon>
-                    <v-card-title class="font-weight-black mt-1" style="font-size:25px"> MIS SERIES </v-card-title>
-                    <v-spacer></v-spacer>
-                    <v-btn color="rgb(229,9,20)" @click="addSerial">AÑADIR SERIE</v-btn>
-                </v-app-bar>
+            <v-app-bar height="auto" class="pa-4" shaped>
+                <v-row>
+                    <v-col :cols="titulo">
+                        <v-row>
+                            <v-icon class="mr-4" size="35"> mdi-television-classic </v-icon>
+                            <v-card-title class="font-weight-black mt-1" style="font-size:25px" > MIS SERIES </v-card-title>
+                        </v-row>
+                    </v-col>
+                    <v-col :cols="add" class="box" >
+                        <v-btn color="rgb(229,9,20)" @click="addSerial"> AÑADIR SERIE </v-btn>
+                    </v-col>
+                </v-row> 
+            </v-app-bar>
 
             <v-card-text>
                 <h1 v-if="noSeries === true"> NO TIENES SERIES AÚN</h1>
@@ -44,13 +51,20 @@ export default ({
     
     data() {
       return {
-          visible: true,
-          serials: [],
-          noSeries: "",
-          size: "360px",
-          series: "4",
-          loading: false
+        visible: true,
+        serials: [],
+        noSeries: "",
+        series: "",
+        titulo: "",
+        add: "",
+        size: "",
+        loading: true,
+        value: this.$vuetify.breakpoint.name
       }  
+    },
+
+    created(){
+        this.responsive()
     },
 
     async beforeMount(){
@@ -59,7 +73,7 @@ export default ({
             this.visible = false
             return this.$router.push("/logIn")
         }
-        this.loading = true
+        
         await this.loadSerials()
         this.loading = false
     },
@@ -68,22 +82,57 @@ export default ({
         '$vuetify.breakpoint.name'(value){
             console.log(value)
 
-            if( value === "xl"){
+            if( value === "xl" || value === "lg"){
+                this.titulo = "6"
+                this.add = "6"
                 this.series = "4"
                 this.size = "360px"
-                
-            } else if(value === "lg" || value === "md" ){
+
+            } else if(value === "lg" || value === "md"){
+                this.titulo = "6"
+                this.add = "6"
                 this.series = "6"
                 this.size = "820px"
-                
-            } else if(value === "sm" || value === "xs") {
+            
+            } else if( value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
                 this.series = "12"
-                this.size= "960px"
+                this.size= "720px"
+            } else if( value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
+                this.series = "12"
+                this.size= "360px"
             }
         }
     },
 
     methods: {
+
+        responsive(){
+
+            if( this.value === "xl" || this.value === "lg"){
+                this.titulo = "6"
+                this.add = "6"
+                this.series = "4"
+                this.size = "360px"
+
+            } else if(this.value === "lg" || this.value === "md"){
+                this.titulo = "6"
+                this.add = "6"
+                this.series = "6"
+                this.size = "820px"
+                
+            } else if(this.value === "sm" || this.value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
+                this.series = "12"
+                this.size= "960px"
+            }
+
+        },
+
         addSerial(){
             this.$router.push('/addSerial')
         },
@@ -139,6 +188,12 @@ export default ({
 .boton{
     background-color: rgb(18, 18, 18);
     border: 2px solid rgb(229,9,20);
+}
+
+.box {
+  display: flex;
+
+  justify-content: right;
 }
 
 </style>
