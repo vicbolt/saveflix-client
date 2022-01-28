@@ -6,11 +6,11 @@
 
 
         <v-card>
-            <v-app-bar shaped style="background: white; color: black">
+            <v-app-bar height="auto" shaped style="background: white; color: black">
 
                 <v-row>
                     <v-col :cols="titulo">
-                        <h2 class="font-weight-black mt-1" style="font-size:22px" ><v-icon class="mr-4 mb-1" size="35" color="black"> mdi-star </v-icon> {{this.title}} </h2>
+                        <h2 class="font-weight-black mt-3" style="font-size:22px" ><v-icon class="mr-4 mb-1" size="35" color="black"> mdi-star </v-icon> {{this.title}} </h2>
                     </v-col>
                     
                     <v-col :cols="add" class="box" >
@@ -108,27 +108,46 @@ export default ({
             paramsId: "",
             error: "",
             msg: "",
-            imagen: "4",
-            info: "8"
+            imagen: "",
+            info: "",
+            add: "",
+            titulo: "",
+            value: this.$vuetify.breakpoint.name
         }
     },
 
+    created(){
+        this.responsive()
+    },
 
     async beforeMount(){
+
+        const token = localStorage.getItem("token")
+        if(!token){
+            this.visible = false
+            return this.$router.push("/logIn")
+        }
 
             await this.showDetails()
             await this.loadViews()
             await this.adminOrNot()
             await this.likedOrNot()
 
-            //TODO TOKEN
     },
 
     watch: {
         '$vuetify.breakpoint.name'(value){
             console.log(value)
   
-            if(value === "md" || value === "sm" || value === "xs") {
+            if(value === "xl" || value === "lg"){
+                this.titulo = "6"
+                this.add = "6"
+                this.imagen = "4"
+                this.info = "8"
+
+            }else if(value === "md" || value === "sm" || value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
                 this.imagen = "12"
                 this.info = "12"
             }
@@ -136,6 +155,22 @@ export default ({
     },
 
     methods:{
+
+        responsive(){
+
+            if(this.value === "xl" || this.value === "lg"){
+                this.titulo = "6"
+                this.add = "6"
+                this.imagen = "4"
+                this.info = "8"
+
+            }else if(this.value === "md" || this.value === "sm" || this.value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
+                this.imagen = "12"
+                this.info = "12"
+            }
+        },
 
         async showDetails(){
             try{
@@ -534,6 +569,13 @@ export default ({
     border: 3px solid rgb(229,9,20);
     border-radius: 100%;
     margin-left: 1em;
+}
+
+
+.box {
+  display: flex;
+
+  justify-content: right;
 }
 
 
