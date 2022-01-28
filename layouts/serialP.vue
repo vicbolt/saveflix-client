@@ -18,8 +18,8 @@
 export default({
     data() {
         return{
-            series: "8",
-            seriesP: "4"
+            series: "",
+            seriesP: ""
         }
     },
 

@@ -5,12 +5,21 @@
 
 
         <v-card elevation="2">
-            <v-app-bar shaped>
-                <v-icon class="mr-4" size="35"> mdi-movie-open-star-outline </v-icon>
-                <v-app-bar-title class="font-weight-black mt-1" style="font-size:20px" > MIS PELICULAS </v-app-bar-title>
-                <v-spacer></v-spacer>
-                <v-btn color="rgb(229,9,20)" @click="addMovie"> AÑADIR PELICULA </v-btn>
+            <v-app-bar height="auto" class="pa-4" shaped>
+                <v-row>
+                    <v-col :cols="titulo">
+                        <v-row>
+                            <v-icon class="mr-4" size="35"> mdi-movie-open-star-outline </v-icon>
+                            <v-app-bar-title class="font-weight-black mt-4" style="font-size:20px" > MIS PELICULAS </v-app-bar-title>
+                        </v-row>
+                    </v-col>
+                    <v-col :cols="add" class="box" >
+                        <v-btn color="rgb(229,9,20)" @click="addMovie"> AÑADIR PELICULA </v-btn>
+                    </v-col>
+                </v-row>
             </v-app-bar>
+
+
             <v-card-text>
                 <h1 v-if="noMovies === true"> NO TIENES PELÍCULAS AÚN</h1>
                 <div v-if="loading" style="text-align:center">
@@ -18,9 +27,9 @@
                 </div>
                 <v-row v-if="noMovies === false">
                     <v-col :cols="peliculas"  v-for="movie in movies" :key="movie.id" @click="goTo(movie._id)">
-                        <v-list-item >
+                        <v-list-item>
                             <v-list-item-content style="cursor: pointer;" class="fondo">
-                                <v-img :height="size" :src="movie.image"/>
+                                <v-img height="360px" :src="movie.image"/>
                                 <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:20px"> {{movie.title}} </v-list-item-title>
                                         <v-progress-linear color="rgb(229,9,20)" v-model="movie.score" height="25">
                                             <strong> {{ Math.ceil(movie.score) }} <v-icon color="white" size="15"> mdi-heart </v-icon> </strong>
@@ -46,10 +55,17 @@ export default ({
             movies: [],
             noMovies: "",
             error: "",
-            peliculas: "4",
-            size: "360px",
-            loading: false
+            peliculas: "",
+            size: "",
+            titulo: "",
+            add: "",
+            loading: true,
+            value: this.$vuetify.breakpoint.name
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     async beforeMount(){
@@ -60,7 +76,6 @@ export default ({
             return this.$router.push("/logIn")
         }
 
-        this.loading = true
         await this.loadMovies()
         this.loading = false
         
@@ -71,14 +86,20 @@ export default ({
             console.log(value)
 
             if( value === "xl" || value === "lg"){
+                this.titulo = "6"
+                this.add = "6"
                 this.peliculas = "4"
                 this.size = "360px"
 
             } else if(value === "lg" || value === "md"){
+                this.titulo = "6"
+                this.add = "6"
                 this.peliculas = "6"
                 this.size = "820px"
                 
             } else if(value === "sm" || value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
                 this.peliculas = "12"
                 this.size= "960px"
             }
@@ -86,6 +107,30 @@ export default ({
     },
 
     methods: {
+
+        responsive(){
+
+            if( this.value === "xl" || this.value === "lg"){
+                this.titulo = "6"
+                this.add = "6"
+                this.peliculas = "4"
+                this.size = "360px"
+
+            } else if(this.value === "lg" || this.value === "md"){
+                this.titulo = "6"
+                this.add = "6"
+                this.peliculas = "6"
+                this.size = "820px"
+                
+            } else if(this.value === "sm" || this.value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
+                this.peliculas = "12"
+                this.size= "960px"
+            }
+
+        },
+
         addMovie(){
             this.$router.push('/addMovie')
         },
@@ -138,5 +183,11 @@ export default ({
 .boton{
     background-color: rgb(18, 18, 18);
     border: 2px solid rgb(229,9,20);
+}
+
+.box {
+  display: flex;
+
+  justify-content: right;
 }
 </style>

@@ -18,8 +18,8 @@
 export default({
     data() {
         return{
-            peliculas: "8",
-            peliculasP: "4"
+            peliculas: "",
+            peliculasP: ""
         }
     },
 

@@ -4,7 +4,7 @@
         <v-alert v-if="this.error" type="error" class="text-center" dismissible border="top" color="red" dark> {{this.error}} </v-alert>
         
         <v-card>
-            <v-app-bar height="auto" shaped>
+            <v-app-bar height="auto" class="pa-4" shaped>
                 <v-row>
                     <v-col :cols="explorar">
                         <v-row>
@@ -96,7 +96,6 @@ export default ({
                 this.cards = "12"
                 this.explorar = "12"
                 this.buscador = "12"
-                console.log(this.buscador)
                 this.tamañoFuente = "font-size:20px"
             }
         }
