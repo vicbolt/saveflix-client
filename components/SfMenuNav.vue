@@ -14,7 +14,6 @@
                             <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="misPeliculas()">MIS PELICULAS</v-btn> <br>
                             <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="misSeries()">MIS SERIES</v-btn> <br>
                             <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="ranking()">MI RANKING</v-btn> <br>
-                            <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="chat()">CHAT </v-btn> <br>
                             <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="perfil()">MI PERFIL</v-btn> <br>
                             <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" color="rgb(229,9,20)" @click="logOut">CERRAR SESION</v-btn>
                         </v-list>
@@ -52,10 +51,6 @@
                     </v-col>
                     <v-col cols="1" class="mr-13">
                         <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="ranking()">MI RANKING</v-btn>
-                    </v-col>
-                    <v-col cols="1" class="mr-13">
-                        <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="chat()">CHAT </v-btn>
-                <!-- <v-badge color="pink" dot>CHAT</v-badge> -->
                     </v-col>
                     <v-col cols="1" class="mr-16">
                         <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="perfil()">MI PERFIL</v-btn>
@@ -255,14 +250,6 @@ export default({
 
             this.$router.push(`/explorar/${id}`)
 
-        },
-
-        chat(){
-            const strId = localStorage.getItem('userId')
-
-            const id = JSON.parse(strId)
-
-            this.$router.push(`/chat/${id}`)
         },
 
         ranking(){
