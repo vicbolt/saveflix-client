@@ -78,14 +78,24 @@ export default {
             active: false,
             imagen: "4",
             info: "8",
-            loading: false
+            loading: false,
+            value: this.$vuetify.breakpoint.name,
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     watch: {
         '$vuetify.breakpoint.name'(value){
             console.log(value)
-  
+
+            if(value === "xl" || value === "lg"){
+                this.imagen = "4"
+                this.info = "8"
+            }
+
             if(value === "md" || value === "sm" || value === "xs") {
                 this.imagen = "12"
                 this.info = "12"
@@ -94,6 +104,20 @@ export default {
     },
 
     methods: {
+
+        responsive(){
+
+            if(this.value === "xl" || this.value === "lg"){
+                this.imagen = "4"
+                this.info = "8"
+            }
+
+            if(this.value === "md" || this.value === "sm" || this.value === "xs") {
+                this.imagen = "12"
+                this.info = "12"
+            }
+        },
+        
         async upload(){
 
             try{

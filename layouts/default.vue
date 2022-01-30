@@ -21,7 +21,13 @@ export default ({
             visible: true,
             main: "",
             info: "",
+            value: this.$vuetify.breakpoint.name
+
         }
+    },
+
+    created(){
+        this.responsive()
     },
     
     beforeMount(){
@@ -45,6 +51,21 @@ export default ({
             }
         }
     },
+
+    methods: {
+        
+        responsive(){
+            if( this.value === "xl" || this.value === "lg" || this.value === 'md'){
+                this.main = "8"
+                this.info = "4"
+            } else {
+                this.main = "12"
+                this.info = "12"
+            }
+
+
+        }
+    }
 
 })
 </script>

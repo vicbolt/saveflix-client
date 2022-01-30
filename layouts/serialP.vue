@@ -19,8 +19,14 @@ export default({
     data() {
         return{
             series: "",
-            seriesP: ""
+            seriesP: "",
+            value: this.$vuetify.breakpoint.name
         }
+    },
+
+
+    created(){
+        this.responsive()
     },
 
     watch: {
@@ -37,5 +43,17 @@ export default({
             }
         }
     },
+
+    methods: {
+        responsive(){
+            if(this.value === "xl" || this.value === "lg"){
+                this.series = "8"
+                this.seriesP = "4"
+            } else{
+                this.series = "12"
+                this.seriesP = "12"
+            }
+        }
+    }
 })
 </script>

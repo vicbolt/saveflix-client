@@ -19,8 +19,13 @@ export default({
     data() {
         return{
             peliculas: "",
-            peliculasP: ""
+            peliculasP: "",
+            value: this.$vuetify.breakpoint.name
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     watch: {
@@ -30,12 +35,24 @@ export default({
             if(value === "xl" || value === "lg"){
                 this.peliculas = "8"
                 this.peliculasP = "4"
-
             } else{
                 this.peliculas = "12"
                 this.peliculasP = "12"
             }
         }
     },
+
+    methods: {
+        responsive(){
+
+            if(this.value === "xl" || this.value === "lg"){
+                this.peliculas = "8"
+                this.peliculasP = "4"
+            } else{
+                this.peliculas = "12"
+                this.peliculasP = "12"
+            }
+        }
+    }
 })
 </script>

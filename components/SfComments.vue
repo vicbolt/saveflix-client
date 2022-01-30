@@ -21,19 +21,23 @@
 
                 <v-card-text>
                     <v-row v-for="comment in comments" :key="comment._id" class="mb-3" style="background-color: rgb(37, 37, 37 ); border-radius: 50px">
-                        <v-col :cols="avatar" v-if="!xs">
-                            <v-img class="imagen mr-1" :src="comment.user.avatar" width="100px" height="100px" />
+                        
+                        <v-col :cols="avatar" class="mr-5">
+                            <v-img class="imagen mr-1" :src="comment.user.avatar" :width="anchoAvatar" :height="altoAvatar" />
                         </v-col>
+
                         <v-col :cols="content">
+                            <v-row>             
+                                <v-col cols="10" class="pa-0 mb-4">
+                                    <p style="font-size:auto; text-align: right" class="mt-2"> {{comment.date}} </p>
+                                </v-col>
+                                <v-col cols="2">
+                                    <v-btn v-if="comment.user._id === userId || comment.post.userId === userId " @click="removeComment(comment._id)" class=" font-weight-black mt-n2" style=" background-color: red; min-width:1px; width:30px; min-height:1px; height: 30px; border-radius:100px;"> <v-icon class="" size="18px">mdi-trash-can-outline</v-icon></v-btn>
+                                </v-col>
+                            </v-row>
                             <v-row>
-                                <v-col cols="6">
-                                    <p class="font-weight-black mt-5"  style=" font-size: 17px; color:white; width: auto"> {{comment.user.username}} ha comentado: </p>
-                                </v-col>
-                                <v-col cols="5">
-                                    <p  style="font-size:auto; text-align: right"> {{comment.date}} </p>
-                                </v-col>
-                                <v-col cols="1">
-                                    <v-btn v-if="comment.user._id === userId || comment.post.userId === userId " @click="removeComment(comment._id)" class=" font-weight-black mt-n2" style="background-color: red; min-width:1px; width:30px; min-height:1px; height: 30px; border-radius:100px; text-align:center "> <v-icon class="" size="18px">mdi-trash-can-outline</v-icon></v-btn>
+                                <v-col cols="12" class="pa-0 mt-n10">
+                                    <p class="font-weight-black mt-5"  style=" font-size: auto; color:white; width: auto; text-align:left"> {{comment.user.username}} ha comentado: </p>
                                 </v-col>
                             </v-row>
                             <v-row class="mt-n5">
@@ -61,11 +65,17 @@ export default ({
             userId: "",
             error: "",
             msg: "",
-            avatar: "2",
-            content: "9",
-            xs: false
+            avatar: "",
+            content: "",
+            anchoAvatar: "",
+            altoAvatar: "",
+            value: this.$vuetify.breakpoint.name
             
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     async beforeMount(){
@@ -77,17 +87,38 @@ export default ({
     watch: {
         '$vuetify.breakpoint.name'(value){
             console.log(value)
-  
+
             if(value === "xs") {
-                this.xs = true
-                this.avatar = "12"
-                this.content = "12"
-               
+                this.avatar = "4"
+                this.content = "7"
+                this.anchoAvatar = "70px"
+                this.altoAvatar = "70px"
+            } else {
+                this.avatar = "2"
+                this.content = "9"
+                this.anchoAvatar = "100px"
+                this.altoAvatar = "100px"
             }
         }
     },
 
     methods: {
+
+        responsive(){
+    
+            if (this.value === "xs"){
+                this.avatar = "4"
+                this.content = "7"
+                this.anchoAvatar = "70px"
+                this.altoAvatar = "70px"
+            } else {
+                this.anchoAvatar = "100px"
+                this.altoAvatar = "100px"
+                this.avatar = "2"
+                this.content = "9"
+            }
+
+        },
 
         async sendComment(){
             try{

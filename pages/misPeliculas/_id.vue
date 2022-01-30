@@ -19,7 +19,6 @@
                 </v-row>
             </v-app-bar>
 
-
             <v-card-text>
                 <h1 v-if="noMovies === true"> NO TIENES PELÍCULAS AÚN</h1>
                 <div v-if="loading" style="text-align:center">
@@ -59,7 +58,6 @@ export default ({
             size: "",
             titulo: "",
             add: "",
-            size: "",
             loading: true,
             value: this.$vuetify.breakpoint.name
         }
@@ -86,25 +84,31 @@ export default ({
         '$vuetify.breakpoint.name'(value){
             console.log(value)
 
-            if( value === "xl" || value === "lg"){
+            if(value === "xl" || value === "lg" ){
                 this.titulo = "6"
                 this.add = "6"
+
                 this.peliculas = "4"
                 this.size = "360px"
 
-            } else if(value === "lg" || value === "md"){
+            } else if(value === "md"){
                 this.titulo = "6"
                 this.add = "6"
+
                 this.peliculas = "6"
                 this.size = "820px"
+
             } else if(value === "sm") {
                 this.titulo = "12"
                 this.add = "12"
+
                 this.peliculas = "12"
                 this.size= "720px"
+
             } else if(value === "xs") {
                 this.titulo = "12"
                 this.add = "12"
+
                 this.peliculas = "12"
                 this.size= "360px"
             }
@@ -121,17 +125,23 @@ export default ({
                 this.peliculas = "4"
                 this.size = "360px"
 
-            } else if(this.value === "lg" || this.value === "md"){
+            } else if(this.value === "md"){
                 this.titulo = "6"
                 this.add = "6"
                 this.peliculas = "6"
-                this.size = "820px"
-                
-            } else if(this.value === "sm" || this.value === "xs") {
+                this.size = "720px"
+
+            } else if(this.value === "sm") {
                 this.titulo = "12"
                 this.add = "12"
                 this.peliculas = "12"
-                this.size= "960px"
+                this.size= "720px"
+                
+            } else if(this.value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
+                this.peliculas = "12"
+                this.size= "360px"
             }
 
         },

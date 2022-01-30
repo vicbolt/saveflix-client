@@ -54,8 +54,14 @@ export default {
             active: false,
             imagen: "4",
             info: "8",
-            loading: false
+            loading: false,
+            value: this.$vuetify.breakpoint.name,
+
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     watch: {
@@ -65,11 +71,26 @@ export default {
             if(value === "md" || value === "sm" || value === "xs") {
                 this.imagen = "12"
                 this.info = "12"
+            } else {
+                this.imagen = "4"
+                this.info = "8"
             }
         }
     },
 
     methods: {
+
+        responsive(){
+
+          if(this.value === "md" || this.value === "sm" || this.value === "xs") {
+                this.imagen = "12"
+                this.info = "12"
+            } else {
+                this.imagen = "4"
+                this.info = "8"
+            }
+        },
+
         async upload(){
 
             try{

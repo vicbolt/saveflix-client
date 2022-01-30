@@ -67,8 +67,10 @@ export default ({
             ],
             error: "",
             msg: "",
-            imagen: "4",
-            info: "8"
+            imagen: "",
+            info: "",
+            value: this.$vuetify.breakpoint.name,
+
         }
     },
 
@@ -79,6 +81,9 @@ export default ({
             if(value === "md" || value === "sm" || value === "xs") {
                 this.imagen = "12"
                 this.info = "12"
+            } else {
+                this.imagen = "4"
+                this.info = "8"
             }
         }
     },
@@ -90,8 +95,22 @@ export default ({
         }
     },
 
+    created(){
+        this.responsive()
+    },
 
     methods: {
+
+        responsive(){
+            if(this.value === "md" || this.value === "sm" || this.value === "xs") {
+                this.imagen = "12"
+                this.info = "12"
+            } else {
+                this.imagen = "4"
+                this.info = "8"
+            }
+
+        },
 
         showScore(){
             this.knowledge = this.score

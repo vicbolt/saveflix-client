@@ -5,7 +5,7 @@
         <v-alert v-if="this.msg" class="text-center" type="error" border="top" color="green" dismissible > {{this.msg}} </v-alert>
 
         <v-row>
-            <v-col cols="8 offset-2">
+            <v-col :cols="size">
                 <v-app-bar shaped class="d-flex justify-center mb-2" style="background-color:rgb(229,9,20)">
                     <v-icon class="mr-4" size="30"> mdi-account-edit </v-icon>
                     <v-card-title class="font-weight-black" style="font-size: 25px"> EDITAR PERFIL </v-card-title>
@@ -15,61 +15,61 @@
 
         <v-form>
             <v-row>
-            <v-col cols="8 offset-2">
-            <h3 class="mb-1">CORREO ELECTRÓNICO</h3>
-            <v-alert v-if="this.error1" class="text-center" type="error" border="top" color="red" dismissible > {{this.error1}} </v-alert>
-            <v-alert v-if="this.msg1" type="error" class="text-center" border="top" color="green" dismissible > {{this.msg1}} </v-alert>
-            <v-text-field v-model="email" type="email" placeholder="Correo Electrónico" class=""></v-text-field>
-            <v-btn @click="saveEmail()" block color="red" class="mb-8"> GUARDAR </v-btn>
+                <v-col :cols="size">
+                    <h3 class="mb-1">CORREO ELECTRÓNICO</h3>
+                    <v-alert v-if="this.error1" class="text-center" type="error" border="top" color="red" dismissible > {{this.error1}} </v-alert>
+                    <v-alert v-if="this.msg1" type="error" class="text-center" border="top" color="green" dismissible > {{this.msg1}} </v-alert>
+                    <v-text-field v-model="email" type="email" placeholder="Correo Electrónico" class=""></v-text-field>
+                    <v-btn @click="saveEmail()" block color="red" class="mb-8"> GUARDAR </v-btn>
 
-            <v-divider class="mt-7 mb-7"></v-divider>
+                    <v-divider class="mt-7 mb-7"></v-divider>
 
-            <h3 class="mb-1">NOMBRE DE USUARIO</h3>
-            <v-alert v-if="this.error2" class="text-center" type="error" border="top" color="red" dismissible > {{this.error2}} </v-alert>
-            <v-alert v-if="this.msg2" class="text-center" type="info" border="top" color="green" dismissible > {{this.msg2}} </v-alert>
-            <v-text-field v-model="username" placeholder="Nombre de usuario" class="mb-4"/>
-            <v-btn @click="saveUsername()"  block color="red" class="mb-8"> GUARDAR </v-btn>
+                    <h3 class="mb-1">NOMBRE DE USUARIO</h3>
+                    <v-alert v-if="this.error2" class="text-center" type="error" border="top" color="red" dismissible > {{this.error2}} </v-alert>
+                    <v-alert v-if="this.msg2" class="text-center" type="info" border="top" color="green" dismissible > {{this.msg2}} </v-alert>
+                    <v-text-field v-model="username" placeholder="Nombre de usuario" class="mb-4"/>
+                    <v-btn @click="saveUsername()"  block color="red" class="mb-8"> GUARDAR </v-btn>
 
-            <v-divider class="mt-7 mb-7"></v-divider>
-            
-            
-            <h3 class="mb-1">CONTRASEÑA</h3>
-            <v-alert v-if="this.error3" class="text-center" type="error" border="top" color="red" dismissible > {{this.error3}} </v-alert>
-            <v-alert v-if="this.msg3" class="text-center" type="error" border="top" color="green" dismissible > {{this.msg3}} </v-alert>
-            <v-text-field v-model="currentPassword" type="password" placeholder="Contraseña actual" class="mb-n2"/>
-            <v-text-field v-model="newPassword" type="password" placeholder="Nueva contraseña" class="mb-n2"/>
-            <v-text-field v-model="newPassword2" type="password" placeholder="Repita la nueva contraseña " class="mb-2"/>
-            <v-btn @click="savePassword()" block color="red" class="mb-8"> GUARDAR </v-btn>
+                    <v-divider class="mt-7 mb-7"></v-divider>
+                    
+                    
+                    <h3 class="mb-1">CONTRASEÑA</h3>
+                    <v-alert v-if="this.error3" class="text-center" type="error" border="top" color="red" dismissible > {{this.error3}} </v-alert>
+                    <v-alert v-if="this.msg3" class="text-center" type="error" border="top" color="green" dismissible > {{this.msg3}} </v-alert>
+                    <v-text-field v-model="currentPassword" type="password" placeholder="Contraseña actual" class="mb-n2"/>
+                    <v-text-field v-model="newPassword" type="password" placeholder="Nueva contraseña" class="mb-n2"/>
+                    <v-text-field v-model="newPassword2" type="password" placeholder="Repita la nueva contraseña " class="mb-2"/>
+                    <v-btn @click="savePassword()" block color="red" class="mb-8"> GUARDAR </v-btn>
 
-            <v-divider class="mt-7 mb-7"></v-divider>
+                    <v-divider class="mt-7 mb-7"></v-divider>
 
-            <h3 class="mb-4">AVATAR</h3>
-            <v-alert v-if="this.error4" class="text-center" type="error" border="top" color="red" dismissible > {{this.error4}} </v-alert>
-            <v-alert v-if="this.msg4" class="text-center" type="error" border="top" color="green" dismissible > {{this.msg4}} </v-alert>
-            <div class="file-container mb-4">
-                <h5 v-if="!url" id="h5">SUBIR AVATAR</h5>
-                <img id="img" v-if="url" :src="url" alt="Image not found" @click="picAgain">
-                <input v-if="!url" type="file" @change="showImg" ref="file" id="imgBtn" class="mt-3" style="background: red; border: 2px solid white; overflow: hidden"/>
-            </div>   
-            <v-btn id="boton" @click="saveAvatar()"  block color="red"> GUARDAR </v-btn>
+                    <h3 class="mb-4">AVATAR</h3>
+                    <v-alert v-if="this.error4" class="text-center" type="error" border="top" color="red" dismissible > {{this.error4}} </v-alert>
+                    <v-alert v-if="this.msg4" class="text-center" type="error" border="top" color="green" dismissible > {{this.msg4}} </v-alert>
+                    <div class="file-container mb-4">
+                        <h5 v-if="!url" id="h5">SUBIR AVATAR</h5>
+                        <img id="img" v-if="url" :src="url" alt="Image not found" @click="picAgain">
+                        <input v-if="!url" type="file" @change="showImg" ref="file" id="imgBtn" class="mt-3" style="background: red; border: 2px solid white; overflow: hidden"/>
+                    </div>   
+                    <v-btn id="boton" @click="saveAvatar()"  block color="red"> GUARDAR </v-btn>
 
-            <v-divider class="mt-7 mb-7"></v-divider>
+                    <v-divider class="mt-7 mb-7"></v-divider>
 
-            <h3 class="mb-1">BORRAR PERFIL</h3>
-            <p class="mb-3" style="font-size: 12px"> Al pulsar sobre "Borrar Perfil" se eliminará la cuenta y los datos asociados a ella de forma irreversible</p>
-            <v-alert v-if="alertMsg" prominent type="error">
-                <v-row align="center">
-                    <v-col class="grow">
-                           <strong>{{this.alertMsg}}</strong>
-                    </v-col>
-                    <v-col class="shrink">
-                        <v-btn @click="borrarPerfil">ACEPTAR</v-btn>
-                    </v-col>
-                </v-row>
-            </v-alert>
+                    <h3 class="mb-1">BORRAR PERFIL</h3>
+                    <p class="mb-3" style="font-size: 12px"> Al pulsar sobre "Borrar Perfil" se eliminará la cuenta y los datos asociados a ella de forma irreversible</p>
+                    <v-alert v-if="alertMsg" prominent type="error">
+                        <v-row align="center">
+                            <v-col class="grow">
+                                <strong>{{this.alertMsg}}</strong>
+                            </v-col>
+                            <v-col class="shrink">
+                                <v-btn @click="borrarPerfil">ACEPTAR</v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-alert>
 
-            <v-btn id="boton" @click="securityMsg"  block color="red"> BORRAR PERFIL </v-btn>
-            </v-col>
+                    <v-btn id="boton" @click="securityMsg"  block color="red"> BORRAR PERFIL </v-btn>
+                </v-col>
         
             </v-row>
 
@@ -107,8 +107,18 @@ export default ({
             msg4: "",
             msg5: "",
             alertMsg: "",
-            active: false
+            active: false,
+
+            size: "",
+            value: this.$vuetify.breakpoint.name,
+
+
+
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     async beforeMount(){
@@ -121,8 +131,30 @@ export default ({
         await this.loadUserDetails()
     },
 
+
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+            if(value == "xl" || value === "lg"){
+                this.size = "8 offset-2"
+            }
+            if(value === "md" || value === "sm" || value === "xs") {
+                this.size = "12"
+            } 
+        }
+    },
+
     methods:{
 
+        responsive(){
+            if(this.value == "xl" || this.value === "lg"){
+                this.size = "8 offset-2"
+            }
+            if(this.value === "md" || this.value === "sm" || this.value === "xs") {
+                this.size = "12"
+            } 
+        },
+         
         async loadUserDetails(){
             try{
             const config = require('/config')

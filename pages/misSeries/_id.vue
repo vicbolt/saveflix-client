@@ -94,11 +94,12 @@ export default ({
                 this.series = "6"
                 this.size = "820px"
             
-            } else if( value === "xs") {
+            } else if( value === "sm") {
                 this.titulo = "12"
                 this.add = "12"
                 this.series = "12"
                 this.size= "720px"
+
             } else if( value === "xs") {
                 this.titulo = "12"
                 this.add = "12"
@@ -122,13 +123,19 @@ export default ({
                 this.titulo = "6"
                 this.add = "6"
                 this.series = "6"
-                this.size = "820px"
-                
-            } else if(this.value === "sm" || this.value === "xs") {
+                this.size = "720px"
+
+            } else if(this.value === "sm") {
                 this.titulo = "12"
                 this.add = "12"
                 this.series = "12"
-                this.size= "960px"
+                this.size= "720px"
+                
+            } else if(this.value === "xs") {
+                this.titulo = "12"
+                this.add = "12"
+                this.series = "12"
+                this.size= "360px"
             }
 
         },

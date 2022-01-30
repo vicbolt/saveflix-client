@@ -29,7 +29,6 @@ export default ({
                 this.visible = false
                 return this.$router.push("/logIn")
             }
-    }
-
+    },
 })
 </script>

@@ -127,12 +127,10 @@ export default ({
             this.visible = false
             return this.$router.push("/logIn")
         }
-
             await this.showDetails()
             await this.loadViews()
             await this.adminOrNot()
             await this.likedOrNot()
-
     },
 
     watch: {

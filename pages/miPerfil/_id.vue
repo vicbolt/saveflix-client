@@ -5,15 +5,15 @@
         <!-- BARRA DE TITULO -->
         <v-card class="mt-5" shaped>
                 <v-row class="barra">
-                    <v-col cols="5">
+                    <v-col :cols="avatarUsername">
                         <v-row>
-                            <v-avatar  size="100" class="ml-6 mr-5 mt-4 " color="rgb(209, 53, 53)"> 
-                                <img class="avatar"  :src="avatar" alt="avatar">
+                            <v-avatar size="100" class="ml-6 mr-5 mt-4 " color="rgb(209, 53, 53)"> 
+                                <img class="avatar" :src="avatar" alt="avatar">
                             </v-avatar>
                             <h1 class="mt-10"> {{this.username}} </h1>
                         </v-row>                       
                     </v-col>
-                    <v-col cols="5">
+                    <v-col :cols="friends">
                         <v-row class="mt-5">
                             <v-col cols="4" style="cursor: pointer"> 
                                 <h3 style="text-align: center">{{this.allPosts}}</h3>
@@ -30,7 +30,7 @@
                             
                         </v-row>
                     </v-col>
-                    <v-col cols="1">
+                    <v-col :cols="editarPerfil">
                         <v-btn color="white" style="color:black" class="mt-10" outlined @click="goToEditProfilePage()">EDITAR PERFIL</v-btn>
                     </v-col>
                 </v-row>
@@ -38,7 +38,8 @@
         <!-- MIS PELICULAS Y MIS SERIES -->
         <v-card>
             <v-row class="mt-5">
-                <v-col cols="6">
+
+                <v-col :cols="misPeliculasRes">
                     <v-card elevation="2">
                         <v-app-bar shaped style=" background-color:white; color: black">
                             <v-icon class="mr-4" size="35" color="black"> mdi-movie-open-star-outline </v-icon>
@@ -50,7 +51,7 @@
                             </div>                            
                             <v-row>
                                 <v-col cols="3"  v-for="movie in movies" :key="movie.id" @click="goToDetails(movie._id)" style="cursor: pointer" >
-                                    <v-img height="160px" style="border: 2px solid white" :src="movie.image"/>
+                                    <v-img :height="size" style="border: 2px solid white" :src="movie.image"/>
                                     <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movie.title}} </v-list-item-title>
                                 </v-col>
                             </v-row>
@@ -59,7 +60,7 @@
                 </v-col>
 
 
-                <v-col cols="6">
+                <v-col :cols="misSeriesRes">
                     <v-card elevation="2">
                         <v-app-bar shaped style=" background-color:white">
                             <v-icon class="mr-4" size="35" color="black"> mdi-television-classic </v-icon>
@@ -72,18 +73,18 @@
                             </div>
                             <v-row>
                                 <v-col @click="goToDetails(serial._id)" cols="3" v-for="serial in serials" :key="serial.id"  style="cursor: pointer">
-                                    <v-img height="160px" style="border: 2px solid white" :src="serial.image" />
+                                    <v-img :height="size" style="border: 2px solid white" :src="serial.image" />
                                     <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{serial.title}} </v-list-item-title>
                                 </v-col>
                             </v-row>
                         </v-card-text>
                     </v-card>
                 </v-col>
-                <v-col cols="6">
+                <v-col :cols="peliculasPRes">
                     <v-card elevation="2">
                         <v-app-bar shaped style=" background-color:white">
                             <v-icon class="mr-4" size="35" color="black"> mdi-television-classic </v-icon>
-                            <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> PELICULAS PENDIENTES </v-card-title>
+                            <v-card-title class="font-weight-black mt-1" :style="titulos"> PELICULAS PENDIENTES </v-card-title>
                         </v-app-bar>
 
                         <v-card-text>
@@ -92,18 +93,18 @@
                             </div>
                             <v-row>
                                 <v-col @click="goToDetailsPendiente(movieP._id)" cols="3" v-for="movieP in moviesP" :key="movieP.id"  style="cursor: pointer">
-                                    <v-img height="160px" style="border: 2px solid white" :src="movieP.image" />
+                                    <v-img :height="size" style="border: 2px solid white" :src="movieP.image" />
                                     <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movieP.title}} </v-list-item-title>
                                 </v-col>
                             </v-row>
                         </v-card-text>
                     </v-card>
                 </v-col>
-                    <v-col cols="6">
+                    <v-col :cols="seriesPRes">
                     <v-card elevation="2">
                         <v-app-bar shaped style=" background-color:white">
                             <v-icon class="mr-4" size="35" color="black"> mdi-television-classic </v-icon>
-                            <v-card-title class="font-weight-black mt-1" style="font-size:20px; color:black"> SERIES PENDIENTES </v-card-title>
+                            <v-card-title class="text-center mt-2 font-weight-black" :style="titulos"> SERIES PENDIENTES </v-card-title>
                         </v-app-bar>
 
                         <v-card-text>
@@ -112,7 +113,7 @@
                             </div>
                             <v-row>
                                 <v-col  cols="3"  @click="goToDetailsPendiente(serialP._id)" v-for="serialP in serialsP" :key="serialP.id" style="cursor: pointer">
-                                    <v-img height="160px" style="border: 2px solid white" :src="serialP.image" />
+                                    <v-img :height="size" style="border: 2px solid white" :src="serialP.image" />
                                     <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{serialP.title}} </v-list-item-title>
                                 </v-col>
                             </v-row>
@@ -145,12 +146,28 @@ export default({
             avatar: undefined,
             allPosts: "",
             error: "",
-            loadingM: false,
-            loadingS: false,
-            loadingMP: false,
-            loadingSP: false
+
+            loadingM: true,
+            loadingS: true,
+            loadingMP: true,
+            loadingSP: true,
+
+            avatarUsername: "",
+            friends: "",
+            editarPerfil: "",
+            misPeliculasRes: "",
+            misSeriesRes: "",
+            peliculasPRes: "",
+            seriesPRes: "",
+            size: "",
+            titulos: "",
+            value: this.$vuetify.breakpoint.name,
 
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     async beforeMount(){
@@ -160,10 +177,6 @@ export default({
             this.visible = false
             return this.$router.push("logIn")
         }
-        this.loadingM = true
-        this.loadingS = true
-        this.loadingMP = true
-        this.loadingSP = true
         
         await this.loadUserDetails()
         await this.loadMovies()
@@ -176,7 +189,114 @@ export default({
         this.loadingSP = false
     },
 
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log("watch", value)
+            if(value === "xl" || value === "lg"){
+                this.avatarUsername = "5"
+                this.friends = "5"
+                this.editarPerfil = "2"
+                this.misPeliculasRes = "6"
+                this.misSeriesRes = "6"
+                this.peliculasPRes = "6"
+                this.seriesPRes = "6"
+                this.size = "160px"
+                this.titulos = "font-size:20px; color:black"
+            }
+
+            if(value === "md"){
+                this.avatarUsername = "12"
+                this.friends = "9"
+                this.editarPerfil = "3"
+                this.misPeliculasRes = "6"
+                this.misSeriesRes = "6"
+                this.peliculasPRes = "6"
+                this.seriesPRes = "6"
+                this.size = "160px"
+                this.titulos = "font-size:20px; color:black"
+            }
+
+            if(value == "sm"){
+                this.avatarUsername = "12"
+                this.friends = "12"
+                this.editarPerfil = "12"
+                this.misPeliculasRes = "12"
+                this.misSeriesRes = "12"
+                this.peliculasPRes = "12"
+                this.seriesPRes = "12"
+                this.size = "160px"
+                this.titulos = "font-size:20px; color:black"
+            } 
+            
+            if(value == "xs"){
+                this.avatarUsername = "12"
+                this.friends = "12"
+                this.editarPerfil = "12"
+                this.misPeliculasRes = "12"
+                this.misSeriesRes = "12"
+                this.peliculasPRes = "12"
+                this.seriesPRes = "12"
+                this.size = "80px"
+                this.titulos = "font-size:15px; color:black"
+                
+            }
+        }
+    },
+
     methods:{
+
+        responsive(){
+            console.log(this.value)
+            if(this.value === "xl" || this.value === "lg"){
+                this.avatarUsername = "5"
+                this.friends = "5"
+                this.editarPerfil = "2"
+                this.misPeliculasRes = "6"
+                this.misSeriesRes = "6"
+                this.peliculasPRes = "6"
+                this.seriesPRes = "6"
+                this.size = "160px"
+                this.titulos = "font-size:20px; color:black"
+            }
+
+            if(this.value === "md"){
+                this.avatarUsername = "12"
+                this.friends = "9"
+                this.editarPerfil = "3"
+                this.misPeliculasRes = "6"
+                this.misSeriesRes = "6"
+                this.peliculasPRes = "6"
+                this.seriesPRes = "6"
+                this.size = "160px"
+                this.titulos = "font-size:20px; color:black"
+            }
+
+            if(this.value == "sm"){
+                this.avatarUsername = "12"
+                this.friends = "12"
+                this.editarPerfil = "12"
+                this.misPeliculasRes = "12"
+                this.misSeriesRes = "12"
+                this.peliculasPRes = "12"
+                this.seriesPRes = "12"
+                this.size = "160px"
+                this.titulos = "font-size:20px; color:black"
+            } 
+            
+            if(this.value == "xs"){
+                this.avatarUsername = "12"
+                this.friends = "12"
+                this.editarPerfil = "12"
+                this.misPeliculasRes = "12"
+                this.misSeriesRes = "12"
+                this.peliculasPRes = "12"
+                this.seriesPRes = "12"
+                this.size = "80px"
+                this.titulos = "font-size:15px; color:black"
+                
+            }
+        },
+
         async loadSerials(){
             try{
                 const config = require('/config')
@@ -354,6 +474,7 @@ export default({
 
 .barra{
     background-color:rgb(229,9,20);
-    height: 130px;
+    height: auto;
+    padding: 4px;
 }
 </style>
