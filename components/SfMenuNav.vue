@@ -10,12 +10,13 @@
                             <v-btn color="red" dark v-on="on"> MENU </v-btn>
                         </template>
                         <v-list>
-                            <v-btn id="Btn" class="font-weight-black" width="10em" height="50px" @click="explorar()"> EXPLORAR </v-btn> <br>
-                            <v-btn id="Btn" class="font-weight-black" width="10em" height="50px" @click="misPeliculas()">MIS PELICULAS</v-btn> <br>
-                            <v-btn id="Btn" class="font-weight-black" width="10em" height="50px" @click="misSeries()">MIS SERIES</v-btn> <br>
-                            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="ranking()">MI RANKING</v-btn> <br>
-                            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="chat()">CHAT </v-btn> <br>
-                            <v-btn id="Btn" class="font-weight-black ml-1" width="10em" height="50px" @click="perfil()">MI PERFIL</v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="explorar()"> EXPLORAR </v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="misPeliculas()">MIS PELICULAS</v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="misSeries()">MIS SERIES</v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="ranking()">MI RANKING</v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="chat()">CHAT </v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" @click="perfil()">MI PERFIL</v-btn> <br>
+                            <v-btn id="Btn" class="font-weight-black pa-6" width="10em" height="50px" color="rgb(229,9,20)" @click="logOut">CERRAR SESION</v-btn>
                         </v-list>
                     </v-menu>
             </v-col>
