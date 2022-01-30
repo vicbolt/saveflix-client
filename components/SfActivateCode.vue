@@ -243,7 +243,8 @@ img{
 
 .code{
     display: flex;
-    font-size: 35px;
+    height: auto;
+    font-size: auto;
     text-align-last: center;
 }
 

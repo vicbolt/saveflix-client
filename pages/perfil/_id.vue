@@ -377,6 +377,11 @@ export default({
             localStorage.setItem("ownerId", this.ownerId)
             this.$router.push(`/following/${this.ownerId}`)
         },
+
+        goTo(id){
+            localStorage.setItem("postId", id)
+            this.$router.push(`/details/${id}`)
+        },
     }
 })
 
