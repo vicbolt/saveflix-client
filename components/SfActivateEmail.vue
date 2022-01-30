@@ -58,8 +58,14 @@ export default ({
             error: "",
             msg: "",
             formulario: "6 offset-3",
-            enlace: ""
+            enlace: "",
+            value: this.$vuetify.breakpoint.name,
+
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     beforeMount(){
@@ -77,7 +83,7 @@ export default ({
         '$vuetify.breakpoint.name'(value){
             console.log(value)
 
-            if( value === "xl" || value === "lg" || value === 'md'){
+            if(value === "xl" || value === "lg"){
                 this.formulario = "6 offset-3"
                 this.enlace = "font-size: 15px"
             } else {
@@ -88,6 +94,16 @@ export default ({
     },
 
     methods: {
+
+        responsive(){
+            if(this.value === "xl" || this.value === "lg"){
+                this.formulario = "6 offset-3"
+                this.enlace = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.enlace = "font-size: 12px"
+            }
+        },
 
         async activar(){
             try{

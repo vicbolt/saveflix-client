@@ -29,10 +29,18 @@ export default ({
             email: "",
             error: "",
             loading: false,
-            formulario: "6 offset-3",
-            fontSize: "font-size: 25px"
+            formulario: "",
+            fontSize: "",
+            enlace: "",
+            value: this.$vuetify.breakpoint.name,
+
         }
     },
+
+    created(){
+        this.responsive()
+    },
+
 
     beforeMount(){
         
@@ -44,16 +52,27 @@ export default ({
         '$vuetify.breakpoint.name'(value){
             console.log(value)
 
-            if( value === "xl" || value === "lg" || value === 'md'){
+            if( value === "xl" || value === "lg"){
                 this.formulario = "6 offset-3"
+                this.fontSize = "font-size: 15px"
             } else {
                 this.formulario = "10 offset-1"
-                this.fontSize = "font-size: 20px"
+                this.fontSize = "font-size: 12px"
             }
         }
     },
 
     methods: {
+
+        responsive(){
+            if( this.value === "xl" || this.value === "lg"){
+                this.formulario = "6 offset-3"
+                this.fontSize = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.fontSize = "font-size: 12px"
+            }
+        },
     
         async reactivateCode(){
             try{

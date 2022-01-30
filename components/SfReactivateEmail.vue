@@ -7,8 +7,7 @@
         <v-form>
             <h1> REENVIAR CODIGO DE ACTIVACIÓN </h1>
             <v-row>
-            <v-col></v-col>
-                <v-col cols="5">
+                <v-col :cols="formulario">
                 <v-text-field v-model="email" placeholder="Correo electrónico" outlined class="mb-n4"/>
                 <v-btn id="boton" block @click="reactivateEmail"> ENVIAR DE NUEVO EL CODIGO </v-btn>
                 </v-col>
@@ -30,7 +29,15 @@ export default ({
             email: "",
             oldEmail: "",
             error: "",
+            formulario: "",
+            enlace: "",
+            value: this.$vuetify.breakpoint.name,
+
         }
+    },
+
+    created(){
+        this.responsive()
     },
 
     beforeMount(){
@@ -43,7 +50,31 @@ export default ({
 
     },
 
+    watch: {
+        '$vuetify.breakpoint.name'(value){
+            console.log(value)
+
+            if( value === "xl" || value === "lg"){
+                this.formulario = "6 offset-3"
+                this.enlace = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.enlace = "font-size: 12px"
+            }
+        }
+    },
+
     methods: {
+
+        responsive(){
+            if( this.value === "xl" || this.value === "lg"){
+                this.formulario = "6 offset-3"
+                this.enlace = "font-size: 15px"
+            } else {
+                this.formulario = "10 offset-1"
+                this.enlace = "font-size: 12px"
+            }
+        },
     
         async reactivateEmail(){
             try{
