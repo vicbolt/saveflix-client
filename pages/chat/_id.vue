@@ -4,13 +4,13 @@
         <v-row>
             <v-col :cols="chat">
                 <v-card elevation="2" shaped class="mb-5">
-                    <v-app-bar>
+                    <v-app-bar height="auto" class="pt-1" style="background-color: red">
                         <v-row>
-                            <v-col cols="4">
-                                <v-img class="ml-n1" id="imagen" :src="avatar" width="50px" height="50px" />
+                            <v-col cols="auto">
+                                <v-img class="ml-n1" id="imagen" :src="avatar" />
                             </v-col>
                             <v-col cols="8">
-                                <h3 class="font-weight-black mt-3 ml-n10"> {{this.username}} </h3>
+                                <h3 class="font-weight-black mt-3"> {{this.username}} </h3>
                             </v-col>
                         </v-row>
                     </v-app-bar>
@@ -19,14 +19,14 @@
                     <v-card height="300px" width="auto">
 
                         <div id="scroll">
-                            <v-row v-for="mensaje in mensajes" :key="mensaje._id" style="max-width: 600px" class="mb-1">
+                            <v-row v-for="mensaje in mensajes" :key="mensaje._id" class="mb-1">
                                     <v-row class="userIdContainer mb-1" v-if="userId === mensaje.userOne">
                                         <v-col cols="12">
                                             <v-row>
-                                                <v-col cols="9">
+                                                <v-col :cols="userNombre" style="display:flex; justify-content:right">
                                                     <h4 style="text-align: right">{{usernameUser}}</h4>
                                                 </v-col>
-                                                <v-col cols="2" style="display: flex; flex-direction: column; align-content: flex-end; flex-wrap: wrap;">
+                                                <v-col :cols="userFoto" style="display: flex; flex-direction: column; align-content: flex-end; flex-wrap: wrap;">
                                                     <v-img id="imagen" :src="avatarUser" width="35px" height="35px" />
                                                 </v-col>
                                             </v-row>
@@ -109,6 +109,8 @@ export default ({
             amigos: "",
             input: "",
             boton: "",
+            userNombre: "",
+            userFoto: "",
             value: this.$vuetify.breakpoint.name,
         }
     },
@@ -143,12 +145,16 @@ export default ({
                 this.amigos = "4"
                 this.input = "9"
                 this.boton = "2"
+                this.userNombre = "10"
+                this.userFoto = "1"
             }
             if(value === "md" || value === "sm" || value === "xs") {
                 this.chat = "12"
                 this.amigos = "12"
                 this.input = "11"
                 this.boton = "12"
+                this.userNombre = "9"
+                this.userFoto = "2"
             } 
         }
     },
@@ -162,12 +168,16 @@ export default ({
                 this.amigos = "4"
                 this.input = "10"
                 this.boton = "2"
+                this.userNombre = "10"
+                this.userFoto = "1"
             }
             if(this.value === "md" || this.value === "sm" || this.value === "xs") {
                 this.chat = "12"
                 this.amigos = "12"
                 this.input = "12"
                 this.boton = "12"
+                this.userNombre = "9"
+                this.userFoto = "2"
             } 
         },
 
@@ -345,6 +355,9 @@ export default ({
     border: 2px solid rgb(229,9,20);
     border-radius: 100%;
     margin-left: 2em;
+    display: absolute;
+    width: 50px;
+    height: 50px
 }
 
 .p1 {
