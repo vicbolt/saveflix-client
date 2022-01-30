@@ -6,10 +6,10 @@
                 <v-card elevation="2" shaped class="mb-5">
                     <v-app-bar>
                         <v-row>
-                            <v-col cols="2">
+                            <v-col cols="4">
                                 <v-img class="ml-n1" id="imagen" :src="avatar" width="50px" height="50px" />
                             </v-col>
-                            <v-col cols="10">
+                            <v-col cols="8">
                                 <h3 class="font-weight-black mt-3 ml-n10"> {{this.username}} </h3>
                             </v-col>
                         </v-row>
@@ -18,14 +18,12 @@
 
                     <v-card height="300px" width="auto">
 
-                        <div id="scroll" width="30px">
-                            <v-row v-for="mensaje in mensajes" :key="mensaje._id" >
-                                <v-col cols="6"></v-col>
-                                <v-col cols="6">
-                                    <v-row class="userIdContainer" v-if="userId === mensaje.userOne">
+                        <div id="scroll">
+                            <v-row v-for="mensaje in mensajes" :key="mensaje._id" style="max-width: 600px" class="mb-1">
+                                    <v-row class="userIdContainer mb-1" v-if="userId === mensaje.userOne">
                                         <v-col cols="12">
-                                            <v-row style="">
-                                                <v-col cols="10">
+                                            <v-row>
+                                                <v-col cols="9">
                                                     <h4 style="text-align: right">{{usernameUser}}</h4>
                                                 </v-col>
                                                 <v-col cols="2" style="display: flex; flex-direction: column; align-content: flex-end; flex-wrap: wrap;">
@@ -33,35 +31,13 @@
                                                 </v-col>
                                             </v-row>
                                         </v-col>
-                                        <v-col cols="12">
+                                        <v-col cols="11">
                                             <p style="display: flex; justify-content: flex-end; text-align: right"> {{mensaje.content}}</p>
                                         </v-col>
                                     </v-row>
-                                </v-col>
-                            
-                                
-                                <!-- <v-col cols="12" class="userIdContainer mb-2" v-if="userId === mensaje.userOne" >
-                                    <v-col cols="6"></v-col>
-                                    <v-col cols="6">
-                                    <v-row style="justify-content:flex-end">
-                                        <v-col cols="8"></v-col>
-                                        <v-col cols="2" style="justify-content:flex-center">
-                                                
-                                        </v-col>
-                                        <v-col cols="2" style=" display: flex; justify-content:center; flex-direction: column; flex-wrap: wrap;">
-                                                
-                                        </v-col>
-                                    </v-row>
-                                    </v-col>
-                                    <v-row style="justify-content:flex-end">
-                                        <p class="p1 mr-2"> </p>
-                                    </v-row>
-                                </v-col> -->
 
 
-
-
-                                <div class="textToContainer mb-2" v-if="userId !== mensaje.userOne" >
+                                <div class="textToContainer mb-1" v-if="userId !== mensaje.userOne" >
                                     <v-row style="display: flex; justify-content: right;">
                                         <v-col cols="4">
                                             <v-img  class="mr-12" id="imagen" :src="avatar" width="35px" height="35px" /> 
@@ -77,7 +53,7 @@
                     </v-card>
                     <v-row>
                         <v-col :cols="input">
-                            <v-text-field v-model="content" placeholder="Escribe un mensaje" class="ml-3" v-on:keyup.enter="createMsg"></v-text-field>
+                            <v-text-field v-model="content" height="auto" placeholder="Escribe un mensaje" class="ml-3" v-on:keyup.enter="createMsg"></v-text-field>
                         </v-col>
                         <v-col :cols="boton">
                             <v-btn  color="rgb(229,9,20)" class="mt-4" width="28px" @click="createMsg" > ENVIAR </v-btn>
@@ -165,13 +141,13 @@ export default ({
             if(value == "xl" || value === "lg"){
                 this.chat = "8"
                 this.amigos = "4"
-                this.input = "10"
+                this.input = "9"
                 this.boton = "2"
             }
             if(value === "md" || value === "sm" || value === "xs") {
                 this.chat = "12"
                 this.amigos = "12"
-                this.input = "12"
+                this.input = "11"
                 this.boton = "12"
             } 
         }
@@ -390,7 +366,7 @@ export default ({
 }
 
 #scroll{
-    width: 760px;
+    width: auto;
     max-height: 300px;
     height: 100%;
     overflow: scroll
