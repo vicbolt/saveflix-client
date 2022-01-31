@@ -18,7 +18,7 @@
                         <v-col :cols="peliculas" v-for="movie in movies" :key="movie._id" class="mb-7">
                                 <v-list-item-content style="cursor: pointer" class="mb-n12" @click="go(movie._id)">
                                     <v-img :height="size" style="border: 2px solid white" :src="movie.image" />
-                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:px"> {{movie.title}} </v-list-item-title>
+                                    <v-list-item-title class="text-center mt-2 font-weight-black" style="font-size:11px"> {{movie.title}} </v-list-item-title>
                                 </v-list-item-content>
                         </v-col>
                     </v-row>
@@ -34,10 +34,17 @@ export default({
     data(){
         return{
             movies: [],
-            peliculas: "3",
-            size: "240px"
+            peliculas: "",
+            size: "",
+            value: this.$vuetify.breakpoint.name
+
         }
     },
+
+    created(){
+        this.responsive()
+    },
+
 
     async beforeMount(){
         await this.loadMoviesPendientes()
@@ -49,10 +56,10 @@ export default({
 
             if(value === "xl"){
                 this.peliculas = "3"
-                this.size = "240px"
+                this.size = "180px"
             }else if(value === "lg"){
                 this.peliculas = "4"
-                this.size = "240px"
+                this.size = "180px"
             } else if(value === "md"){
                 this.peliculas = "2"
                 this.size = "240px"
@@ -67,6 +74,26 @@ export default({
     },
 
     methods: {
+
+        responsive(){
+
+            if(this.value === "xl"){
+                this.peliculas = "3"
+                this.size = "180px"
+            }else if(this.value === "lg"){
+                this.peliculas = "4"
+                this.size = "180px"
+            } else if(this.value === "md"){
+                this.peliculas = "2"
+                this.size = "240px"
+            } else if(this.value === "sm"){
+                this.size = "240px"
+                this.peliculas = "3"
+            } else if (this.value === "xs") {
+                this.size = "240px"
+                this.peliculas = "4"
+            }
+        },
 
         async loadMoviesPendientes(){
             try{

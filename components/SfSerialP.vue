@@ -34,10 +34,17 @@ export default({
     data(){
         return{
             serials: [],
-            series: "3",
-            size: "240px"
+            series: "",
+            size: "",
+            value: this.$vuetify.breakpoint.name
+
         }
     },
+
+    created(){
+        this.responsive()
+    },
+
 
     async beforeMount(){
         await this.loadSerialPendientes()
@@ -49,10 +56,10 @@ export default({
 
             if(value === "xl"){
                 this.series = "3"
-                this.size = "240px"
+                this.size = "180px"
             } else if(value === "lg"){
                 this.series = "4"
-                this.size = "240px"
+                this.size = "180px"
             } else if(value === "md"){
                 this.series = "2"
                 this.size = "240px"
@@ -67,6 +74,26 @@ export default({
     },
 
     methods: {
+
+        responsive(){
+
+            if(this.value === "xl"){
+                this.series = "3"
+                this.size = "180px"
+            }else if(this.value === "lg"){
+                this.series = "4"
+                this.size = "180px"
+            } else if(this.value === "md"){
+                this.series = "2"
+                this.size = "240px"
+            } else if(this.value === "sm"){
+                this.size = "240px"
+                this.series = "3"
+            } else if (this.value === "xs") {
+                this.size = "240px"
+                this.series = "4"
+            }
+        },
 
         async loadSerialPendientes(){
             try{
