@@ -75,7 +75,6 @@ export default ({
 
     watch: {
         '$vuetify.breakpoint.name'(value){
-            console.log("watch: ", value)
 
             if( value === "xl" || value === "lg"){
                 this.cards = "4"
@@ -92,7 +91,7 @@ export default ({
             }
             
             if(value === "xs") {
-                console.log("hola")
+                
                 this.cards = "12"
                 this.explorar = "12"
                 this.buscador = "12"
@@ -120,7 +119,7 @@ export default ({
             }
             
             if(this.value === "xs") {
-                console.log("hola")
+                
                 this.cards = "12"
                 this.explorar = "12"
                 this.buscador = "12"

@@ -134,7 +134,6 @@ export default ({
 
     watch: {
         '$vuetify.breakpoint.name'(value){
-            console.log(value)
             if(value == "xl" || value === "lg"){
                 this.size = "8 offset-2"
             }
@@ -316,9 +315,9 @@ export default ({
             const file = this.$refs.file.files[0]
             const reader = new FileReader()
             reader.onloadend = () => {
-                console.log(reader.result)
+
                 this.url = reader.result
-                console.log("ESTO ES THIS.URL" ,this.url)
+
             }
             if(file){
                 reader.readAsDataURL(file)

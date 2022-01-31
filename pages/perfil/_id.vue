@@ -141,7 +141,7 @@ export default({
 
     watch: {
         '$vuetify.breakpoint.name'(value){
-            console.log("watch", value)
+   
             if(value === "xl" || value === "lg"){
                 this.avatarUsername = "5"
                 this.friends = "5"
@@ -307,7 +307,7 @@ export default({
                 const followers = data1.seguidores
 
                 if(followers.length > 0){
-                    console.log(followers[0]._id === userId )
+                    
                     for(let i = 0; i < followers.length; i++){
                         if(followers[i]._id === userId){
                             this.siguiendo = true
@@ -356,8 +356,6 @@ export default({
                 }
 
                 this.$router.go()
-                alert('Ahora sigues a este usuario')
-                
 
 
             }catch(error){

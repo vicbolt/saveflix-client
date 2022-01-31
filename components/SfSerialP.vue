@@ -52,7 +52,6 @@ export default({
 
     watch: {
         '$vuetify.breakpoint.name'(value){
-            console.log(value)
 
             if(value === "xl"){
                 this.series = "3"

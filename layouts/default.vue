@@ -40,7 +40,6 @@ export default ({
 
     watch: {
         '$vuetify.breakpoint.name'(value){
-            console.log(value)
 
             if( value === "xl" || value === "lg" || value === 'md'){
                 this.main = "8"

@@ -191,7 +191,7 @@ export default({
 
     watch: {
         '$vuetify.breakpoint.name'(value){
-            console.log("watch", value)
+           
             if(value === "xl" || value === "lg"){
                 this.avatarUsername = "5"
                 this.friends = "5"
@@ -246,7 +246,7 @@ export default({
     methods:{
 
         responsive(){
-            console.log(this.value)
+            
             if(this.value === "xl" || this.value === "lg"){
                 this.avatarUsername = "5"
                 this.friends = "5"

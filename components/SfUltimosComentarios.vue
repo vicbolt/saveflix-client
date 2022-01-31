@@ -42,7 +42,6 @@ export default ({
 
     watch: {
         '$vuetify.breakpoint.name'(value){
-            console.log(value)
 
             if( value === "xl" || value == "sm"){
                 this.imagen = "2"

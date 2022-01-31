@@ -105,7 +105,6 @@ export default ({
                     return this.error = data.error
                 }
 
-                alert('Los cambios se han guardado correctamente')
 
                 this.$router.push(`/explorar/${id}`)
 

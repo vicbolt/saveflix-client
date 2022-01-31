@@ -87,8 +87,6 @@ export default ({
 
             localStorage.setItem("ownerId", seguidorId)
 
-            console.log("yo:",user, "raquel:",seguidorId)
-
             if( user === seguidorId){
                 this.$router.push(`/miPerfil/${seguidorId}`)
             } else {
